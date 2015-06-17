@@ -1,9 +1,11 @@
 var scene, camera, renderer;
 var geometry, material, mesh;
 
-init();
-var animate = animateSound(sound);
-animate();
+$(function() {
+  init();
+  var animate = animateSound(sound);
+  animate();
+})
 
 function init() {
 
@@ -36,10 +38,10 @@ function init() {
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
 
-  container = document.createElement( 'div' );
-  document.body.appendChild( container );
-  container.appendChild( renderer.domElement );
-  // $('webgl-container').append( renderer.domElement );
+  // container = document.createElement( 'div' );
+  // document.body.appendChild( container );
+  // container.appendChild( renderer.domElement );
+  $('#webgl-container').append( renderer.domElement );
 
 }
 
