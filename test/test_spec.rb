@@ -2,7 +2,7 @@ require_relative "spec_helper"
 
 describe "the test page" do
   
-  it "has the test Home Page" do
+  it "has the text Home Page" do
     visit "/"
     expect(page).to have_content('Home Page')
     page.check('checkme')
