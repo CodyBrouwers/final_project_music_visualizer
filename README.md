@@ -1,7 +1,7 @@
-Sinatra
+Music Visualizer Final Project
 =============
 
-Brought to you by Lighthouse Labs
+Brought to you by Andrew, Bruno, and Cody
 
 ## Getting Started
 
