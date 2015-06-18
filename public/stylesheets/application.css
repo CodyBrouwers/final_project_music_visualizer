@@ -90,3 +90,7 @@ body {
 .menu input {
   color: #000;
 }
+
+.viz-container {
+  position: relative;
+}
