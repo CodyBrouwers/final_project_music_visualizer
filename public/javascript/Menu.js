@@ -19,6 +19,7 @@ var Menu = function() {
     e.style.transform = 'translateX(' + v + 'px)';
   }
 
+  //KEEP THIS IF YOU START OVER
   $('.color').on('blur', 'li', function(event) {
     var red = $('#input-red').val() + ", ";
     var green = $('#input-green').val() + ", ";
@@ -36,7 +37,8 @@ var Menu = function() {
       mesh.geometry = new THREE.BoxGeometry( 200, 200, 200 );
     }
   });
-
+  //-----------
+  //
   btn.addEventListener('click', function() {
     btn.style.opacity = 0;
     menu.style.opacity = 1;
