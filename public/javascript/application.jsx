@@ -1,3 +1,7 @@
+require es5-shim
+// require React
+// require react-ujs
+
 $(document).ready(function() {
 
   var visualizations = [{name: 'Andrew', id: 5}, {name: 'Raf', id: 6}];
