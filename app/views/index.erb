@@ -1,11 +1,13 @@
 <h1>Home Page</h1>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script>
-$(function() {
 
-  $("input").click(function() { $("body").append("<p>goodbye</p>") });
-})
-</script>
-<form>
-<input type="checkbox" id="checkme" value="yes">I can be checked<br>
-</form>
+<div class="container">
+  <div id="wave">
+    <div class="controls">
+      <button data-action="backward">Backwards</button>
+      <button data-action="play">Play/Pause</button>
+      <button data-action="forward">Forwards</button>
+      <button data-action="toggle-mute">Mute</button>
+    </div>
+  </div>
+  <p id="drop">Drop your file here</p>
+</div>
