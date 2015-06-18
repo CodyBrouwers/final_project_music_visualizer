@@ -8,7 +8,8 @@ var Waveform = function() {
     container: document.querySelector("#wave"),
     waveColor: 'violet',
     progressColor: 'purple',
-    cursorColor: 'navy'
+    cursorColor: 'navy',
+    scrollParent: false
   };
 
   // Initializes with above options
