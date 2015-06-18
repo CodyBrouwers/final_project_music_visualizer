@@ -7,10 +7,11 @@ require 'rspec'
 require 'active_record'
 require 'database_cleaner'
 
+require 'rack/test'
 require 'capybara/poltergeist'
 require 'capybara/rspec'
-Capybara.javascript_driver = :poltergeist
-Capybara.default_driver = :poltergeist
+Capybara.javascript_driver = :selenium
+Capybara.default_driver = :selenium
 Capybara.app_host = "http://localhost:3000"
 Capybara.server_host = "localhost"
 Capybara.server_port = "3000"
@@ -35,6 +36,8 @@ RSpec.configure do |config|
   # additional factory_girl configuration
 
   config.include Capybara::DSL
+
+  # config.include Rack::Test::Methods
 
   config.color = true
   # config.formatter = :documentation

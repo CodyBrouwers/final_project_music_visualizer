@@ -19,4 +19,5 @@ group :development, :test do
   gem 'capybara'
   gem 'rspec'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
 end
