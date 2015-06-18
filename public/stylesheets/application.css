@@ -1,5 +1,5 @@
 body {
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .menu-button {
@@ -93,4 +93,24 @@ body {
 
 .viz-container {
   position: relative;
+}
+
+.wave-container {
+  max-width: 900px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.controls {
+  text-align: center;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+#drop {
+  border: 3px dashed #ddd;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+
 }
