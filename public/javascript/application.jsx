@@ -1,8 +1,7 @@
-require es5-shim
-// require React
-// require react-ujs
 
 $(document).ready(function() {
+
+  /** @jsx React.DOM */
 
   var visualizations = [{name: 'Andrew', id: 5}, {name: 'Raf', id: 6}];
 
@@ -53,10 +52,50 @@ $(document).ready(function() {
           <p onClick={function(){
             self.props.parent.changePage('List');
           }}>Back to List</p>
+          <ParameterMenu />
         </div>
         )
       } 
   });
+
+  var ParameterMenu = React.createClass({
+    render: function(){
+      return (
+        <div className="menu">
+          <div className="close">- hide options</div>
+          <p>Color</p>
+          <ul className="color">
+              <li>
+                <form for='input-red'>Red</form>
+                <input id='input-red' type='number' name="red"/>
+              </li>
+              <li>
+                <form for='input-green'>Green</form>
+                <input id='input-green' type='number' name="green"/>
+              </li>
+              <li>
+                <form for='input-blue'>Blue</form>
+                <input id='input-blue' type='number' name="blue"/>
+              </li>
+          </ul>
+          <ul className='shape'>
+            <li>
+              <label>Sphere</label>
+              <input type="radio" name="shape" value="sphere"/>
+            </li>
+            <li>
+              <label>Cube</label>
+              <input type="radio" name="shape" value="cube"/>
+            </li>
+          </ul>
+          <p>Source</p>
+          <ul>
+              <li className="track">Track</li>
+          </ul>
+        </div> 
+      )
+    }
+  })
 
   
   React.render(
