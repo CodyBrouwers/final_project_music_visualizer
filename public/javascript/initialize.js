@@ -39,10 +39,6 @@ var stats = new Stats();
 stats.domElement.setAttribute('class', 'stats');
 if(DEBUG) document.body.appendChild(stats.domElement);
 
-// Menu.onEffect(setEffect);
-// Menu.onMic(useMic);
-// Menu.onTrack(useTrack);
-
 sound.onBeat = function() {
     if(DEBUG) debugViz.onBeat();
 }

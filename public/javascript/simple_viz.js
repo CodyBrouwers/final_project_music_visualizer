@@ -14,8 +14,13 @@ function init() {
   camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
   camera.position.z = 1000;
 
+
+  var red = 240;
+  var green = 50;
+  var blue = 10;
+  myColor = new THREE.Color('rgb(' + red + ',' + green + ',' + blue + ')');
   geometry = new THREE.BoxGeometry( 200, 200, 200 );
-  material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+  material = new THREE.MeshPhongMaterial( { color: myColor } );
 
   mesh = new THREE.Mesh( geometry, material );
   scene.add( mesh );
@@ -38,10 +43,11 @@ function init() {
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
 
-  // container = document.createElement( 'div' );
-  // document.body.appendChild( container );
-  // container.appendChild( renderer.domElement );
   $('#webgl-container').append( renderer.domElement );
+
+  $('#input-red').val(red);
+  $('#input-green').val(green);
+  $('#input-blue').val(blue);
 
 }
 
