@@ -72,43 +72,52 @@
       var soundAnalyzer = initSound();
       var container = $('.viz-container');
       var viz = new VIZ.Simple(container, soundAnalyzer);
+      Menu();
     }
   });
 
   var ParameterMenu = React.createClass({
     render: function(){
       return (
-        <div className="menu">
-          <div className="close">- hide options</div>
-          <p>Color</p>
-          <ul className="color">
-              <li>
-                <form htmlFor='input-red'>Red</form>
-                <input id='input-red' type='number' name="red"/>
-              </li>
-              <li>
-                <form htmlFor='input-green'>Green</form>
-                <input id='input-green' type='number' name="green"/>
-              </li>
-              <li>
-                <form htmlFor='input-blue'>Blue</form>
-                <input id='input-blue' type='number' name="blue"/>
-              </li>
-          </ul>
-          <ul className='shape'>
-            <li>
-              <label>Sphere</label>
-              <input type="radio" name="shape" value="sphere"/>
-            </li>
-            <li>
-              <label>Cube</label>
-              <input type="radio" name="shape" value="cube"/>
-            </li>
-          </ul>
-          <p>Source</p>
-          <ul>
-              <li className="track">Track</li>
-          </ul>
+        <div>
+          <div className="menu-button">+ show options</div>
+          <div className="menu">
+            <div className="close">- hide options</div>
+            <fieldset>
+              <legend>Color</legend>
+              <ul className="color">
+                <li>
+                  <form htmlFor='input-red'>Red</form>
+                  <input id='input-red' type='number' name="red"/>
+                </li>
+                <li>
+                  <form htmlFor='input-green'>Green</form>
+                  <input id='input-green' type='number' name="green"/>
+                </li>
+                <li>
+                  <form htmlFor='input-blue'>Blue</form>
+                  <input id='input-blue' type='number' name="blue"/>
+                </li>
+              </ul>
+            </fieldset>
+            <fieldset>
+              <legend>Shape</legend>
+              <ul className='shape'>
+                <li>
+                  <label>Sphere</label>
+                  <input type="radio" name="shape" value="sphere"/>
+                </li>
+                <li>
+                  <label>Cube</label>
+                  <input type="radio" name="shape" value="cube"/>
+                </li>
+              </ul>
+            </fieldset>
+            <p>Source</p>
+            <ul>
+                <li className="track">Track</li>
+            </ul>
+          </div>
         </div> 
       )
     }
