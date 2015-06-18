@@ -15,11 +15,19 @@ $(document).ready(function() {
   wavesurfer.init(options);
 
   // Loads music
-  wavesurfer.load('./Lenno-Lost.mp3');
+  wavesurfer.load('./music/Lenno-Lost.mp3');
 
-  // Plays once ready
+  // Initializes timeline plugin and plays once ready
   wavesurfer.on('ready', function () {
-    wavesurfer.play();
+    // wavesurfer.play();
+    var timeline = Object.create(WaveSurfer.Timeline);
+
+    timeline.init({
+      wavesurfer: wavesurfer,
+      container: "#wave-timeline"
+    });
+
+    
   });
 
   // Console logs errors
