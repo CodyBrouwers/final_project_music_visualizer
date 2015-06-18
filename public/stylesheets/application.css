@@ -3,8 +3,9 @@ body {
 }
 
 .menu-button {
+  display: none;
   position: absolute;
-  top: 0px;
+  top: 30px;
   left: 0px;
   text-transform: lowercase;
   font-size: 0.8em;
@@ -23,19 +24,21 @@ body {
 .menu {
   position: absolute;
   color: #c8c8c8;
-  top: 0px;
+  top: 80px;
   left: 0px;
   background-color: rgba(0, 0, 0, 0.3);
   width: 160px;
-  -webkit-transition: all 0.2s ease;
+  -webkit-transition: all 0.4s ease;
 }
-.menu .close {
+.close {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  color: #c8c8c8;
+  left: 0px;
+  top: 30px;
   font-size: 0.8em;
+  padding: 8px 18px 13px 13px;
 }
-.menu .close:hover {
+.close:hover {
   cursor: pointer;
   color: #fff;
 }
