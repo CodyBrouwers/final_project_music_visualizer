@@ -5,19 +5,13 @@ var Menu = function() {
   var effectCallback, micCallback, trackCallback;
 
   var menu = document.querySelector(".menu");
-  var btn = document.querySelector(".menu-button");
-  var close = document.querySelector(".menu .close");
+  var showbtn = document.querySelector(".menu-button");
+  var hidebtn = document.querySelector(".close");
   var effects = document.querySelectorAll(".colors li");
 
-  var mic = document.querySelector(".mic");
+  // var mic = document.querySelector(".mic");
   var track = document.querySelector(".track");
 
-  var translateX = function(e, v) {
-    e.style.webkitTransform = 'translateX(' + v + 'px)';
-    e.style.msTransform = 'translateX(' + v + 'px)';
-    e.style.MozTransform = 'translateX(' + v + 'px)';
-    e.style.transform = 'translateX(' + v + 'px)';
-  }
 
   //KEEP THIS IF YOU START OVER
   $('.color').on('blur', 'li', function(event) {
@@ -37,34 +31,20 @@ var Menu = function() {
       mesh.geometry = new THREE.BoxGeometry( 200, 200, 200 );
     }
   });
-  //-----------
-  //
-  btn.addEventListener('click', function() {
-    btn.style.opacity = 0;
+
+  showbtn.addEventListener('click', function() {
     menu.style.opacity = 1;
-    translateX(menu, 0);
-
-    setTimeout(function() {
-      btn.style.display = 'none';
-    }, 200);
+    hidebtn.style.display = 'block';
+    showbtn.style.display = 'none';  
   });
 
-  close.addEventListener('click', function() {
-    btn.style.display = 'block';
-
-    setTimeout(function() {
-      btn.style.opacity = 1;
-    }, 1);
-
+  hidebtn.addEventListener('click', function() {
+    showbtn.style.opacity = 1;
     menu.style.opacity = 0;
-    translateX(menu, -30);
+    showbtn.style.display = 'block';
+    hidebtn.style.display = 'none';
+    
   });
-
-  // mic.addEventListener('click', function() {
-  //   mic.setAttribute('class', 'selected');
-  //   track.setAttribute('class', '');
-  //   if(micCallback) micCallback();
-  // });
 
   track.addEventListener('click', function() {
     mic.setAttribute('class', '');
@@ -72,26 +52,26 @@ var Menu = function() {
     if(trackCallback) trackCallback();
   });
 
-  var m = {};
+  // var m = {};
 
-  m.onEffect = function(callback) {
-    effectCallback = callback;
-  }
+  // m.onEffect = function(callback) {
+  //   effectCallback = callback;
+  // }
 
-  m.onMic = function(callback) {  
-    micCallback = callback;
+  // m.onMic = function(callback) {  
+  //   micCallback = callback;
     
-  }
+  // }
 
-  m.onTrack = function(callback) {
-    trackCallback = callback;
-  }
+  // m.onTrack = function(callback) {
+  //   trackCallback = callback;
+  // }
 
-  track.setAttribute('class', 'selected');
-  btn.style.opacity = 0;
-  btn.style.display = 'none';
+  // track.setAttribute('class', 'selected');
+  // btn.style.opacity = 0;
+  // btn.style.display = 'none';
 
-  return m;
+  // return m;
 
 };
 

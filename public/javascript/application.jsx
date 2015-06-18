@@ -80,9 +80,9 @@
     render: function(){
       return (
         <div>
+          <div className="close">- hide options</div>
           <div className="menu-button">+ show options</div>
           <div className="menu">
-            <div className="close">- hide options</div>
             <fieldset>
               <legend>Color</legend>
               <ul className="color">
