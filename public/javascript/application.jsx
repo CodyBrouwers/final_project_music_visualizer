@@ -80,8 +80,9 @@
       return (
         <div className="menu">
           <div className="close">- hide options</div>
-          <p>Color</p>
-          <ul className="color">
+          <fieldset>
+            <legend>Color</legend>
+            <ul className="color">
               <li>
                 <form htmlFor='input-red'>Red</form>
                 <input id='input-red' type='number' name="red"/>
@@ -94,23 +95,30 @@
                 <form htmlFor='input-blue'>Blue</form>
                 <input id='input-blue' type='number' name="blue"/>
               </li>
-          </ul>
-          <ul className='shape'>
-            <li>
-              <label>Sphere</label>
-              <input type="radio" name="shape" value="sphere"/>
-            </li>
-            <li>
-              <label>Cube</label>
-              <input type="radio" name="shape" value="cube"/>
-            </li>
-          </ul>
+            </ul>
+          </fieldset>
+          <fieldset>
+            <legend>Shape</legend>
+            <ul className='shape'>
+              <li>
+                <label>Sphere</label>
+                <input type="radio" name="shape" value="sphere"/>
+              </li>
+              <li>
+                <label>Cube</label>
+                <input type="radio" name="shape" value="cube"/>
+              </li>
+            </ul>
+          </fieldset>
           <p>Source</p>
           <ul>
               <li className="track">Track</li>
           </ul>
         </div> 
       )
+    },
+    componenetDidMount: function() {
+        Menu();
     }
   })
 

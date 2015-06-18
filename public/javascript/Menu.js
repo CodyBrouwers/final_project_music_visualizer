@@ -1,4 +1,4 @@
-var Menu = (function() {
+var Menu = function() {
 
   var width = 240;
 
@@ -91,7 +91,7 @@ var Menu = (function() {
 
   return m;
 
-})();
+};
 
 
 
