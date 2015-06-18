@@ -49,10 +49,11 @@
       return (
         <div>
           <h1>Edit View</h1>
-          <WebGLVisualizer />
           <p onClick={function(){
             self.props.parent.changePage('List');
           }}>Back to List</p>
+          <WebGLVisualizer />
+          <AudioWave />
         </div>
         )
       } 
@@ -111,6 +112,28 @@
           </ul>
         </div> 
       )
+    }
+  })
+
+  var AudioWave = React.createClass({
+    render: function(){
+      return (
+        <div className="wave-container">
+          <div className="controls">
+            <button data-action="backward">Backwards</button>
+            <button data-action="play">Play/Pause</button>
+            <button data-action="forward">Forwards</button>
+            <button data-action="toggle-mute">Mute</button>
+          </div>
+          <div id="wave"></div>
+          <div id="wave-timeline"></div>
+
+          <p id="drop">Drop your file here</p>
+        </div>
+      );
+    },
+    componentDidMount: function () {
+      Waveform();
     }
   })
 
