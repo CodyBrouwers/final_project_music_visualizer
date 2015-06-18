@@ -1,9 +1,11 @@
+
 var VIZ = VIZ || {};
 
-VIZ.Simple = function(container, sound) {
+var scene, camera, renderer;
+var geometry, material, mesh;
 
-  var scene, camera, renderer;
-  var geometry, material, mesh;
+
+VIZ.Simple = function(container, sound) {
 
   // $(function() {
   //   var animate = animateSound(sound);
@@ -54,8 +56,8 @@ VIZ.Simple = function(container, sound) {
   }
 
   function animate(frame) {
-
-    requestAnimationFrame( animate );
+    
+    requestAnimationFrame(animate);
 
     mesh.rotation.x += 0.01;
     mesh.rotation.y += 0.02;
@@ -65,7 +67,7 @@ VIZ.Simple = function(container, sound) {
     mesh.scale.y = scale;
     mesh.scale.z = scale;
 
-    renderer.render( scene, camera );
+    renderer.render(scene, camera)
   }
 
 }
