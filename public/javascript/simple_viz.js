@@ -1,72 +1,77 @@
-var scene, camera, renderer;
-var geometry, material, mesh;
+var VIZ = VIZ || {};
 
-$(function() {
+VIZ.Simple = function(container, sound) {
+
+  var scene, camera, renderer;
+  var geometry, material, mesh;
+
+  // $(function() {
+  //   var animate = animateSound(sound);
+  // })
   init();
-  var animate = animateSound(sound);
   animate();
-})
 
-function init() {
+  function init() {
 
-  scene = new THREE.Scene();
+    scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-  camera.position.z = 1000;
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+    camera.position.z = 1000;
 
 
-  var red = 240;
-  var green = 50;
-  var blue = 10;
-  myColor = new THREE.Color('rgb(' + red + ',' + green + ',' + blue + ')');
-  geometry = new THREE.BoxGeometry( 200, 200, 200 );
-  material = new THREE.MeshPhongMaterial( { color: myColor } );
+    var red = 240;
+    var green = 50;
+    var blue = 10;
+    myColor = new THREE.Color('rgb(' + red + ',' + green + ',' + blue + ')');
+    geometry = new THREE.BoxGeometry( 200, 200, 200 );
+    material = new THREE.MeshPhongMaterial( { color: myColor } );
 
-  mesh = new THREE.Mesh( geometry, material );
-  scene.add( mesh );
+    mesh = new THREE.Mesh( geometry, material );
+    scene.add( mesh );
 
-  // create a point light
-  var pointLight = new THREE.PointLight( 0xFFFFFF );
+    // create a point light
+    var pointLight = new THREE.PointLight( 0xFFFFFF );
 
-  // set its position
-  pointLight.position.x = 10;
-  pointLight.position.y = 150;
-  pointLight.position.z = 130;
+    // set its position
+    pointLight.position.x = 10;
+    pointLight.position.y = 150;
+    pointLight.position.z = 130;
 
-  // add to the scene
-  // scene.add(pointLight);
+    // add to the scene
+    // scene.add(pointLight);
 
-  // var light = new THREE.AmbientLight( 0x404040 ); // soft white light
-  var light = new THREE.HemisphereLight(0xFFFFFF, 0x80CC99, 1.0);
-  scene.add( light );
+    // var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    var light = new THREE.HemisphereLight(0xFFFFFF, 0x80CC99, 1.0);
+    scene.add( light );
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
 
-  $('#webgl-container').append( renderer.domElement );
+    container.append( renderer.domElement );
 
-  $('#input-red').val(red);
-  $('#input-green').val(green);
-  $('#input-blue').val(blue);
+    // TODO: Call menu to add event listeners and all that.
 
-}
+  }
 
-function animateSound(soundAnalyzer) {
-  return function animate(frame) {
+  function animate(frame) {
 
     requestAnimationFrame( animate );
 
     mesh.rotation.x += 0.01;
     mesh.rotation.y += 0.02;
 
-    // var phase = frame / 360 * Math.PI;
-    // var scale = 2 + 0.5* Math.sin(phase);
-    // console.log(soundAnalyzer.level)
-    var scale = 1 + 2* soundAnalyzer.level;
+    var scale = 1 + 2* sound.level;
     mesh.scale.x = scale;
     mesh.scale.y = scale;
     mesh.scale.z = scale;
 
     renderer.render( scene, camera );
   }
+
 }
+
+// VIZ.SetParameters = function(params) {  
+//   $('#input-red').val(params.red);
+//   $('#input-green').val(params.green);
+//   $('#input-blue').val(params.blue);
+// }

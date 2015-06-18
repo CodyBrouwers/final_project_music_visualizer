@@ -1,12 +1,9 @@
-require es5-shim
-// require React
-// require react-ujs
-
-$(document).ready(function() {
+(function() {
 
   var visualizations = [{name: 'Andrew', id: 5}, {name: 'Raf', id: 6}];
-
-
+  
+  // var WebGLVisualization = require('./webgl-viz.jsx');
+  
   var AppView = React.createClass({
     getInitialState: function () {
       return {
@@ -50,6 +47,7 @@ $(document).ready(function() {
       return (
         <div>
           <h1>Edit View</h1>
+          <WebGLVisualizer />
           <p onClick={function(){
             self.props.parent.changePage('List');
           }}>Back to List</p>
@@ -58,10 +56,21 @@ $(document).ready(function() {
       } 
   });
 
+  var WebGLVisualizer = React.createClass({
+    render: function() {
+      return (
+        <div className='viz-container'></div>
+      );
+    },
+    componentDidMount: function() {
+      var container = $('.viz-container');
+      var viz = new VIZ.Simple(container, sound);
+    }
+  });
   
   React.render(
     <AppView />,
     document.getElementById('app')
   );
 
-});
+})();
