@@ -24,7 +24,7 @@ body {
   position: absolute;
   color: #c8c8c8;
   top: 0px;
-  left: 0px;
+  right: 0px;
   background-color: rgba(0, 0, 0, 0.3);
   width: 160px;
   -webkit-transition: all 0.2s ease;
