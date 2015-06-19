@@ -31,6 +31,7 @@
     getInitialState: function(){
       return { visualizations: [] }
     },
+    
     componentWillMount: function(){
       $.ajax({
         type: "GET",
@@ -42,18 +43,21 @@
       });
     },
 
+    componentDidMount: function(){
+      slipHover(this.refs.container.getDOMNode());
+    },
+
     render: function(){
       var self = this;
       var items = this.state.visualizations.map(function(v){
-        return <li key={ "visualization-item-" + v.id }onClick={function(){
+        return <div className="viz" key={ "visualization-item-" + v.id }onClick={function(){
           self.props.parent.changePage('Edit');
-        }}>{v.song_name}</li>
+        }}><img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg"  title={v.song_name}></img></div>
       })
-      console.log(items);
       return (
         <div>
           <h1>List View</h1>
-          <div>
+          <div id="container" ref="container">
             {items}
           </div>
         </div>

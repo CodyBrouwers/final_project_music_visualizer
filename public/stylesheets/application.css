@@ -97,3 +97,17 @@ body {
 .viz-container {
   position: relative;
 }
+
+/* Grid hover caption effect */
+
+.viz {
+  height: 250px;
+  width: 250px;
+  float: left;
+  margin: 1px;
+}
+
+img {
+  height: 250px;
+  width: 250px;
+}
