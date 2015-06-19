@@ -128,7 +128,6 @@
     render: function(){
       return (
         <div className="wave-container">
-
           <div className="controls">
             <button data-action="backward">Backwards</button>
             <button data-action="play">Play/Pause</button>
