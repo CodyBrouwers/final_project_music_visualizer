@@ -9,7 +9,8 @@ var Waveform = function() {
     waveColor: 'violet',
     progressColor: 'purple',
     cursorColor: 'navy',
-    scrollParent: false
+    scrollParent: false,
+    audioContext: new window.AudioContext()
   };
 
   // Initializes with above options
@@ -141,5 +142,7 @@ var Waveform = function() {
   // wavesurfer.on('ready', hideProgress);
   // wavesurfer.on('destroy', hideProgress);
   // wavesurfer.on('error', hideProgress);
+
+  return wavesurfer;
 
 };
