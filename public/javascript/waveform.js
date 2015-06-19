@@ -86,7 +86,6 @@ var Waveform = function() {
     });
   });
 
-
   // Drag and Drop for files
   var toggleActive = function (e, toggle) {
       e.stopPropagation();
@@ -124,24 +123,6 @@ var Waveform = function() {
   Object.keys(handlers).forEach(function (event) {
       dropTarget.addEventListener(event, handlers[event]);
   });
-
-  // Progress bar for uploading music file
-  // var progressDiv = document.querySelector('#progress-bar');
-  // var progressBar = progressDiv.querySelector('.progress-bar');
-
-  // var showProgress = function (percent) {
-  //     progressDiv.style.display = 'block';
-  //     progressBar.style.width = percent + '%';
-  // };
-
-  // var hideProgress = function () {
-  //     progressDiv.style.display = 'none';
-  // };
-
-  // wavesurfer.on('loading', showProgress);
-  // wavesurfer.on('ready', hideProgress);
-  // wavesurfer.on('destroy', hideProgress);
-  // wavesurfer.on('error', hideProgress);
 
   return wavesurfer;
 
