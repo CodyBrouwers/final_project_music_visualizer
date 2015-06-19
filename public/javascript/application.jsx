@@ -49,6 +49,7 @@
           self.props.parent.changePage('Edit');
         }}>{v.song_name}</li>
       })
+      console.log(items);
       return (
         <div>
           <h1>List View</h1>
