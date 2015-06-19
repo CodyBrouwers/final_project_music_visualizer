@@ -1,8 +1,6 @@
 (function() {
 
   /** @jsx React.DOM */
-
-  var visualizations = [{name: 'Andrew', id: 5}, {name: 'Raf', id: 6}];
   
   // var WebGLVisualization = require('./webgl-viz.jsx');
   
@@ -15,23 +13,43 @@
     changePage: function(page){
       this.setState({page: page});
     },
+
     render: function(){
       if (this.state.page === 'List'){
-        return <ListView parent={this}/>;
+        return <VisualizationList key='list' parent={this}/>;
       } else {
-        return <EditView parent ={this}/>;
+        return <EditView key='edit' parent={this}/>;
       }
     }
   });
 
-  var ListView = React.createClass({
+  var VisualizationList = React.createClass({
+    propTypes: {
+      parent: React.PropTypes.any.isRequired
+    },
+
+    getInitialState: function(){
+      return { visualizations: [] }
+    },
+    componentWillMount: function(){
+      $.ajax({
+        type: "GET",
+        url: "/visualizations",
+        dataType: 'json',
+        success: function(visualizations) {
+          this.setState({visualizations: visualizations})
+        }.bind(this)
+      });
+    },
+
     render: function(){
       var self = this;
-      var items = visualizations.map(function(v){
-        return <li onClick={function(){
+      var items = this.state.visualizations.map(function(v){
+        return <li key={ "visualization-item-" + v.id }onClick={function(){
           self.props.parent.changePage('Edit');
-        }}>{v.name}</li>
+        }}>{v.song_name}</li>
       })
+      console.log(items);
       return (
         <div>
           <h1>List View</h1>
@@ -39,8 +57,8 @@
             {items}
           </div>
         </div>
-        )
-      } 
+      )
+    }
   });
 
   var EditView = React.createClass({
@@ -55,8 +73,8 @@
           <WebGLVisualizer />
           <AudioWave />
         </div>
-        )
-      } 
+      )
+    } 
   });
 
   var WebGLVisualizer = React.createClass({
