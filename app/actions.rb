@@ -8,3 +8,9 @@ get '/visualizations' do
   visualizations = Visualization.all
   visualizations.to_json
 end
+
+post '/visualization/new' do
+  content_type :json
+  visualization = Visualization.create
+  visualization.to_json
+end

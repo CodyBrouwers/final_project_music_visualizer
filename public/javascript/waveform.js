@@ -17,7 +17,7 @@ var Waveform = function() {
   wavesurfer.init(options);
 
   // Loads music
-  wavesurfer.load('./music/Lenno-Lost.mp3');
+  // wavesurfer.load('./music/Lenno-Lost.mp3');
 
   // Initializes timeline plugin and plays once ready
   wavesurfer.on('ready', function () {

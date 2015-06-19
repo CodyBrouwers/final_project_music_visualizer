@@ -52,6 +52,7 @@
       return (
         <div>
           <h1>List View</h1>
+          <h3>New Visual</h3>
           <div>
             {items}
           </div>
