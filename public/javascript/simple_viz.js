@@ -51,6 +51,11 @@ VIZ.Simple = function(container, sound) {
 
     container.append( renderer.domElement );
 
+    $('#input-red').val(red);
+    $('#input-green').val(green);
+    $('#input-blue').val(blue);
+  
+
     // TODO: Call menu to add event listeners and all that.
 
   }
@@ -72,8 +77,3 @@ VIZ.Simple = function(container, sound) {
 
 }
 
-// VIZ.SetParameters = function(params) {  
-//   $('#input-red').val(params.red);
-//   $('#input-green').val(params.green);
-//   $('#input-blue').val(params.blue);
-// }
