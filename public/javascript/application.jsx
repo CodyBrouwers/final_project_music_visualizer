@@ -69,12 +69,6 @@
         </div>
       );
     },
-    componentDidMount: function() {
-      var soundAnalyzer = initSound();
-      var container = $('.viz-container');
-      var viz = new VIZ.Simple(container, soundAnalyzer);
-      Menu();
-    }
   });
 
   var ParameterMenu = React.createClass({
@@ -142,7 +136,10 @@
       );
     },
     componentDidMount: function () {
-      Waveform();
+      wavesurfer = Waveform();
+      var $container = $('.viz-container');
+      var viz = new VIZ.Simple($container, wavesurfer.WebAudio.Data);
+      Menu();
     }
   })
 
