@@ -6,7 +6,7 @@ WaveSurfer.WebAudio.Data = {
 
   init: function(analyser) {
 
-    this.analyser = analyser
+    this.analyser = analyser //WaveSurfer.WebAudio.analyser
 
     var binCount = this.analyser.frequencyBinCount;
     this.levelBins = Math.floor(binCount / this.levelsCount);

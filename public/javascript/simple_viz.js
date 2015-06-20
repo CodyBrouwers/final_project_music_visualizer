@@ -55,8 +55,8 @@ VIZ.Simple = function(container, sound) {
     $('#input-green').val(green);
     $('#input-blue').val(blue);
   
-
     // TODO: Call menu to add event listeners and all that.
+
 
   }
 

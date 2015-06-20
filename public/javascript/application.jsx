@@ -144,6 +144,7 @@
             <button data-action="play">Play/Pause</button>
             <button data-action="forward">Forwards</button>
             <button data-action="toggle-mute">Mute</button>
+            <button data-action="add-transition">Add Transition</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
@@ -154,8 +155,6 @@
     },
     componentDidMount: function () {
       wavesurfer = Waveform();
-      var $container = $('.viz-container');
-      var viz = new VIZ.Simple($container, wavesurfer.WebAudio.Data);
       Menu();
     }
   })

@@ -56,7 +56,7 @@ var Waveform = function() {
 
     'toggle-mute': function () {
       wavesurfer.toggleMute();
-    }
+    },
 
   };
 
