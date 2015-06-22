@@ -69,23 +69,20 @@
           <p onClick={function(){
             self.props.parent.changePage('List');
           }}>Back to List</p>
-          <WebGLVisualizer />
+          <div>
+            <div className='viz-container'>
+              <ParameterMenu />
+            </div>
+          </div>
           <AudioWave />
         </div>
       )
-    } 
-  });
-
-  var WebGLVisualizer = React.createClass({
-    render: function() {
-      return (
-        <div>
-          <div className='viz-container'>
-            <ParameterMenu />
-          </div>
-        </div>
-      );
     },
+    componentDidMount: function() {
+      musicInterface = startMusicInterface();
+      musicInterface.animate();
+      $('.viz-container').append(musicInterface.renderer.domElement);
+    } 
   });
 
   var ParameterMenu = React.createClass({
@@ -140,10 +137,11 @@
       return (
         <div className="wave-container">
           <div className="controls">
-            <button data-action="backward">Backwards</button>
+            <button data-action="backward" >Backwards</button>
             <button data-action="play">Play/Pause</button>
             <button data-action="forward">Forwards</button>
             <button data-action="toggle-mute">Mute</button>
+            <button data-action="add-transition">Add Transition</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
@@ -153,9 +151,6 @@
       );
     },
     componentDidMount: function () {
-      wavesurfer = Waveform();
-      var $container = $('.viz-container');
-      var viz = new VIZ.Simple($container, wavesurfer.WebAudio.Data);
       Menu();
     }
   })
