@@ -10,8 +10,8 @@ require 'database_cleaner'
 require 'rack/test'
 require 'capybara/poltergeist'
 require 'capybara/rspec'
-Capybara.javascript_driver = :selenium
-Capybara.default_driver = :selenium
+Capybara.javascript_driver = :poltergeist
+Capybara.default_driver = :poltergeist
 Capybara.app_host = "http://localhost:3000"
 Capybara.server_host = "localhost"
 Capybara.server_port = "3000"

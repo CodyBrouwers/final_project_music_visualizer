@@ -5,7 +5,7 @@ var scene, camera, renderer;
 var geometry, material, mesh;
 
 
-VIZ.Simple = function(container, sound) {
+VIZ.Simple = function(container) {
 
   // $(function() {
   //   var animate = animateSound(sound);
@@ -55,8 +55,8 @@ VIZ.Simple = function(container, sound) {
     $('#input-green').val(green);
     $('#input-blue').val(blue);
   
-
     // TODO: Call menu to add event listeners and all that.
+
 
   }
 
@@ -67,12 +67,13 @@ VIZ.Simple = function(container, sound) {
     mesh.rotation.x += 0.01;
     mesh.rotation.y += 0.02;
 
-    var scale = 1 + 2* sound.level;
+    var scale = 1 + sound.level;
     mesh.scale.x = scale;
     mesh.scale.y = scale;
     mesh.scale.z = scale;
 
-    renderer.render(scene, camera)
+    sound.update();
+    renderer.render(scene, camera);
   }
 
 }
