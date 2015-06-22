@@ -4,8 +4,7 @@ describe 'react' do
 
   it 'loads with the list view initially ' do 
     visit "/"
-    expect(page).to have_text("Raf")
-    # expect(page).to have_content('List View')
+    expect(page).to have_text("List View")
   end
 
 
