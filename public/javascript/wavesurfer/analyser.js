@@ -34,4 +34,4 @@ WaveSurfer.WebAudio.Data = {
   }
 }
 
-// WaveSurfer.util.extend(WaveSurfer.WebAudio.Data, WaveSurfer.Observer);
+WaveSurfer.util.extend(WaveSurfer, WaveSurfer.Observer);

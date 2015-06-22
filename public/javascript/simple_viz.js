@@ -5,7 +5,7 @@ var scene, camera, renderer;
 var geometry, material, mesh;
 
 
-VIZ.Simple = function(container, sound) {
+VIZ.Simple = function(container) {
 
   // $(function() {
   //   var animate = animateSound(sound);

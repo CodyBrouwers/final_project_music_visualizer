@@ -17,7 +17,7 @@ WaveSurfer.Visualizer = {
     this.geometry = new THREE.BoxGeometry( 200, 200, 200 );
     this.material = new THREE.MeshPhongMaterial( { color: myColor } );
 
-    this.mesh = new THREE.Mesh( geometry, material );
+    this.mesh = new THREE.Mesh( this.geometry, this.material );
     this.scene.add( this.mesh );
 
     this.hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x80CC99, 1.0);
@@ -33,8 +33,8 @@ WaveSurfer.Visualizer = {
     $('#input-blue').val(blue);
 
   },
-  animate: function (frame) {
-      
+  animate: function(frame) {
+
     requestAnimationFrame(this.animate.bind(this));
 
     this.mesh.rotation.x += 0.01;

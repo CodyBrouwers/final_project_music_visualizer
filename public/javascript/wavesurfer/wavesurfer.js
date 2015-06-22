@@ -70,7 +70,6 @@ var WaveSurfer = {
         this.createDrawer();
         this.createBackend();
         this.Visualizer.init($('.viz-container'), this.WebAudio.Data);
-        this.Visualizer.animate(0);
     },
 
     createDrawer: function () {
