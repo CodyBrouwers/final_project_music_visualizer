@@ -76,6 +76,7 @@ var startMusicInterface = function() {
     });
   });
 
+  //TODO Get drag and drop working again (and as React events)
   // // Drag and Drop for files
   // var toggleActive = function (e, toggle) {
   //     e.stopPropagation();

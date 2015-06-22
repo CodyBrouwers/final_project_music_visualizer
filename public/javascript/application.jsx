@@ -70,8 +70,9 @@
             self.props.parent.changePage('List');
           }}>Back to List</p>
           <div>
-            <ParameterMenu />
-            <div className='viz-container' />
+            <div className='viz-container'>
+              <ParameterMenu />
+            </div>
           </div>
           <AudioWave />
         </div>
@@ -136,7 +137,7 @@
       return (
         <div className="wave-container">
           <div className="controls">
-            <button data-action="backward">Backwards</button>
+            <button data-action="backward" >Backwards</button>
             <button data-action="play">Play/Pause</button>
             <button data-action="forward">Forwards</button>
             <button data-action="toggle-mute">Mute</button>
