@@ -95,9 +95,8 @@
       return (
         <div>
           <h1>Edit View</h1>
-          <p onClick={function(){
-            self.props.parent.changePage('List');
-          }}>Back to List</p>
+          <p onClick={handleClick}>
+          Back to List</p>
           <div>
             <div className='viz-container'>
               <ParameterMenu />
