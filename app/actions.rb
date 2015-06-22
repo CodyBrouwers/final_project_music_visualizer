@@ -9,7 +9,7 @@ get '/visualizations' do
   visualizations.to_json
 end
 
-post '/visualization/new' do
+post '/visualizations/new' do
   content_type :json
   visualization = Visualization.create
   visualization.to_json

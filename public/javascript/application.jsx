@@ -41,18 +41,21 @@
         }.bind(this)
       });
     },
-
     render: function(){
       var self = this;
+      var song_path;
       var items = this.state.visualizations.map(function(v){
         return <li key={ "visualization-item-" + v.id }onClick={function(){
           self.props.parent.changePage('Edit');
+          song_path = v.song_path;
         }}>{v.song_name}</li>
       })
       return (
         <div>
           <h1>List View</h1>
-          <h3>New Visual</h3>
+          <button onClick={function(){
+            self.props.parent.changePage('Edit');
+          }}>New Visual</button>
           <div>
             {items}
           </div>
@@ -155,6 +158,7 @@
     },
     componentDidMount: function () {
       wavesurfer = Waveform();
+      
       var $container = $('.viz-container');
       var viz = new VIZ.Simple($container, wavesurfer.WebAudio.Data);
       Menu();
