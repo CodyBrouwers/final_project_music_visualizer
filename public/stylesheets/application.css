@@ -1,5 +1,5 @@
 body {
-  /*overflow: hidden;*/
+  overflow: hidden;
 }
 
 .menu-button {
@@ -98,6 +98,30 @@ body {
   position: relative;
 }
 
+
+/* Grid hover caption effect */
+
+.viz {
+  height: 250px;
+  width: 250px;
+  float: left;
+  margin: 1px;
+  transition: all 2s;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
+
+.sort-button {
+  margin: 3px;
+  display: inline-block;
+  height: 50px;
+  width:100px;
+  background: #526161;
+}
+
 .wave-container {
   max-width: 900px;
   margin-right: auto;
@@ -120,3 +144,4 @@ body {
 #drop.wavesurfer-dragover {
   border-color: #333;
 }
+
