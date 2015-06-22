@@ -96,7 +96,7 @@
       return (
         <div>
           <h1>Edit View</h1>
-          <p onClick={handleClick}>
+          <p onClick={this.handleClick}>
           Back to List</p>
           <div>
             <div className='viz-container'>
