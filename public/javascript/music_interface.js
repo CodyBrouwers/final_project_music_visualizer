@@ -1,3 +1,7 @@
+String.prototype.capitalize = function() {
+  return this[0].toUpperCase() + this.slice(1);
+}
+
 var MusicInterface = {
 
   init: function() {
@@ -143,10 +147,21 @@ var MusicInterface = {
     //the format of {type:..., value:...} that we can iterate
     //through and set parameters automatically.
     params.forEach(function(param, index) {
-      this[param['type']] = this[param['value']]
-    });
+      this['set' + param['type'].capitalize()](param['value']);
+    }, this);
+  },
+
+  setColor: function(params) {
+    this.mesh.material.color = new THREE.Color('rgb(' + params[0] + ',' + params[1] + ',' + params[2] + ')');
+  },
+
+  setGeometry: function(shape) {
+    if (shape === 'sphere') {
+      this.mesh.geometry = new THREE.SphereGeometry( 200, 30, 30 );
+    }
+    else {
+      this.mesh.geometry = new THREE.BoxGeometry( 200, 200, 200 );
+    }
   }
-
-
 }
 
