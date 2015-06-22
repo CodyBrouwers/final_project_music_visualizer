@@ -9,6 +9,12 @@ get '/visualizations' do
   visualizations.to_json
 end
 
+get '/visualizations/new' do 
+  content_type :json
+  visualization = Visualization.create
+  visualization.to_json
+end
+
 post '/visualizations/:viz_id/transitions' do
   content_type :json
   transition = Transition.create!(

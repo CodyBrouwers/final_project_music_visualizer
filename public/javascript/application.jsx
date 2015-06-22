@@ -52,7 +52,7 @@
         <div>
           <h1>List View</h1>
           <button onClick={function(){
-            self.props.parent.changePage('Edit', null);
+            self.props.parent.changePage('Edit', 'visualizations/new');
           }}>New Visual</button>
           <div>
             {items}
