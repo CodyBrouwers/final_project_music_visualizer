@@ -16,20 +16,39 @@
 
     render: function(){
       if (this.state.page === 'List'){
-        return <VisualizationList key='list' parent={this}/>;
+        return <VisualizationList key='list' changePage={this.changePage}/>;
       } else {
-        return <EditView key='edit' parent={this}/>;
+        return <EditView key='edit' changePage={this.changePage}/>;
       }
     }
   });
 
-  var VisualizationList = React.createClass({
-    propTypes: {
-      parent: React.PropTypes.any.isRequired
+  var VisualizationItem = React.createClass({
+
+    handleClick1: function(){
+      console.log('handleclick called');
+      return this.props.changePage('edit'); 
     },
 
+    // shouldComponentUpdate: function() {
+    //   return false
+    // },
+    render: function() {
+      console.log('inside viz render function', this.handleClick);
+      return <div className="viz">
+        <img onClick={this.handleClick1} src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg"  title={this.props.v.song_name}>
+        </img></div>
+
+    }
+
+  });
+
+  var VisualizationList = React.createClass({
+
+    sortOptions: ['song_name', 'created_at', 'updated_at'],
+
     getInitialState: function(){
-      return { visualizations: [] }
+      return { visualizations: [], sortBy: this.sortOptions[0] };
     },
     
     componentWillMount: function(){
@@ -49,14 +68,19 @@
 
     render: function(){
       var self = this;
-      var items = this.state.visualizations.map(function(v){
-        return <div className="viz" key={ "visualization-item-" + v.id }onClick={function(){
-          self.props.parent.changePage('Edit');
-        }}><img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg"  title={v.song_name}></img></div>
+      var items = _.sortBy(self.state.visualizations, function(v){return v[self.state.sortBy]});
+      var items = items.map(function(v){
+        return <VisualizationItem v={v} key={ "visualization-item-" + v.id} changePage={self.props.changePage} />;
+      })
+      var sortButtons = _.map(self.sortOptions, function(s){
+        return <div className="sort-button" onClick={function(){
+          self.setState({sortBy: s});
+        }}>{s}</div>;
       })
       return (
         <div>
           <h1>List View</h1>
+          {sortButtons}
           <div id="container" ref="container">
             {items}
           </div>
@@ -72,7 +96,7 @@
         <div>
           <h1>Edit View</h1>
           <p onClick={function(){
-            self.props.parent.changePage('List');
+            self.props.changePage('List');
           }}>Back to List</p>
           <WebGLVisualizer />
         </div>
