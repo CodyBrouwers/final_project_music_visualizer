@@ -91,6 +91,7 @@
     },
 
     render: function(){
+      musicInterface = Object.create(MusicInterface);
       var self = this;
       return (
         <div>
@@ -107,13 +108,41 @@
       )
     },
     componentDidMount: function() {
-      musicInterface = startMusicInterface();
-      musicInterface.animate();
       $('.viz-container').append(musicInterface.renderer.domElement);
+      musicInterface.animate();
+      musicInterface.loadSong('./music/Lenno-Lost.mp3');
+      // Initializes timeline plugin and plays once ready
+      musicInterface.on('ready', function () {
+        // musicInterface.play();
+        var timeline = Object.create(WaveSurfer.Timeline);
+
+        timeline.init({
+          WaveSurfer: musicInterface.waveSurfer,
+          container: "#wave-timeline"
+        });
+      });
     } 
   });
 
   var ParameterMenu = React.createClass({
+    changeColor: function() {
+      //TODO: Write this the react way...
+      var red = $('#input-red').val();
+      var green = $('#input-green').val();
+      var blue = $('#input-blue').val();
+      var param = [{
+        'type': 'color',
+        'value': [red, green, blue]
+      }];
+      musicInterface.setVisualizerParams(param)
+    },
+    changeShape: function() {
+      var param = [{
+      'type': 'geometry',
+      'value': event.target.value
+      }];
+      musicInterface.setVisualizerParams(param)
+    },
     render: function(){
       return (
         <div>
@@ -125,15 +154,15 @@
               <ul className="color">
                 <li>
                   <form htmlFor='input-red'>Red</form>
-                  <input id='input-red' type='number' name="red"/>
+                  <input id='input-red' type='number' name="red" val='240' onChange={this.changeColor}/>
                 </li>
                 <li>
                   <form htmlFor='input-green'>Green</form>
-                  <input id='input-green' type='number' name="green"/>
+                  <input id='input-green' type='number' name="green" val='100' onChange={this.changeColor}/>
                 </li>
                 <li>
                   <form htmlFor='input-blue'>Blue</form>
-                  <input id='input-blue' type='number' name="blue"/>
+                  <input id='input-blue' type='number' name="blue" val='30' onChange={this.changeColor}/>
                 </li>
               </ul>
             </fieldset>
@@ -142,11 +171,11 @@
               <ul className='shape'>
                 <li>
                   <label>Sphere</label>
-                  <input type="radio" name="shape" value="sphere"/>
+                  <input type="radio" name="shape" value="sphere" onClick={this.changeShape}/>
                 </li>
                 <li>
                   <label>Cube</label>
-                  <input type="radio" name="shape" value="cube"/>
+                  <input type="radio" name="shape" value="cube" onClick={this.changeShape}/>
                 </li>
               </ul>
             </fieldset>
@@ -158,18 +187,33 @@
         </div> 
       )
     }
-  })
+  });
 
   var AudioWave = React.createClass({
+    //Playback
+    backward: function() {
+      musicInterface.skipBackward();
+    },
+    forward: function() {
+      musicInterface.skipForward();
+    },
+    playPause: function() {
+      musicInterface.playPause();
+    },
+    toggleMute: function() {
+      musicInterface.toggleMute();
+    },
+
+
     render: function(){
       return (
         <div className="wave-container">
           <div className="controls">
-            <button data-action="backward" >Backwards</button>
-            <button data-action="play">Play/Pause</button>
-            <button data-action="forward">Forwards</button>
-            <button data-action="toggle-mute">Mute</button>
-            <button data-action="add-transition">Add Transition</button>
+            <button onClick={this.backward}>Backwards</button>
+            <button onClick={this.playPause}>Play/Pause</button>
+            <button onClick={this.forward}>Forwards</button>
+            <button onClick={this.toggleMute}>Mute</button>
+            <button onClick={this.addTransition}>Add Transition</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
@@ -179,7 +223,7 @@
       );
     },
     componentDidMount: function () {
-      Menu();
+      musicInterface.init();
     }
   })
 

@@ -29,52 +29,8 @@ var startMusicInterface = function() {
 
   musicInterface.on('finish', function () {
     console.log('Finished playing');
-  })
-
-  // Set global actions of buttons
-  var GLOBAL_ACTIONS = {
-    'play': function () {
-      musicInterface.playPause();
-    },
-    
-    'backward': function () {
-      musicInterface.skipBackward();
-    },
-
-    'forward': function () {
-      musicInterface.skipForward();
-    },
-
-    'toggle-mute': function () {
-      musicInterface.toggleMute();
-    },
-  };
-
-  // Bind actions to buttons and keypresses
-  document.addEventListener('keydown', function (e) {
-    var map = {
-        32: 'play',       // space
-        37: 'backward',  // left
-        39: 'forward'    // right
-    };
-    var action = map[e.keyCode];
-    if (action in GLOBAL_ACTIONS) {
-        if (document == e.target || document.body == e.target) {
-            e.preventDefault();
-        }
-        GLOBAL_ACTIONS[action](e);
-    }
   });
 
-  [].forEach.call(document.querySelectorAll('[data-action]'), function (el) {
-    el.addEventListener('click', function (e) {
-        var action = e.currentTarget.dataset.action;
-        if (action in GLOBAL_ACTIONS) {
-            e.preventDefault();
-            GLOBAL_ACTIONS[action](e);
-        }
-    });
-  });
 
   //TODO Get drag and drop working again (and as React events)
   // // Drag and Drop for files
