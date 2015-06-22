@@ -47,8 +47,6 @@ WaveSurfer.WebAudio = {
         this.createVolumeNode();
         this.createScriptNode();
         this.createAnalyserNode();
-        this.Data.init(this.analyser);
-
         this.setState(this.PAUSED_STATE);
         this.setPlaybackRate(this.params.audioRate);
     },

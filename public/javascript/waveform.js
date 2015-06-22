@@ -22,6 +22,7 @@ var Waveform = function() {
   // Initializes timeline plugin and plays once ready
   wavesurfer.on('ready', function () {
     // wavesurfer.play();
+    wavesurfer.Visualizer.animate();
     var timeline = Object.create(WaveSurfer.Timeline);
 
     timeline.init({
@@ -56,6 +57,10 @@ var Waveform = function() {
 
     'toggle-mute': function () {
       wavesurfer.toggleMute();
+    },
+
+    'add-transition': function () {
+      
     }
 
   };

@@ -9,8 +9,19 @@ get '/visualizations' do
   visualizations.to_json
 end
 
-post '/visualizations/new' do
+post '/visualizations/:viz_id/transitions' do
   content_type :json
-  visualization = Visualization.create
-  visualization.to_json
+  transition = Transition.create!(
+    visualization_id: params[:viz_id],
+    time: params[:time],
+    params: params[:parameters]
+    );
+  transition.to_json
 end
+
+get '/visualizations/:viz_id/transitions' do
+  content_type :json
+  visualization = Visualization.find(params[:viz_id]).includes(:transitions)
+  visualization.to_json;
+end
+

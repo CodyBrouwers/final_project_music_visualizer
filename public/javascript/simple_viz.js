@@ -5,7 +5,7 @@ var scene, camera, renderer;
 var geometry, material, mesh;
 
 
-VIZ.Simple = function(container, sound) {
+VIZ.Simple = function(container) {
 
   // $(function() {
   //   var animate = animateSound(sound);
@@ -55,8 +55,8 @@ VIZ.Simple = function(container, sound) {
     $('#input-green').val(green);
     $('#input-blue').val(blue);
   
-
     // TODO: Call menu to add event listeners and all that.
+
 
   }
 
