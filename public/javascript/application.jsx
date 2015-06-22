@@ -10,8 +10,8 @@
         page: 'List'
       }
     },
-    changePage: function(page){
-      this.setState({page: page});
+    changePage: function(page, song_path){
+      this.setState({page: page, song_path: song_path});
     },
 
     render: function(){
@@ -43,18 +43,16 @@
     },
     render: function(){
       var self = this;
-      var song_path;
       var items = this.state.visualizations.map(function(v){
         return <li key={ "visualization-item-" + v.id }onClick={function(){
-          self.props.parent.changePage('Edit');
-          song_path = v.song_path;
+          self.props.parent.changePage('Edit', v.song_path);
         }}>{v.song_name}</li>
       })
       return (
         <div>
           <h1>List View</h1>
           <button onClick={function(){
-            self.props.parent.changePage('Edit');
+            self.props.parent.changePage('Edit', null);
           }}>New Visual</button>
           <div>
             {items}
@@ -71,7 +69,7 @@
         <div>
           <h1>Edit View</h1>
           <p onClick={function(){
-            self.props.parent.changePage('List');
+            self.props.parent.changePage('List', null);
           }}>Back to List</p>
           <div>
             <div className='viz-container'>
@@ -85,6 +83,8 @@
     componentDidMount: function() {
       musicInterface = startMusicInterface();
       musicInterface.animate();
+      musicInterface.loadSong(this.props.parent.state.song_path);
+      // console.log();
       $('.viz-container').append(musicInterface.renderer.domElement);
     } 
   });
