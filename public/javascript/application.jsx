@@ -69,23 +69,19 @@
           <p onClick={function(){
             self.props.parent.changePage('List');
           }}>Back to List</p>
-          <WebGLVisualizer />
+          <div>
+            <ParameterMenu />
+            <div className='viz-container' />
+          </div>
           <AudioWave />
         </div>
       )
-    } 
-  });
-
-  var WebGLVisualizer = React.createClass({
-    render: function() {
-      return (
-        <div>
-          <div className='viz-container'>
-            <ParameterMenu />
-          </div>
-        </div>
-      );
     },
+    componentDidMount: function() {
+      musicInterface = startMusicInterface();
+      musicInterface.animate();
+      $('.viz-container').append(musicInterface.renderer.domElement);
+    } 
   });
 
   var ParameterMenu = React.createClass({
@@ -154,7 +150,6 @@
       );
     },
     componentDidMount: function () {
-      wavesurfer = Waveform();
       Menu();
     }
   })

@@ -33,5 +33,3 @@ WaveSurfer.WebAudio.Data = {
     this.level = total / this.levelsCount;
   }
 }
-
-WaveSurfer.util.extend(WaveSurfer, WaveSurfer.Observer);
