@@ -7,7 +7,7 @@
   var AppView = React.createClass({
     getInitialState: function () {
       return {
-        page: 'List'
+        page: 'Edit'
       }
     },
     changePage: function(page){
@@ -25,20 +25,15 @@
 
   var VisualizationItem = React.createClass({
 
-    handleClick1: function(){
+    handleClick: function(){
       console.log('handleclick called');
-      return this.props.changePage('edit'); 
+      return this.props.changePage('Edit'); 
     },
 
-    // shouldComponentUpdate: function() {
-    //   return false
-    // },
     render: function() {
-      console.log('inside viz render function', this.handleClick);
-      return <div className="viz">
-        <img onClick={this.handleClick1} src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg"  title={this.props.v.song_name}>
+      return <div className="viz" >
+        <img onClick={this.handleClick} src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg"  title={this.props.v.song_name}>
         </img></div>
-
     }
 
   });
@@ -90,14 +85,17 @@
   });
 
   var EditView = React.createClass({
+
+    handleClick: function(){
+      return this.props.changePage('List');
+    },
+
     render: function(){
       var self = this;
       return (
         <div>
           <h1>Edit View</h1>
-          <p onClick={function(){
-            self.props.changePage('List');
-          }}>Back to List</p>
+          <p onClick= {this.handleClick}>Back to List</p>
           <WebGLVisualizer />
         </div>
       )
