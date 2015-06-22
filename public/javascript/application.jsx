@@ -16,21 +16,36 @@
 
     render: function(){
       if (this.state.page === 'List'){
-        return <VisualizationList key='list' parent={this}/>;
+        return <VisualizationList key='list' changePage={this.changePage}/>;
       } else {
-        return <EditView key='edit' parent={this}/>;
+        return <EditView key='edit' changePage={this.changePage}/>;
       }
     }
   });
 
-  var VisualizationList = React.createClass({
-    propTypes: {
-      parent: React.PropTypes.any.isRequired
+  var VisualizationItem = React.createClass({
+
+    handleClick: function(){
+      console.log('handleclick called');
+      return this.props.changePage('Edit'); 
     },
 
+    render: function() {
+      return <div className="viz" onClick={this.handleClick}>
+        <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg"  title={this.props.v.song_name}>
+        </img></div>
+    }
+
+  });
+
+  var VisualizationList = React.createClass({
+
+    sortOptions: ['song_name', 'created_at', 'updated_at'],
+
     getInitialState: function(){
-      return { visualizations: [] }
+      return { visualizations: [], sortBy: this.sortOptions[0] };
     },
+    
     componentWillMount: function(){
       $.ajax({
         type: "GET",
@@ -42,17 +57,26 @@
       });
     },
 
+    componentDidMount: function(){
+      slipHover(this.refs.container.getDOMNode());
+    },
+
     render: function(){
       var self = this;
-      var items = this.state.visualizations.map(function(v){
-        return <li key={ "visualization-item-" + v.id }onClick={function(){
-          self.props.parent.changePage('Edit');
-        }}>{v.song_name}</li>
+      var items = _.sortBy(self.state.visualizations, function(v){return v[self.state.sortBy]});
+      var items = items.map(function(v){
+        return <VisualizationItem v={v} key={ "visualization-item-" + v.id} changePage={self.props.changePage} />;
+      })
+      var sortButtons = _.map(self.sortOptions, function(s){
+        return <div className="sort-button" onClick={function(){
+          self.setState({sortBy: s});
+        }}>{s}</div>;
       })
       return (
         <div>
           <h1>List View</h1>
-          <div>
+          {sortButtons}
+          <div id="container" ref="container">
             {items}
           </div>
         </div>
@@ -61,6 +85,11 @@
   });
 
   var EditView = React.createClass({
+
+    handleClick: function(){
+      return this.props.changePage('List');
+    },
+
     render: function(){
       var self = this;
       return (
