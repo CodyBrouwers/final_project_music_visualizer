@@ -13,12 +13,15 @@
     changePage: function(page){
       this.setState({page: page});
     },
+    changePath: function(path){
+      this.setState({path: path});
+    },
 
     render: function(){
       if (this.state.page === 'List'){
-        return <VisualizationList key='list' changePage={this.changePage}/>;
+        return <VisualizationList key='list' changePage={this.changePage} changePath={this.changePath}/>;
       } else {
-        return <EditView key='edit' changePage={this.changePage}/>;
+        return <EditView key='edit' changePage={this.changePage} path={this.state.path}/>;
       }
     }
   });
@@ -26,8 +29,8 @@
   var VisualizationItem = React.createClass({
 
     handleClick: function(){
-      console.log('handleclick called');
-      return this.props.changePage('Edit'); 
+      this.props.changePath(this.props.song_path);
+      this.props.changePage('Edit'); 
     },
 
     render: function() {
@@ -65,7 +68,8 @@
       var self = this;
       var items = _.sortBy(self.state.visualizations, function(v){return v[self.state.sortBy]});
       var items = items.map(function(v){
-        return <VisualizationItem v={v} key={ "visualization-item-" + v.id} changePage={self.props.changePage} />;
+      // TODO Move song_path up to VisualizationItem
+        return <VisualizationItem v={v} song_path={v.song_path} key={ "visualization-item-" + v.id} changePage={self.props.changePage} changePath={self.props.changePath} />;
       })
       var sortButtons = _.map(self.sortOptions, function(s){
         return <div className="sort-button" onClick={function(){
@@ -75,6 +79,9 @@
       return (
         <div>
           <h1>List View</h1>
+          <button onClick={function(){
+            self.props.parent.changePage('Edit', 'visualizations/new');
+          }}>New Visual</button>
           {sortButtons}
           <div id="container" ref="container">
             {items}
@@ -110,10 +117,9 @@
     componentDidMount: function() {
       $('.viz-container').append(musicInterface.renderer.domElement);
       musicInterface.animate();
-      musicInterface.loadSong('./music/Lenno-Lost.mp3');
+      musicInterface.loadSong(this.props.path);
       // Initializes timeline plugin and plays once ready
       musicInterface.on('ready', function () {
-        // musicInterface.play();
         var timeline = Object.create(WaveSurfer.Timeline);
 
         timeline.init({

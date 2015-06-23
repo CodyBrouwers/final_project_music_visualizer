@@ -3,7 +3,7 @@ var Waveform = function() {
   // Creates waveform instance
   var wavesurfer = Object.create(WaveSurfer);
 
-    // Waveform options
+  // Waveform options
   var options = {
     container: document.querySelector("#wave"),
     waveColor: 'violet',
@@ -17,7 +17,7 @@ var Waveform = function() {
   wavesurfer.init(options);
 
   // Loads music
-  wavesurfer.load('./music/Lenno-Lost.mp3');
+  // wavesurfer.load();
 
   // Initializes timeline plugin and plays once ready
   wavesurfer.on('ready', function () {
