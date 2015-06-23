@@ -19,19 +19,22 @@ post '/visualizations/new' do
 end
 
 post '/visualizations/:viz_id/transitions' do
-  console.log(params[:viz_id])
+  # console.log(params[:viz_id])
   content_type :json
-  transition = Transition.create!(
-    visualization_id: params[:viz_id],
-    time: params[:time],
-    params: params[:parameters]
+  visualization = Visualization.includes(:transitions).find(params[:viz_id])
+  if visualization
+    transition = visualization.transitions.create!(
+      time: params[:time],
+      params: params[:parameters]
     );
-  transitions.to_json
+    Visualization.find(params[:viz_id]).transitions.to_json
+  end
 end
 
 get '/visualizations/:viz_id/transitions' do
   content_type :json
-  transitions = Visualization.find(params[:viz_id]).tranistions
+  visualization = Visualization.find(params[:viz_id])
+  transitions = visualization ? visualization.transitions : '';
   transitions.to_json;
 end
 

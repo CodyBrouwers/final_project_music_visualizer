@@ -13,8 +13,7 @@ var MusicInterface = {
       waveColor: 'violet',
       progressColor: 'purple',
       cursorColor: 'navy',
-      scrollParent: false,
-      audioContext: new window.AudioContext()
+      scrollParent: false
     };
 
     // Initializes with above options

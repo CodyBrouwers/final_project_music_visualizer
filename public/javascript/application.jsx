@@ -117,7 +117,7 @@
               <ParameterMenu />
             </div>
           </div>
-          <AudioWave visualization_id={this.props.visualization.id} postTransition={this.postTransition} />
+          <AudioWave visualization={this.props.visualization} postTransition={this.postTransition} />
         </div>
       )
     },
@@ -128,19 +128,22 @@
         url: "/visualizations/" + id + '/transitions',
         dataType: 'json',
         success: function(transitions) {
-          this.setState({transitions: transitions})
-          musicInterface.setVisualizerParams[transitions[0]['params']]
-        }.bind(this),
-        error: function() {
-          this.postTransition(id)
+          if (!(transitions.length === 0)) {
+            console.log(transitions.constructor)
+            this.setState({transitions: transitions})
+            // musicInterface.setVisualizerParams[transitions[0]['params']]
+          } else {
+            this.postTransition(id, 0.0, {})
+          }
         }.bind(this)
       });
     },
 
-    postTransition: function(id) {
+    postTransition: function(id, time, params) {
       $.ajax({
         type: "POST",
         url: "/visualizations/" + id + '/transitions',
+        data: {'time': time, 'params': params},
         dataType: 'json',
         success: function(transitions) {
           this.setState({transitions: transitions})
@@ -242,6 +245,7 @@
       musicInterface.skipForward();
     },
     playPause: function() {
+      console.log(musicInterface);
       musicInterface.playPause();
     },
     toggleMute: function() {
@@ -249,7 +253,7 @@
     },
 
     addTransition: function() {
-      this.props.postTransition(this.props.visualization_id);
+      this.props.postTransition(this.props.visualization.id);
     },
 
     render: function(){
