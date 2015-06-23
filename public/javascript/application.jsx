@@ -7,7 +7,8 @@
   var AppView = React.createClass({
     getInitialState: function () {
       return {
-        page: 'List'
+        page: 'List',
+        visualizations: []
       }
     },
     changePage: function(page){
@@ -15,6 +16,17 @@
     },
     changeVisualization: function(visualization){
       this.setState({visualization: visualization});
+    },
+
+    componentWillMount: function(){
+      $.ajax({
+        type: "GET",
+        url: "/visualizations",
+        dataType: 'json',
+        success: function(visualizations) {
+          this.setState({visualizations: visualizations})
+        }.bind(this)
+      });
     },
 
     render: function(){
@@ -34,9 +46,9 @@
     },
 
     render: function() {
-      return <div className="viz" onClick={this.handleClick}>
+      return <a className="viz" onClick={this.handleClick}>
         <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg"  title={this.props.v.song_name}>
-        </img></div>
+        </img></a>
     }
 
   });
@@ -46,20 +58,9 @@
     sortOptions: ['song_name', 'created_at', 'updated_at'],
 
     getInitialState: function(){
-      return { visualizations: [], sortBy: this.sortOptions[0] };
+      return { sortBy: this.sortOptions[0] };
     },
     
-    componentWillMount: function(){
-      $.ajax({
-        type: "GET",
-        url: "/visualizations",
-        dataType: 'json',
-        success: function(visualizations) {
-          this.setState({visualizations: visualizations})
-        }.bind(this)
-      });
-    },
-
     componentDidMount: function(){
       slipHover(this.refs.container.getDOMNode());
     },
@@ -70,7 +71,7 @@
 
     render: function(){
       var self = this;
-      var items = _.sortBy(self.state.visualizations, function(v){return v[self.state.sortBy]});
+      var items = _.sortBy(this.props.visualizations, function(v){return v[self.state.sortBy]});
       var items = items.map(function(v){
       // TODO Move song_path up to VisualizationItem
         return <VisualizationItem 
