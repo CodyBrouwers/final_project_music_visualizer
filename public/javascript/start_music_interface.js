@@ -7,7 +7,7 @@ var startMusicInterface = function() {
   musicInterface.init();
 
   // Loads music
-  musicInterface.loadSong('./music/Lenno-Lost.mp3');
+  // musicInterface.loadSong('./music/Lenno-Lost.mp3');
 
   // Initializes timeline plugin and plays once ready
   musicInterface.on('ready', function () {

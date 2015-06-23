@@ -9,6 +9,15 @@ get '/visualizations' do
   visualizations.to_json
 end
 
+post '/visualizations/new' do 
+  content_type :json
+  visualization = Visualization.create!(
+    song_path: params[:song_path],
+    song_name: params[:song_name]
+    )
+  visualization.to_json
+end
+
 post '/visualizations/:viz_id/transitions' do
   content_type :json
   transition = Transition.create!(
@@ -24,3 +33,4 @@ get '/visualizations/:viz_id/transitions' do
   visualization = Visualization.find(params[:viz_id]).includes(:transitions)
   visualization.to_json;
 end
+
