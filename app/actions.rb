@@ -9,9 +9,12 @@ get '/visualizations' do
   visualizations.to_json
 end
 
-get '/visualizations/new' do 
+post '/visualizations/new' do 
   content_type :json
-  visualization = Visualization.create
+  visualization = Visualization.create!(
+    song_path: params[:song_path],
+    song_name: params[:song_name]
+    )
   visualization.to_json
 end
 
