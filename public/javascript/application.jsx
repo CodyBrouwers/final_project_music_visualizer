@@ -1,6 +1,8 @@
 (function() {
 
   /** @jsx React.DOM */
+
+  var musicInterface = Object.create(MusicInterface);
   
   var AppView = React.createClass({
     getInitialState: function () {
@@ -105,7 +107,6 @@
     },
 
     render: function(){
-      musicInterface = Object.create(MusicInterface);
       var self = this;
       return (
         <div>
@@ -160,11 +161,11 @@
       musicInterface.loadSong(this.props.visualization.song_path);
       this.getTransitions(this.props.visualization.id)
       // Initializes timeline plugin and plays once ready
-      musicInterface.on('ready', function () {
+      musicInterface.waveSurfer.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
 
         timeline.init({
-          WaveSurfer: musicInterface.waveSurfer,
+          wavesurfer: musicInterface.waveSurfer,
           container: "#wave-timeline"
         });
       });
@@ -244,8 +245,7 @@
     forward: function() {
       musicInterface.skipForward();
     },
-    playPause: function() {
-      console.log(musicInterface);
+    playPause: function() {;
       musicInterface.playPause();
     },
     toggleMute: function() {
