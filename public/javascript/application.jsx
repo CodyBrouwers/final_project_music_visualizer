@@ -80,7 +80,8 @@
         <div>
           <h1>List View</h1>
           <button onClick={function(){
-            self.props.parent.changePage('Edit', 'visualizations/new');
+            self.props.changePage('Edit');
+            self.props.changePath();
           }}>New Visual</button>
           {sortButtons}
           <div id="container" ref="container">
