@@ -108,10 +108,8 @@
           <h1>Edit View</h1>
           <p onClick={this.handleClick}>
           Back to List</p>
-          <div>
-            <div className='viz-container'>
-              <ParameterMenu />
-            </div>
+          <div className='viz-container'>
+            <ParameterMenu />
           </div>
           <AudioWave />
         </div>
@@ -121,6 +119,7 @@
       $('.viz-container').append(musicInterface.renderer.domElement);
       musicInterface.animate();
       musicInterface.loadSong(this.props.path);
+      
       // Initializes timeline plugin and plays once ready
       musicInterface.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
