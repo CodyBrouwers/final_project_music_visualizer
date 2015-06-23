@@ -7,7 +7,8 @@
   var AppView = React.createClass({
     getInitialState: function () {
       return {
-        page: 'List'
+        page: 'List',
+        visualizations: []
       }
     },
     changePage: function(page){
@@ -17,9 +18,20 @@
       this.setState({path: path});
     },
 
+    componentWillMount: function(){
+      $.ajax({
+        type: "GET",
+        url: "/visualizations",
+        dataType: 'json',
+        success: function(visualizations) {
+          this.setState({visualizations: visualizations})
+        }.bind(this)
+      });
+    },
+
     render: function(){
       if (this.state.page === 'List'){
-        return <VisualizationList key='list' changePage={this.changePage} changePath={this.changePath}/>;
+        return <VisualizationList visualizations= {this.state.visualizations} key='list' changePage={this.changePage} changePath={this.changePath}/>;
       } else {
         return <EditView key='edit' changePage={this.changePage} path={this.state.path}/>;
       }
@@ -46,27 +58,16 @@
     sortOptions: ['song_name', 'created_at', 'updated_at'],
 
     getInitialState: function(){
-      return { visualizations: [], sortBy: this.sortOptions[0] };
+      return { sortBy: this.sortOptions[0] };
     },
     
-    componentWillMount: function(){
-      $.ajax({
-        type: "GET",
-        url: "/visualizations",
-        dataType: 'json',
-        success: function(visualizations) {
-          this.setState({visualizations: visualizations})
-        }.bind(this)
-      });
-    },
-
     componentDidMount: function(){
       slipHover(this.refs.container.getDOMNode());
     },
 
     render: function(){
       var self = this;
-      var items = _.sortBy(self.state.visualizations, function(v){return v[self.state.sortBy]});
+      var items = _.sortBy(this.props.visualizations, function(v){return v[self.state.sortBy]});
       var items = items.map(function(v){
       // TODO Move song_path up to VisualizationItem
         return <VisualizationItem v={v} song_path={v.song_path} key={ "visualization-item-" + v.id} changePage={self.props.changePage} changePath={self.props.changePath} />;
