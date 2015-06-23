@@ -1,8 +1,8 @@
 (function() {
 
   /** @jsx React.DOM */
-  
-  // var WebGLVisualization = require('./webgl-viz.jsx');
+
+  var musicInterface = Object.create(MusicInterface);
   
   var AppView = React.createClass({
     getInitialState: function () {
@@ -14,8 +14,12 @@
     changePage: function(page){
       this.setState({page: page});
     },
-    changePath: function(path){
-      this.setState({path: path});
+    changeVisualization: function(visualization){
+      this.setState({visualization: visualization});
+    },
+
+    resetVisualization: function () {
+      this.setState({visualization: null});
     },
 
     componentWillMount: function(){
@@ -31,9 +35,13 @@
 
     render: function(){
       if (this.state.page === 'List'){
-        return <VisualizationList visualizations= {this.state.visualizations} key='list' changePage={this.changePage} changePath={this.changePath}/>;
+        return <VisualizationList 
+          visualizations={this.state.visualizations}
+          key='list' changePage={this.changePage}
+          changeVisualization={this.changeVisualization}
+          resetVisualization={this.resetVisualization} />;
       } else {
-        return <EditView key='edit' changePage={this.changePage} path={this.state.path}/>;
+        return <EditView key='edit' changePage={this.changePage} visualization={this.state.visualization}/>;
       }
     }
   });
@@ -41,7 +49,7 @@
   var VisualizationItem = React.createClass({
 
     handleClick: function(){
-      this.props.changePath(this.props.song_path);
+      this.props.changeVisualization(this.props.v);
       this.props.changePage('Edit'); 
     },
 
@@ -65,12 +73,21 @@
       slipHover(this.refs.container.getDOMNode());
     },
 
+    handleClick: function() {
+      this.props.changePage('Edit');
+      this.props.resetVisualization();
+    },
+
     render: function(){
       var self = this;
       var items = _.sortBy(this.props.visualizations, function(v){return v[self.state.sortBy]});
       var items = items.map(function(v){
       // TODO Move song_path up to VisualizationItem
-        return <VisualizationItem v={v} song_path={v.song_path} key={ "visualization-item-" + v.id} changePage={self.props.changePage} changePath={self.props.changePath} />;
+        return <VisualizationItem 
+          v={v} 
+          key={ "visualization-item-" + v.id} 
+          changePage={self.props.changePage} 
+          changeVisualization={self.props.changeVisualization} />;
       })
       var sortButtons = _.map(self.sortOptions, function(s){
         return <div className="sort-button" onClick={function(){
@@ -80,10 +97,9 @@
       return (
         <div>
           <h1>List View</h1>
-          <button onClick={function(){
-            self.props.changePage('Edit');
-            self.props.changePath();
-          }}>New Visual</button>
+          <button onClick={this.handleClick}>
+            New Visual
+            </button>
           {sortButtons}
           <div id="container" ref="container">
             {items}
@@ -101,7 +117,6 @@
     },
 
     render: function(){
-      musicInterface = Object.create(MusicInterface);
       var self = this;
       return (
         <div>
@@ -111,21 +126,55 @@
           <div className='viz-container'>
             <ParameterMenu />
           </div>
-          <AudioWave />
+          <AudioWave visualization={this.props.visualization} postTransition={this.postTransition} />
         </div>
       )
     },
+
+    getTransitions: function(id) {
+      $.ajax({  
+        type: "GET",
+        url: "/visualizations/" + id + '/transitions',
+        dataType: 'json',
+        success: function(transitions) {
+          if (!(transitions.length === 0)) {
+            this.setState({transitions: transitions})
+            // musicInterface.setVisualizerParams[transitions[0]['params']]
+          } else {
+            this.postTransition(id, 0.0, {})
+          }
+        }.bind(this)
+      });
+    },
+
+    postTransition: function(id, time, params) {
+      $.ajax({
+        type: "POST",
+        url: "/visualizations/" + id + '/transitions',
+        data: {'time': time, 'params': params},
+        dataType: 'json',
+        success: function(transitions) {
+          this.setState({transitions: transitions})
+        }.bind(this)
+      });
+    },
+
     componentDidMount: function() {
+      //TODO think of a better way of seperating this so that the timeline
+      //is initiated at the right time.
       $('.viz-container').append(musicInterface.renderer.domElement);
       musicInterface.animate();
-      musicInterface.loadSong(this.props.path);
+      if (this.props.visualization != undefined) {
+        musicInterface.loadSong(this.props.visualization.song_path);
+        this.getTransitions(this.props.visualization.id)
+      }
       
       // Initializes timeline plugin and plays once ready
-      musicInterface.on('ready', function () {
+      musicInterface.waveSurfer.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
 
         timeline.init({
-          WaveSurfer: musicInterface.waveSurfer,
+          wavesurfer: musicInterface.waveSurfer,
           container: "#wave-timeline"
         });
       });
@@ -134,7 +183,7 @@
 
   var ParameterMenu = React.createClass({
     changeColor: function() {
-      //TODO: Write this the react way...
+      //HACK: Write this the react way...
       var red = $('#input-red').val();
       var green = $('#input-green').val();
       var blue = $('#input-blue').val();
@@ -205,13 +254,16 @@
     forward: function() {
       musicInterface.skipForward();
     },
-    playPause: function() {
+    playPause: function() {;
       musicInterface.playPause();
     },
     toggleMute: function() {
       musicInterface.toggleMute();
     },
 
+    addTransition: function() {
+      this.props.postTransition(this.props.visualization.id);
+    },
 
     render: function(){
       return (
