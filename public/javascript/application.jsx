@@ -79,7 +79,7 @@
       return (
         <div>
           <h1>List View</h1>
-          <button onClick={function(){
+          <button id='newvisual' onClick={function(){
             self.props.parent.changePage('Edit', 'visualizations/new');
           }}>New Visual</button>
           {sortButtons}
@@ -105,10 +105,8 @@
           <h1>Edit View</h1>
           <p onClick={this.handleClick}>
           Back to List</p>
-          <div>
-            <div className='viz-container'>
-              <ParameterMenu />
-            </div>
+          <div className='viz-container'>
+            <ParameterMenu />
           </div>
           <AudioWave />
         </div>

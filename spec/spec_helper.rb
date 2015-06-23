@@ -3,6 +3,9 @@ require 'bundler/setup'
 
 require 'active_support/all'
 require 'rspec'
+require 'rake'
+require 'sinatra/activerecord/rake'
+require './app/models/visualization.rb'
 
 require 'active_record'
 require 'database_cleaner'
@@ -13,8 +16,6 @@ require 'capybara/rspec'
 Capybara.javascript_driver = :poltergeist
 Capybara.default_driver = :poltergeist
 Capybara.app_host = "http://localhost:3000"
-Capybara.server_host = "localhost"
-Capybara.server_port = "3000"
 
 # Connect to the DB
 ActiveRecord::Base.establish_connection(
@@ -29,6 +30,7 @@ end
 # Recreate the database
 ActiveRecord::Migration.suppress_messages do
   require './db/schema.rb'
+  Rake::Task["db:seed"].invoke
 end
 
 # spec/support/factory_girl.rb
@@ -44,6 +46,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+    visit '/'
   end
 
   config.after(:each) do
