@@ -1,6 +1,7 @@
 (function() {
 
   /** @jsx React.DOM */
+  
 
   var musicInterface = Object.create(MusicInterface);
   
