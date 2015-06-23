@@ -114,10 +114,8 @@
           <h1>Edit View</h1>
           <p onClick={this.handleClick}>
           Back to List</p>
-          <div>
-            <div className='viz-container'>
-              <ParameterMenu />
-            </div>
+          <div className='viz-container'>
+            <ParameterMenu />
           </div>
           <AudioWave visualization={this.props.visualization} postTransition={this.postTransition} />
         </div>
@@ -158,9 +156,9 @@
       //is initiated at the right time.
       $('.viz-container').append(musicInterface.renderer.domElement);
       musicInterface.animate();
-      console.log(this.props.visualization)
       musicInterface.loadSong(this.props.visualization.song_path);
       this.getTransitions(this.props.visualization.id)
+      
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
