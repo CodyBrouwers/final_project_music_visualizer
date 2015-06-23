@@ -13,11 +13,7 @@ var MusicInterface = {
       waveColor: 'violet',
       progressColor: 'purple',
       cursorColor: 'navy',
-<<<<<<< HEAD
-      scrollParent: false,
-=======
       scrollParent: false
->>>>>>> cf5f3ef7501e0b765cb75d964dc51f8ef117e393
     };
 
     // Initializes with above options

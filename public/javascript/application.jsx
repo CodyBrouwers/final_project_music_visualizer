@@ -31,7 +31,7 @@
 
     render: function(){
       if (this.state.page === 'List'){
-        return <VisualizationList key='list' changePage={this.changePage} changeVisualization={this.changeVisualization}/>;
+        return <VisualizationList visualizations={this.state.visualizations} key='list' changePage={this.changePage} changeVisualization={this.changeVisualization}/>;
       } else {
         return <EditView key='edit' changePage={this.changePage} visualization={this.state.visualization}/>;
       }
@@ -158,6 +158,7 @@
       musicInterface.animate();
       musicInterface.loadSong(this.props.visualization.song_path);
       this.getTransitions(this.props.visualization.id)
+      
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
