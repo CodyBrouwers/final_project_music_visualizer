@@ -79,8 +79,9 @@
       return (
         <div>
           <h1>List View</h1>
-          <button id='newvisual' onClick={function(){
-            self.props.parent.changePage('Edit', 'visualizations/new');
+          <button onClick={function(){
+            self.props.changePage('Edit');
+            self.props.changePath();
           }}>New Visual</button>
           {sortButtons}
           <div id="container" ref="container">
@@ -94,7 +95,8 @@
   var EditView = React.createClass({
 
     handleClick: function(){
-      return this.props.changePage('List');
+      musicInterface.destroy();
+      this.props.changePage('List');
     },
 
     render: function(){
