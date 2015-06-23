@@ -19,18 +19,19 @@ post '/visualizations/new' do
 end
 
 post '/visualizations/:viz_id/transitions' do
+  console.log(params[:viz_id])
   content_type :json
   transition = Transition.create!(
     visualization_id: params[:viz_id],
     time: params[:time],
     params: params[:parameters]
     );
-  transition.to_json
+  transitions.to_json
 end
 
 get '/visualizations/:viz_id/transitions' do
   content_type :json
-  visualization = Visualization.find(params[:viz_id]).includes(:transitions)
-  visualization.to_json;
+  transitions = Visualization.find(params[:viz_id]).tranistions
+  transitions.to_json;
 end
 
