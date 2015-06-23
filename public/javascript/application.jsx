@@ -18,6 +18,10 @@
       this.setState({visualization: visualization});
     },
 
+    resetVisualization: function () {
+      this.setState({visualization: null});
+    },
+
     componentWillMount: function(){
       $.ajax({
         type: "GET",
@@ -31,7 +35,11 @@
 
     render: function(){
       if (this.state.page === 'List'){
-        return <VisualizationList visualizations={this.state.visualizations} key='list' changePage={this.changePage} changeVisualization={this.changeVisualization}/>;
+        return <VisualizationList 
+          visualizations={this.state.visualizations}
+          key='list' changePage={this.changePage}
+          changeVisualization={this.changeVisualization}
+          resetVisualization={this.resetVisualization} />;
       } else {
         return <EditView key='edit' changePage={this.changePage} visualization={this.state.visualization}/>;
       }
@@ -66,7 +74,8 @@
     },
 
     handleClick: function() {
-      self.props.changePage('Edit');
+      this.props.changePage('Edit');
+      this.props.resetVisualization();
     },
 
     render: function(){
@@ -129,7 +138,6 @@
         dataType: 'json',
         success: function(transitions) {
           if (!(transitions.length === 0)) {
-            console.log(transitions.constructor)
             this.setState({transitions: transitions})
             // musicInterface.setVisualizerParams[transitions[0]['params']]
           } else {
@@ -156,8 +164,10 @@
       //is initiated at the right time.
       $('.viz-container').append(musicInterface.renderer.domElement);
       musicInterface.animate();
-      musicInterface.loadSong(this.props.visualization.song_path);
-      this.getTransitions(this.props.visualization.id)
+      if (this.props.visualization != undefined) {
+        musicInterface.loadSong(this.props.visualization.song_path);
+        this.getTransitions(this.props.visualization.id)
+      }
       
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
