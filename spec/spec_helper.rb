@@ -6,7 +6,6 @@ require 'rspec'
 require 'rake'
 require 'sinatra/activerecord/rake'
 require './app/models/visualization.rb'
-require 'pry'
 
 require 'active_record'
 require 'database_cleaner'

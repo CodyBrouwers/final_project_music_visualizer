@@ -110,7 +110,7 @@
           <div className='viz-container'>
             <ParameterMenu />
           </div>
-          <AudioWave path={this.props.path} />
+          <AudioWave />
         </div>
       )
     },
@@ -230,7 +230,7 @@
       );
     },
     componentDidMount: function () {
-        musicInterface.init();
+      musicInterface.init();
     }
   })
 
