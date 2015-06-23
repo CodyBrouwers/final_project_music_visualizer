@@ -110,7 +110,7 @@
           <div className='viz-container'>
             <ParameterMenu />
           </div>
-          <AudioWave />
+          <AudioWave path={this.props.path} />
         </div>
       )
     },
@@ -118,6 +118,7 @@
       $('.viz-container').append(musicInterface.renderer.domElement);
       musicInterface.animate();
       musicInterface.loadSong(this.props.path);
+      
       // Initializes timeline plugin and plays once ready
       musicInterface.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
@@ -229,7 +230,7 @@
       );
     },
     componentDidMount: function () {
-      musicInterface.init();
+        musicInterface.init();
     }
   })
 
