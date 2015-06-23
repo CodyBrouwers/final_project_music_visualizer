@@ -94,7 +94,8 @@
   var EditView = React.createClass({
 
     handleClick: function(){
-      return this.props.changePage('List');
+      musicInterface.destroy();
+      this.props.changePage('List');
     },
 
     render: function(){

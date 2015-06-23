@@ -63,6 +63,11 @@ var MusicInterface = {
     this.waveSurfer.Observer.on(event, fn);
   },
 
+  //Remove all nodes and stuff
+  destroy: function() {
+    this.waveSurfer.destroy();
+  },
+
   //Need to have access to all the playback functions from waveSurfer.js
   playPause: function() {
     this.waveSurfer.playPause();
