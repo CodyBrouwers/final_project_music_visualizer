@@ -11,10 +11,7 @@ end
 
 post '/visualizations/new' do 
   content_type :json
-  visualization = Visualization.create!(
-    song_path: params[:song_path],
-    song_name: params[:song_name]
-    )
+  visualization = Visualization.create!()
   visualization.to_json
 end
 
