@@ -49,10 +49,10 @@ var VisualizationList = React.createClass({
         changeVisualization={self.props.changeVisualization} />;
     })
 
-    var sortButtons = _.map(self.sortOptions, function(sortOption){
+    var sortButtons = _.map(self._sortOptions, function(sortOption){
       return <div className="sort-button" onClick={function(){
         self.setState({sortBy: sortOption});
-      }}>{s}</div>;
+      }}>{sortOption}</div>;
     })
     return (
       <div>
