@@ -2,3 +2,5 @@
 .DS_Store?
 *.sqlite
 *.sqlite3
+/public/javascript/deprecated
+/public/javascript/deprecated/*
