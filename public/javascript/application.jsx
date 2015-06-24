@@ -143,7 +143,6 @@
               transition['params'] = JSON.parse(transition['params']);
             });
             this.setState({transitions: transitions})
-            console.log(transitions[transitions.length-1]['params']);
             musicInterface.setVisualizerParams(transitions[transitions.length-1]['params'])
           } else {
             this.postTransition(id, 0.0, musicInterface.getVisualizerParams())
