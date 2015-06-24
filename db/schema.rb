@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618220953) do
+ActiveRecord::Schema.define(version: 20150624213635) do
 
   create_table "transitions", force: :cascade do |t|
     t.integer  "visualization_id"
@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20150618220953) do
   end
 
   create_table "visualizations", force: :cascade do |t|
-    t.string   "song_path"
-    t.string   "song_name"
+    t.string   "path"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
