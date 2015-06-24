@@ -13,8 +13,10 @@ post '/visualizations/new' do
   content_type :json
   visualization = Visualization.create!(
     id: params[:id],
-    song_name: params[:name]
+    path: params[:path],
+    name: params[:name]
   )
+  visualization.to_json
 end
 
 put '/visualizations/:viz_id/edit' do
@@ -23,8 +25,8 @@ put '/visualizations/:viz_id/edit' do
   if visualization
     Visualization.update_attributes!(
       id: params[:id],
-      song_path: params[:path],
-      song_name: params[:name]
+      path: params[:path],
+      name: params[:name]
     )
   end
 end

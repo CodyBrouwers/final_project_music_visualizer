@@ -1,5 +1,5 @@
-uuid = function() {
-  Math.floor(Math.random()*100000)
+var uuid = function() {
+    return Math.floor(Math.random()*100000)
 }
 
 var Visualization = {
@@ -8,31 +8,23 @@ var Visualization = {
   
   _callbacks: [],
 
-
   _createNewViz: function(){
     var id = uuid();
     return { id: id,
-        path: '',
-        name: id ,
-        created_at: '' ,
-        updated_at: '' ,
+             path: null,
+             name: "Song: "+id
     }
-
   },
 
   _runCallbacks: function () {
-    for(var i in Visualization._callbacks) {
+    for(i = 0; i < Visualization._callbacks.length; i++) {
       Visualization._callbacks[i]();
     }
-    // runs every callback
-    // for callback in callbcaks
-      // callback()
   },
 
   _addVizLocally: function(viz) {
     Visualization._visualizations[viz.id] = viz;
-
-    // change happened, so run callacks
+    Visualization._runCallbacks();
   },
 
   _addVizRemotely: function(viz){
@@ -40,12 +32,16 @@ var Visualization = {
       type: "POST",
       url: "/visualizations/new",
       dataType: 'json',
-      data: viz,
-      success: function() {
-        console.log('posted');
+      data: {
+        id: viz.id,
+        path: viz.path,
+        name: viz.name
       },
-      error: function() {
-        alert('error saving new viz');
+      success: function(data) {
+        console.log('Posted new visualization');
+      },
+      error: function(jqxhr, string) {
+        alert('Error saving new visualization');
       }  
     });
   },
@@ -63,7 +59,6 @@ var Visualization = {
   },
 
   _storeAllLocally: function(vizs) {
-    console.log(vizs);
     vizs.map(function(viz){
       Visualization._visualizations[viz.id] = viz;
     })
@@ -71,8 +66,7 @@ var Visualization = {
 
   _updateVizLocally: function(viz) {
     Visualization._visualizations[viz.id] = viz;
-    // change happened, so run callacks
-
+    Visualization._runCallbacks();
   },
 
   _updateVizRemotely: function (viz) {
@@ -90,7 +84,8 @@ var Visualization = {
   });
   },
 
-  //Create a new visualization locally and store Visualization new visualization in the db.
+  //Create a new visualization locally and store
+  // Visualization new visualization in the db.
   createOne: function(){
     var viz = Visualization._createNewViz();
     Visualization._addVizLocally(viz);

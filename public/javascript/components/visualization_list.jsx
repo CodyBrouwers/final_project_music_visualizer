@@ -10,37 +10,19 @@ var VisualizationList = React.createClass({
     slipHover(this.refs.container.getDOMNode());
   },
 
-  handleClick: function() {
-    this.props.changePage('Edit');
-    this.props.resetVisualization();
-  },
-
   postNewViz: function() {
     // TODO create new viz object
     // add it to visualizations
     // store it to the database
     // change pages
-    var viz={id: Math.floor(10000 * Math.random()), song_name: 'new song'};
-    this.props.addVisualization(viz);
+    var newViz = Visualization.createOne();
     this.props.changePage('Edit');
-    this.props.resetVisualization();
-    $.ajax({
-      type: "POST",
-      url: "/visualizations/new",
-      dataType: 'json',
-      success: function() {
-        console.log('posted');
-      },
-      error: function() {
-        alert('error saving new viz');
-      }  
-    });
+    this.props.changeVisualization(newViz);
   },
 
   render: function(){
     var self = this;
     var items = _.sortBy(Visualization._visualizations, function(viz){return viz[self.state.sortBy]});
-    console.log('Items:', items);
     var items = items.map(function(viz){
       return <VisualizationItem 
         viz={viz} 
