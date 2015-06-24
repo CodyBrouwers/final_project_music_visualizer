@@ -10,7 +10,7 @@ WaveSurfer.Regions = {
         this.list = {};
     },
 
-    /* Remove a region. */
+    /* Add a region. */
     add: function (params) {
         var region = Object.create(WaveSurfer.Region);
         region.init(params, this.wavesurfer);

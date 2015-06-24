@@ -168,16 +168,6 @@
         musicInterface.loadSong(this.props.visualization.song_path);
         this.getTransitions(this.props.visualization.id)
       }
-      
-      // Initializes timeline plugin and plays once ready
-      musicInterface.waveSurfer.on('ready', function () {
-        var timeline = Object.create(WaveSurfer.Timeline);
-
-        timeline.init({
-          wavesurfer: musicInterface.waveSurfer,
-          container: "#wave-timeline"
-        });
-      });
     } 
   });
 
@@ -284,6 +274,29 @@
     },
     componentDidMount: function () {
       musicInterface.init();
+
+      // Initializes timeline plugin and plays once ready
+      musicInterface.waveSurfer.on('ready', function () {
+        var timeline = Object.create(WaveSurfer.Timeline);
+
+        timeline.init({
+          wavesurfer: musicInterface.waveSurfer,
+          container: "#wave-timeline"
+        });
+
+        musicInterface.waveSurfer.on('region-click', function (region, e) {
+          // Play on click, loop on shift click
+          e.shiftKey ? region.playLoop() : region.play();
+        });
+
+        musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
+          region.remove();
+        });
+
+        // TODO - Load JSON data in when ready
+        // loadRegions(JSON.parse(localStorage.transitions));
+      });
+
     }
   })
 

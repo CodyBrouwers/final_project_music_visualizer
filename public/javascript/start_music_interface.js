@@ -6,20 +6,10 @@ var startMusicInterface = function() {
   // Initializes with above options
   musicInterface.init();
 
-  // Loads music
-  // musicInterface.loadSong('./music/Lenno-Lost.mp3');
-
   // Initializes timeline plugin and plays once ready
   musicInterface.on('ready', function () {
     // musicInterface.play();
     musicInterface.animateVisualizer();
-    var timeline = Object.create(WaveSurfer.Timeline);
-
-    timeline.init({
-      WaveSurfer: musicInterface.waveSurfer,
-      container: "#wave-timeline"
-    });
-    
   });
 
   // Console logs errors
