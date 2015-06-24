@@ -1,5 +1,3 @@
-var musicInterface = Object.create(MusicInterface);
-
 var AudioWave = React.createClass({
     //Playback
     backward: function() {
@@ -38,7 +36,7 @@ var AudioWave = React.createClass({
       );
     },
     componentDidMount: function () {
-      musicInterface.init();
+      musicInterface.init(visualizer);
 
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {

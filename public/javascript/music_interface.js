@@ -4,7 +4,7 @@ String.prototype.capitalize = function() {
 
 var MusicInterface = {
 
-  init: function() {
+  init: function(vizualizer) {
   //Need to initialize waveSurfer web-audio context
     this.waveSurfer = Object.create(WaveSurfer);
     // Waveform options
@@ -20,7 +20,7 @@ var MusicInterface = {
     this.waveSurfer.init(options);
     this.grabAnalyser();
     this.initData();
-    this.initVisualizer();
+    visualizer.init();
     this.enableRegions();
   },
   
@@ -98,17 +98,48 @@ var MusicInterface = {
     // this.timeLine =
   },
 
-  getCurrentTime: function(){
+  getCurrentTime: function() {
     return this.waveSurfer.getCurrentTime();
+  },
+
+  getDuration: function() {
+    return this.waveSurfer.getDuration();
   },
   
   //Will need to have access to the events emitted by the region plug-in?
 
   // Enables Region Selection
   enableRegions: function () {
-    this.waveSurfer.enableDragSelection({
+    this.waveSurfer.initRegions({
       color: this.randomColor(0.5)
     });
+  },
+
+  addTransition: function() {
+    console.log(this.currentTransition)
+    if (this.currentTransition) {
+      var region = this.waveSurfer.addRegion({
+        start: this.getCurrentTime(),
+        end: this.currentTransition.end,
+        drag: false,
+        resize: false
+      })
+      this.currentRegion.update({
+        end: this.getCurrentTime(),
+      })
+      this.currentRegion = region;
+    } else {
+      this.currentRegion = this.waveSurfer.addRegion({
+        start: this.getCurrentTime(),
+        end: this.getDuration(),
+        drag: false,
+        resize: false
+      })
+    }
+  },
+
+  setTransitions: function(transitions) {
+    transitions.forEach(function(transition, index) {})
   },
 
   // Generates random colour for regions
@@ -121,118 +152,5 @@ var MusicInterface = {
     ] + ')';
   },
   
-  //Need to have access to visualizer and it's parameters
-  initVisualizer: function() {
-
-    this.scene = new THREE.Scene();
-    
-    this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-    this.camera.position.z = 1000;
-
-    var red = 240;
-    var green = 50;
-    var blue = 10;
-    this.color = 'rgb(' + red + ',' + green + ',' + blue + ')'
-    var myColor = new THREE.Color(this.color);
-    var geometry = new THREE.BoxGeometry( 200, 200, 200 );
-    this.material = new THREE.MeshPhongMaterial( { color: myColor } );
-
-    this.mesh = new THREE.Mesh( geometry, this.material );
-    this.scene.add( this.mesh );
-    this.geometry = this.mesh.geometry;
-
-    this.hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x80CC99, 1.0);
-    this.scene.add( this.hemiLight );
-
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize( window.innerWidth, window.innerHeight );
-
-    this.visualizerType = 1;
-
-    //TODO: remove this shiiit (don't use jQuery)
-    $('#input-red').val(red);
-    $('#input-green').val(green);
-    $('#input-blue').val(blue);
-
-  },
-
-  animate: function(frame) {
-
-    requestAnimationFrame(this.animate.bind(this));
-
-    this.mesh.rotation.x += 0.01;
-    this.mesh.rotation.y += 0.02;
-
-    var scale = 1 + this.level;
-    this.mesh.scale.x = scale;
-    this.mesh.scale.y = scale;
-    this.mesh.scale.z = scale;
-
-    this.updateData();
-    this.renderer.render(this.scene, this.camera);
-  },
-
-  setVisualizerParams: function(params) {
-    //params is supposed to be an array of hashes following
-    //the format of {type:..., value:...} that we can iterate
-    //through and set parameters automatically.
-    params.forEach(function(param, index) {
-      this['set' + param['type'].capitalize()](param['value']);
-    }, this);
-  },
-
-  getVisualizerParams: function() {
-    //TODO make this less hard coded...
-    // var params = [];
-    // paramsList = this.getParamsList(this.visualizerType);
-    // console.log(this);
-    // paramsList.forEach( function(param, index) {
-    //   console.log(this[param]);
-    //   params[index] = {
-    //     'type': param,
-    //     'value': this[param]
-    //   }
-    // }, this);
-    // return params;
-    return [
-      {'type': 'color',
-      'value': this.getColor()},
-      {'type': 'geometry',
-      'value': this.mesh.geometry.type}
-    ]
-  },
-
-  getParamsList: function(visualizerType) {
-    //Might make this a multicase chained operation?
-    var paramList = [];
-    switch (visualizerType) {
-      case (1): //Basic Visualizer Case
-        paramList = paramList.concat(['color', 'geometry']);
-        break;
-    }
-    return paramList;
-  },
-
-  getColor: function() {
-    color = this.mesh.material.color;
-    red = Math.floor(255 * color.r);
-    green = Math.floor(255 * color.g);
-    blue = Math.floor(255 * color.b);
-    return 'rgb('+red+','+green+','+blue+')'
-  },
-
-  setColor: function(color) {
-    this.mesh.material.color = new THREE.Color(color);
-  },
-
-  setGeometry: function(shape) {
-    console.log(shape)
-    if (shape === 'SphereGeometry') {
-      this.mesh.geometry = new THREE[shape]( 200, 30, 30 );
-    }
-    else {
-      this.mesh.geometry = new THREE[shape]( 200, 200, 200 );
-    }
-  }
 }
 

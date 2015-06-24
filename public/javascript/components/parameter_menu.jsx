@@ -8,14 +8,14 @@ var ParameterMenu = React.createClass({
         'type': 'color',
         'value': 'rgb('+red+','+green+','+blue+')'
       }];
-      musicInterface.setVisualizerParams(param)
+      visualizer.setParams(param)
     },
     changeShape: function() {
       var param = [{
       'type': 'geometry',
       'value': event.target.value
       }];
-      musicInterface.setVisualizerParams(param)
+      visualizer.setParams(param)
     },
     render: function(){
       return (
