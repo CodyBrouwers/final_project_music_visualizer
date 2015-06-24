@@ -21,6 +21,7 @@ var MusicInterface = {
     this.grabAnalyser();
     this.initData();
     this.initVisualizer();
+    this.enableRegions();
   },
   
   grabAnalyser: function() {
@@ -92,7 +93,7 @@ var MusicInterface = {
   loadBlob: function(file) {
     this.waveSurfer.loadBlob(file);
   },
-
+  
   initTimeLine: function() {
     // this.timeLine =
   },
@@ -102,6 +103,23 @@ var MusicInterface = {
   },
   
   //Will need to have access to the events emitted by the region plug-in?
+
+  // Enables Region Selection
+  enableRegions: function () {
+    this.waveSurfer.enableDragSelection({
+      color: this.randomColor(0.5)
+    });
+  },
+
+  // Generates random colour for regions
+  randomColor: function (alpha) {
+    return 'rgba(' + [
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+        alpha || 1
+    ] + ')';
+  },
   
   //Need to have access to visualizer and it's parameters
   initVisualizer: function() {

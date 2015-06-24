@@ -20,17 +20,17 @@ var Waveform = function() {
   // wavesurfer.load();
 
   // Initializes timeline plugin and plays once ready
-  wavesurfer.on('ready', function () {
-    // wavesurfer.play();
-    wavesurfer.Visualizer.animate();
-    var timeline = Object.create(WaveSurfer.Timeline);
+  // wavesurfer.on('ready', function () {
+  //   // wavesurfer.play();
+  //   wavesurfer.Visualizer.animate();
+  //   var timeline = Object.create(WaveSurfer.Timeline);
 
-    timeline.init({
-      wavesurfer: wavesurfer,
-      container: "#wave-timeline"
-    });
+  //   timeline.init({
+  //     wavesurfer: wavesurfer,
+  //     container: "#wave-timeline"
+  //   });
     
-  });
+  // });
 
   // Console logs errors
   wavesurfer.on('error', function (err) {
