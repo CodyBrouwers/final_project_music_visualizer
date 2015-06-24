@@ -1,0 +1,24 @@
+{
+  "name": "final_project",
+  "version": "1.0.0",
+  "description": "music visualizer",
+  "main": "index.js",
+  "dependencies": {
+    "react-loader": "^1.4.0",
+    "requirejs": "^2.1.18"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodyBrouwers/final_project_music_visualizer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodyBrouwers/final_project_music_visualizer/issues"
+  },
+  "homepage": "https://github.com/CodyBrouwers/final_project_music_visualizer#readme"
+}

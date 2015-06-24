@@ -96,6 +96,10 @@ var MusicInterface = {
   initTimeLine: function() {
     // this.timeLine =
   },
+
+  getCurrentTime: function(){
+    return this.waveSurfer.getCurrentTime();
+  },
   
   //Will need to have access to the events emitted by the region plug-in?
   
