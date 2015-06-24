@@ -8,7 +8,7 @@ var VisualizationItem = React.createClass({
     render: function() {
       return <a className="viz" onClick={this.handleClick}>
         <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg" 
-        title={this.props.viz.song_name}>
+        title={this.props.viz.name}>
         </img></a>
     }
 
