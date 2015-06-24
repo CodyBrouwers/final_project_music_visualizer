@@ -25,7 +25,7 @@ post '/visualizations/:viz_id/transitions' do
   if visualization
     transition = visualization.transitions.create!(
       time: params[:time],
-      params: params[:parameters]
+      params: params[:params]
     );
     Visualization.find(params[:viz_id]).transitions.to_json
   end

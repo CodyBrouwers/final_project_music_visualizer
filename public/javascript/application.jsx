@@ -102,7 +102,7 @@
 
   var EditView = React.createClass({
 
-    handleClick: function(){
+    handleClick: function() {
       musicInterface.destroy();
       this.props.changePage('List');
     },
@@ -129,21 +129,25 @@
         dataType: 'json',
         success: function(transitions) {
           if (!(transitions.length === 0)) {
-            console.log(transitions.constructor)
+            transitions.forEach(function(transition, index) {
+              transition['params'] = JSON.parse(transition['params']);
+            });
             this.setState({transitions: transitions})
-            // musicInterface.setVisualizerParams[transitions[0]['params']]
+            console.log(transitions[transitions.length-1]['params']);
+            musicInterface.setVisualizerParams(transitions[transitions.length-1]['params'])
           } else {
-            this.postTransition(id, 0.0, {})
+            this.postTransition(id, 0.0, musicInterface.getVisualizerParams())
           }
         }.bind(this)
       });
     },
 
     postTransition: function(id, time, params) {
+      console.log(params);
       $.ajax({
         type: "POST",
         url: "/visualizations/" + id + '/transitions',
-        data: {'time': time, 'params': params},
+        data: {'time': time, 'params': JSON.stringify(params)},
         dataType: 'json',
         success: function(transitions) {
           this.setState({transitions: transitions})
@@ -179,7 +183,7 @@
       var blue = $('#input-blue').val();
       var param = [{
         'type': 'color',
-        'value': [red, green, blue]
+        'value': 'rgb('+red+','+green+','+blue+')'
       }];
       musicInterface.setVisualizerParams(param)
     },
@@ -218,11 +222,11 @@
               <ul className='shape'>
                 <li>
                   <label>Sphere</label>
-                  <input type="radio" name="shape" value="sphere" onClick={this.changeShape}/>
+                  <input type="radio" name="shape" value="SphereGeometry" onClick={this.changeShape}/>
                 </li>
                 <li>
                   <label>Cube</label>
-                  <input type="radio" name="shape" value="cube" onClick={this.changeShape}/>
+                  <input type="radio" name="shape" value="BoxGeometry" onClick={this.changeShape}/>
                 </li>
               </ul>
             </fieldset>
@@ -252,7 +256,7 @@
     },
 
     addTransition: function() {
-      this.props.postTransition(this.props.visualization.id);
+      this.props.postTransition(this.props.visualization.id, 0.0, musicInterface.getVisualizerParams());
     },
 
     render: function(){
