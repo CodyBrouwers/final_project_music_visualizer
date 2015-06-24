@@ -176,7 +176,6 @@ var MusicInterface = {
     //params is supposed to be an array of hashes following
     //the format of {type:..., value:...} that we can iterate
     //through and set parameters automatically.
-    console.log(params)
     params.forEach(function(param, index) {
       this['set' + param['type'].capitalize()](param['value']);
     }, this);
