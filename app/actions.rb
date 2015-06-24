@@ -11,9 +11,23 @@ end
 
 post '/visualizations/new' do 
   content_type :json
-  visualization = Visualization.create!()
-  visualization.to_json
+  visualization = Visualization.create!(
+    id: params[:id],
+    song_name: params[:name]
+  )
 end
+
+put '/visualizations/:viz_id/edit' do
+  content_type :json
+  visualization = Visualization.find(params[:viz_id])
+  if visualization
+    Visualization.update_attributes!(
+      id: params[:id],
+      song_path: params[:path],
+      song_name: params[:name]
+    )
+end
+
 
 post '/visualizations/:viz_id/transitions' do
   # console.log(params[:viz_id])
