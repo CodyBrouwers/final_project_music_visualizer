@@ -21,13 +21,16 @@ var Visualization = {
   },
 
   _runCallbacks: function () {
+    for(var i in Visualization._callbacks) {
+      Visualization._callbacks[i]();
+    }
     // runs every callback
     // for callback in callbcaks
       // callback()
   },
 
   _addVizLocally: function(viz) {
-    this._visualizations[viz.id] = viz;
+    Visualization._visualizations[viz.id] = viz;
 
     // change happened, so run callacks
   },
@@ -53,20 +56,21 @@ var Visualization = {
         url: "/visualizations",
         dataType: 'json',
         success: function(vizs) {
-          _storeAllLocally(vizs);
-      });
-
-    // change happened, so run callacks
+          Visualization._storeAllLocally(vizs);
+          Visualization._runCallbacks();
+        }
+    });
   },
 
-  _storeAllLocally: function (vizs) {
+  _storeAllLocally: function(vizs) {
+    console.log(vizs);
     vizs.map(function(viz){
-      this._visualizations[viz.id] = viz;
+      Visualization._visualizations[viz.id] = viz;
     })
-  }
+  },
 
   _updateVizLocally: function(viz) {
-    this._visualizations[viz.id] = viz;
+    Visualization._visualizations[viz.id] = viz;
     // change happened, so run callacks
 
   },
@@ -86,30 +90,29 @@ var Visualization = {
   });
   },
 
-  //Create a new visualization locally and store this new visualization in the db.
+  //Create a new visualization locally and store Visualization new visualization in the db.
   createOne: function(){
-    var viz = _createNewViz();
-    _addVizLocally(viz);
-    _addVizRemotely(viz);
+    var viz = Visualization._createNewViz();
+    Visualization._addVizLocally(viz);
+    Visualization._addVizRemotely(viz);
     return viz;
   },
 
   updateOne: function(viz) {
-    _updateVizLocally(viz);
-    _updateVizRemotely(viz);
+    Visualization._updateVizLocally(viz);
+    Visualization._updateVizRemotely(viz);
   },
 
   fetchAll: function() {
-    var vizs = _fetchAllFromRemote();
-    _storeAllLocally(vizs);
+    var vizs = Visualization._fetchAllFromRemote();
     return null;
   },
 
   getAll: function() {
-    return this._visualizations;
+    return Visualization._visualizations;
   },
 
   registerChangeCallback: function(fn) {
-    this._callbacks.push(fn);
+    Visualization._callbacks.push(fn);
   }
 }

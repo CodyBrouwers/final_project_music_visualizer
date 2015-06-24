@@ -1,9 +1,9 @@
 var VisualizationList = React.createClass({
 
-  sortOptions: ['song_name', 'created_at', 'updated_at'],
+  _sortOptions: ['song_name', 'created_at', 'updated_at'],
 
   getInitialState: function(){
-    return { sortBy: this.sortOptions[0] };
+    return { sortBy: this._sortOptions[0] }
   },
   
   componentDidMount: function(){
@@ -39,18 +39,19 @@ var VisualizationList = React.createClass({
 
   render: function(){
     var self = this;
-    var items = _.sortBy(this.props.visualizations, function(v){return v[self.state.sortBy]});
-    var items = items.map(function(v){
-    // TODO Move song_path up to VisualizationItem
+    var items = _.sortBy(Visualization._visualizations, function(viz){return viz[self.state.sortBy]});
+    console.log('Items:', items);
+    var items = items.map(function(viz){
       return <VisualizationItem 
-        v={v} 
-        key={ "visualization-item-" + v.id} 
+        viz={viz} 
+        key={ "visualization-item-" + viz.id} 
         changePage={self.props.changePage} 
         changeVisualization={self.props.changeVisualization} />;
     })
-    var sortButtons = _.map(self.sortOptions, function(s){
+
+    var sortButtons = _.map(self.sortOptions, function(sortOption){
       return <div className="sort-button" onClick={function(){
-        self.setState({sortBy: s});
+        self.setState({sortBy: sortOption});
       }}>{s}</div>;
     })
     return (
@@ -67,3 +68,8 @@ var VisualizationList = React.createClass({
     )
   }
 });
+
+//To Do: Should this be here or elsewhere?
+Visualization.registerChangeCallback(function () {
+  React.render( < AppView />, document.getElementById('app'))
+})

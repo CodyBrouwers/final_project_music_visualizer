@@ -26,6 +26,7 @@ put '/visualizations/:viz_id/edit' do
       song_path: params[:path],
       song_name: params[:name]
     )
+  end
 end
 
 

@@ -2,7 +2,6 @@ var AppView = React.createClass({
     getInitialState: function () {
       return {
         page: 'List',
-        visualizations: [],
         visualization: null
       }
     },
@@ -18,28 +17,20 @@ var AppView = React.createClass({
     },
 
     componentWillMount: function(){
-      $.ajax({
-        type: "GET",
-        url: "/visualizations",
-        dataType: 'json',
-        success: function(visualizations) {
-          this.setState({visualizations: visualizations})
-        }.bind(this)
-      });
+      Visualization.fetchAll();
     },
 
-    addVisualization: function(viz){
-      this.setState({
-        visualizations: _.union(this.state.visualizations, [viz])
-      })
-    },
+    // addVisualization: function(viz){
+    //   this.setState({
+    //     visualizations: _.union(this.state.visualizations, [viz])
+    //   })
+    // },
 
     render: function(){
       if (this.state.page === 'List'){
         return <VisualizationList 
-          addVisualization={this.addVisualization}
-          visualizations={this.state.visualizations}
-          key='list' changePage={this.changePage}
+          key='list' 
+          changePage={this.changePage}
           changeVisualization={this.changeVisualization}
           resetVisualization={this.resetVisualization} />;
       } else {
