@@ -55,11 +55,6 @@ var AudioWave = React.createClass({
           container: "#wave-timeline"
         });
 
-        musicInterface.waveSurfer.on('region-click', function (region, e) {
-          // Play on click, loop on shift click
-          e.shiftKey ? region.playLoop() : region.play();
-        });
-
         musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
           region.remove();
         });
