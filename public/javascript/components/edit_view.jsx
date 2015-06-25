@@ -1,15 +1,29 @@
 var EditView = React.createClass({
 
+  // getInitialState: function () {
+  //     return {
+  //       name: this.props.visualization.name
+  //     }
+  //   },
+
   handleClick: function() {
     musicInterface.destroy();
     this.props.changePage('List');
   },
 
+  updateName: function(event){
+    var viz = this.props.visualization
+    viz.name = event.target.value;
+    Visualization.updateOne(viz);
+  },
+
   render: function(){
     var self = this;
+    // var value = this.state.name
     return (
       <div>
         <h1>Edit View</h1>
+        <input type="text" defaultValue={this.props.visualization.name} onBlur={this.updateName} />
         <p onClick={this.handleClick}>
         Back to List</p>
         <div className='viz-container'>
@@ -31,7 +45,6 @@ var EditView = React.createClass({
             transition['params'] = JSON.parse(transition['params']);
           });
           this.setState({transitions: transitions})
-          console.log(transitions[transitions.length-1]['params']);
           musicInterface.setVisualizerParams(transitions[transitions.length-1]['params'])
         } else {
           this.postTransition(id, 0.0, musicInterface.getVisualizerParams())
@@ -41,7 +54,6 @@ var EditView = React.createClass({
   },
 
   postTransition: function(id, time, params) {
-    console.log(params);
     $.ajax({
       type: "POST",
       url: "/visualizations/" + id + '/transitions',
@@ -58,8 +70,8 @@ var EditView = React.createClass({
     //is initiated at the right time.
     $('.viz-container').append(musicInterface.renderer.domElement);
     musicInterface.animate();
-    if (this.props.visualization != undefined) {
-      musicInterface.loadSong(this.props.visualization.song_path);
+    if (this.props.visualization.path != null) {
+      musicInterface.loadSong(this.props.visualization.path);
       this.getTransitions(this.props.visualization.id)
     }
   } 
