@@ -35,12 +35,12 @@ post '/visualizations/:viz_id/transitions' do
   visualization = Visualization.includes(:transitions).find(params[:viz_id])
   if visualization
     transition = visualization.transitions.create!(
+      id: params[:id],
       time: params[:time],
       params: params[:params]
     );
-    return Visualization.find(params[:viz_id]).transitions.to_json
+    return transition.to_json
   end
-  visualization.to_json
 end
 
 get '/visualizations/:viz_id/transitions' do

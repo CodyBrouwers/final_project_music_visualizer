@@ -14,12 +14,15 @@ var AudioWave = React.createClass({
     },
 
     addTransition: function() {
-      var time = musicInterface.getCurrentTime();
-      this.props.postTransition(this.props.visualization.id, time, visualizer.getParams());
+      this.props.postTransition(
+        this.props.visualization.id, 
+        musicInterface.getCurrentTime(), 
+        visualizer.getParams()
+      );
     },
 
     setCurrentRegionAndTransition: function(region) {
-      var transitions = this.props.transitions
+      var transitions = Transision.getAll();
       musicInterface.currentRegion = region;
       for (var i = 0; i < transitions.length; i++) {
         var transition = transitions[i];
@@ -52,6 +55,11 @@ var AudioWave = React.createClass({
     componentDidMount: function () {
       var self = this;
       musicInterface.init(visualizer);
+
+      // Loads song with path if there is one
+      if (this.props.visualization.path != undefined) {
+        musicInterface.loadSong(this.props.visualization.path);  
+      }
 
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
