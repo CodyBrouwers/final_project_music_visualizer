@@ -8,17 +8,17 @@ var Visualization = {
   
   _callbacks: [],
 
+  _runCallbacks: function () {
+    for(i = 0; i < Visualization._callbacks.length; i++) {
+      Visualization._callbacks[i]();
+    }
+  },
+
   _createNewViz: function(){
     var id = uuid();
     return { id: id,
              path: null,
              name: "Song: "+id
-    }
-  },
-
-  _runCallbacks: function () {
-    for(i = 0; i < Visualization._callbacks.length; i++) {
-      Visualization._callbacks[i]();
     }
   },
 

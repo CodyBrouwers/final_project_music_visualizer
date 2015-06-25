@@ -23,6 +23,7 @@ var EditView = React.createClass({
         <input type="text" defaultValue={this.props.visualization.name} onBlur={this.updateName} />
         <p onClick={this.handleClick}>
         Back to List</p>
+        <h1 id="vizname">{this.props.visualization.name}</h1>
         <div className='viz-container'>
           <ParameterMenu />
         </div>
@@ -83,3 +84,7 @@ var EditView = React.createClass({
     }
   } 
 });
+
+Transition.registerChangeCallback(function () {
+  React.render( < AppView />, document.getElementById('app'))
+})
