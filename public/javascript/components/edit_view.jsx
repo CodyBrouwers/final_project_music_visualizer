@@ -9,11 +9,19 @@ var EditView = React.createClass({
     this.props.changePage('List');
   },
 
+  updateName: function(event){
+    var viz = this.props.visualization
+    viz.name = event.target.value;
+    Visualization.updateOne(viz);
+  },
+
   render: function(){
     var self = this;
+    // var value = this.state.name
     return (
       <div>
         <h1>Edit View</h1>
+        <input type="text" defaultValue={this.props.visualization.name} onBlur={this.updateName} />
         <p onClick={this.handleClick}>
         Back to List</p>
         <div className='viz-container'>
@@ -46,7 +54,6 @@ var EditView = React.createClass({
 
   postTransition: function(id, time, params) {
     var self = this;
-    console.log(params);
     var request = $.ajax({
       type: "POST",
       url: "/visualizations/" + id + '/transitions',
