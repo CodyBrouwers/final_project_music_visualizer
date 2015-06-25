@@ -115,7 +115,8 @@ var MusicInterface = {
   // Enables Region Selection
   enableRegions: function () {
     this.waveSurfer.initRegions({
-      color: this.randomColor(0.5)
+      drag: false,
+      resize: false
     });
   },
 
@@ -125,20 +126,18 @@ var MusicInterface = {
       var region = this.waveSurfer.addRegion({
         start: this.getCurrentTime(),
         end: this.currentTransition.end,
-        drag: false,
-        resize: false
       })
-      this.currentTransition.update({
+      this.currentTransition = this.currentTransition.update({
         start: this.currentTransition.start,
         end: this.getCurrentTime(),
+        color: this.randomColor(0.5),
       })
       this.currentTransition = region;
     } else {
       this.currentTransition = this.waveSurfer.addRegion({
         start: this.getCurrentTime(),
         end: this.getDuration(),
-        drag: false,
-        resize: false
+        color: this.randomColor(0.5),
       })
     }
   },
@@ -154,23 +153,20 @@ var MusicInterface = {
         this.waveSurfer.addRegion({
           start: transitions[index].time,
           end: transitions[index+1].time,
-          drag: false,
-          resize: false
+          color: this.randomColor(0.5),
         })
       }
       this.waveSurfer.addRegion({
         start: transitions[index].time,
         end: this.getDuration(),
-        drag: false,
-        resize: false
+        color: this.randomColor(0.5),
       });
     } else {
       console.log(transitions[0])
       this.waveSurfer.addRegion({
         start: transitions[0].time,
         end: this.getDuration(),
-        drag: false,
-        resize: false
+        color: this.randomColor(0.5),
       })
     }
   },

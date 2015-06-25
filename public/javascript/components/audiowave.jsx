@@ -48,12 +48,19 @@ var AudioWave = React.createClass({
         });
 
         musicInterface.waveSurfer.on('region-click', function (region, e) {
-          // Play on click, loop on shift click
-          e.shiftKey ? region.playLoop() : region.play();
+          //set current region properly
+          console.log(region);
+          musicInterface.currentTransition = region;
         });
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
+          //This will need more work, but for now just reset completely?
           region.remove();
+        });
+
+        musicInterface.waveSurfer.on('region-in', function (region, e) {
+          console.log(region);
+          musicInterface.currentTransition = region;
         });
 
         // TODO - Load JSON data in when ready
