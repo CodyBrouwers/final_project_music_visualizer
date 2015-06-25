@@ -3,6 +3,10 @@ var visualizer = Object.create(WebGLVisualizer);
 
 var EditView = React.createClass({
 
+  getInitialState: function() {
+    return { transitions: [] }
+  },
+
   handleClick: function() {
     musicInterface.destroy();
     this.props.changePage('List');
@@ -19,14 +23,22 @@ var EditView = React.createClass({
     return (
       <div>
         <h1>Edit View</h1>
-        <input type="text" defaultValue={this.props.visualization.name} onBlur={this.updateName} />
+        <input 
+          type="text" 
+          defaultValue={this.props.visualization.name} 
+          onBlur={this.updateName} />
         <p onClick={this.handleClick}>
         Back to List</p>
         <h1 id="vizname">{this.props.visualization.name}</h1>
         <div className='viz-container'>
-          <ParameterMenu />
+          <ParameterMenu 
+          postTransition={this.postTransition} 
+          transitions={this.state.transitions} />
         </div>
-        <AudioWave visualization={this.props.visualization} postTransition={this.postTransition} />
+        <AudioWave 
+          visualization={this.props.visualization} 
+          postTransition={this.postTransition} 
+          transitions={this.state.transitions} />
       </div>
     )
   },

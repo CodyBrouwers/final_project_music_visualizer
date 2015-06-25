@@ -91,12 +91,16 @@ WebGLVisualizer = {
   },
 
   getParam: function(type) {
+    var value;
     switch (type) {
       case 'color':
-        return this.getColor();
+        value = this.getColor();
+        break;
       case 'geometry':
-        return this.mesh.geometry;
+        value = this.mesh.geometry;
+        break;
     }
+    return { 'type': type, 'value': value }
   },
 
   getColor: function() {
