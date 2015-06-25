@@ -21,6 +21,10 @@ var AudioWave = React.createClass({
       // this.props.postTransition(this.props.visualization.id, time, visualizer.getParams());
     },
 
+    updateTransition: function () {
+      
+    }
+
     render: function(){
       return (
         <div className="wave-container">
@@ -57,15 +61,13 @@ var AudioWave = React.createClass({
 
         musicInterface.waveSurfer.on('region-click', function (region, e) {
           // Play on click, loop on shift click
-          e.shiftKey ? region.playLoop() : region.play();
+          // e.shiftKey ? region.playLoop() : region.play();
         });
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
           region.remove();
         });
-
-        // TODO - Load JSON data in when ready
-        // loadRegions(JSON.parse(localStorage.transitions));
+        
       });
     }
   })

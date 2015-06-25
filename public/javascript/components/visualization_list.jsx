@@ -22,7 +22,7 @@ var VisualizationList = React.createClass({
 
   render: function(){
     var self = this;
-    var items = _.sortBy(Visualization._visualizations, function(viz){return viz[self.state.sortBy]});
+    var items = _.sortBy(Visualization.getAll, function(viz){return viz[self.state.sortBy]});
     var items = items.map(function(viz){
       return <VisualizationItem 
         viz={viz} 
