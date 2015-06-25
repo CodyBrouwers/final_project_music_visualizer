@@ -90,7 +90,10 @@ var Transition = {
       type: "PUT",
       url: "/visualizations/"+viz.id+"/transitions",
       dataType: 'json',
-      data: transition,
+      data: {
+        id: transition.id,
+        params: transition.params
+      },
       success: function() {
         console.log('Updated');
       },

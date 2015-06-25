@@ -16,28 +16,41 @@ var AudioWave = React.createClass({
     addTransition: function() {
       var time = musicInterface.getCurrentTime();
       var params = visualizer.getParams();
-      var new_tran = Transition.createOne(this.props.visualization.id, time, params);
-      musicInterface.addTransition(); 
+      var new_transition = Transition.createOne(this.props.visualization.id, time, params);
+      musicInterface.addTransition(new_transition); 
     },
 
-    setCurrentRegionAndTransition: function(region) {
-      var transitions = Transision.getAll();
-      musicInterface.currentRegion = region;
+    updateTransition: function(){
+      var active = this.findCurrentTransition(musicInterface.currentRegion);
+      console.log("this is the active transition", active);
+      
+    },
+
+    findCurrentTransition: function(region){
+      var transitions = Transition.getAll();
       for (var i = 0; i < transitions.length; i++) {
         var transition = transitions[i];
         if (transition.id === musicInterface.currentRegion.id) {
-          visualizer.setParams(transition.params);
-          console.log(transition.params);
-          break;
+          return transition;
         }
       }
+    },
+
+    setCurrentTransition: function(transition){
+      visualizer.setParams(transition.params);
+    },
+
+    setCurrentRegionAndTransition: function(region) {
+      var transition = this.findCurrentTransition(region);
+      this.setCurrentTransition(transition);
     },
 
     render: function(){
       return (
         <div className="wave-container">
           <div className="controls">
-            <button onClick={this.backward}>Backwards</button>
+            <button onClick={this.updateTransition}>Backwards</button>
+            // <button onClick={this.backward}>Backwards</button>
             <button onClick={this.playPause}>Play/Pause</button>
             <button onClick={this.forward}>Forwards</button>
             <button onClick={this.toggleMute}>Mute</button>
@@ -72,7 +85,7 @@ var AudioWave = React.createClass({
         musicInterface.waveSurfer.on(
           'region-click',
           function (region, event) {
-            self.setCurrentRegionAndTransition(region);
+            self.findCurrentTransition(region);
           }
         );
 
