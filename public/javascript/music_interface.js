@@ -95,10 +95,6 @@ var MusicInterface = {
   loadBlob: function(file) {
     this.waveSurfer.loadBlob(file);
   },
-  
-  initTimeLine: function() {
-    // this.timeLine =
-  },
 
   getCurrentTime: function() {
     return this.waveSurfer.getCurrentTime();
@@ -106,7 +102,6 @@ var MusicInterface = {
 
   getDuration: function() {
     var time = this.waveSurfer.backend.getDuration();
-    console.log(time)
     return time;
   },
   
@@ -165,7 +160,6 @@ var MusicInterface = {
         resize: false
       });
     } else {
-      console.log(transitions[0])
       this.waveSurfer.addRegion({
         start: transitions[0].time,
         end: this.getDuration(),

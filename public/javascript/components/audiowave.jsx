@@ -38,6 +38,11 @@ var AudioWave = React.createClass({
     componentDidMount: function () {
       musicInterface.init(visualizer);
 
+      // Loads song with path if there is one
+      if (this.props.visualization.path != undefined) {
+        musicInterface.loadSong(this.props.visualization.path);  
+      }
+
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);

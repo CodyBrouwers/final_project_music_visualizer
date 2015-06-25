@@ -24,7 +24,7 @@ var Visualization = {
 
   _addVizLocally: function(viz) {
     Visualization._visualizations[viz.id] = viz;
-    Visualization._runCallbacks();
+    // Visualization._runCallbacks();
   },
 
   _addVizRemotely: function(viz){
@@ -99,7 +99,7 @@ var Visualization = {
   },
 
   fetchAll: function() {
-    var vizs = Visualization._fetchAllFromRemote();
+    Visualization._fetchAllFromRemote();
     return null;
   },
 

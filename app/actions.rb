@@ -35,6 +35,7 @@ post '/visualizations/:viz_id/transitions' do
   visualization = Visualization.includes(:transitions).find(params[:viz_id])
   if visualization
     transition = visualization.transitions.create!(
+      id: params[:id],
       time: params[:time],
       params: params[:params]
     );
