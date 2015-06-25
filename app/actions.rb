@@ -39,9 +39,8 @@ post '/visualizations/:viz_id/transitions' do
       time: params[:time],
       params: params[:params]
     );
-    return Visualization.find(params[:viz_id]).transitions.to_json
+    return transition.to_json
   end
-  visualization.to_json
 end
 
 get '/visualizations/:viz_id/transitions' do

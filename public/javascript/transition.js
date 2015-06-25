@@ -36,10 +36,11 @@ var Transition = {
       data: {
         id: transition.id,
         time: transition.time,
-        params: transition.params
+        params: JSON.stringify(transition.params)
       },
       success: function(data) {
         console.log('Posted new transition: ', data);
+        data.params = JSON.parse(data.params);
       },
       error: function(jqxhr, string) {
         alert('Error saving new transition');
