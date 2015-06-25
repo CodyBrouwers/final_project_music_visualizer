@@ -26,8 +26,7 @@ var AppView = React.createClass({
           changeVisualization={this.changeVisualization} />;
       } else {
         return <EditView 
-          key='edit' 
-           
+          key='edit'
           changePage={this.changePage} 
           visualization={this.state.visualization}/>;
       }

@@ -1,10 +1,8 @@
-var EditView = React.createClass({
+var musicInterface = Object.create(MusicInterface);
+var visualizer = Object.create(WebGLVisualizer);
 
-  // getInitialState: function () {
-  //     return {
-  //       name: this.props.visualization.name
-  //     }
-  //   },
+
+var EditView = React.createClass({
 
   handleClick: function() {
     musicInterface.destroy();
@@ -35,44 +33,54 @@ var EditView = React.createClass({
   },
 
   getTransitions: function(id) {
-    $.ajax({  
+    var self = this;
+    var request = $.ajax({  
       type: "GET",
       url: "/visualizations/" + id + '/transitions',
       dataType: 'json',
-      success: function(transitions) {
-        if (!(transitions.length === 0)) {
-          transitions.forEach(function(transition, index) {
-            transition['params'] = JSON.parse(transition['params']);
-          });
-          this.setState({transitions: transitions})
-          musicInterface.setVisualizerParams(transitions[transitions.length-1]['params'])
-        } else {
-          this.postTransition(id, 0.0, musicInterface.getVisualizerParams())
-        }
-      }.bind(this)
+    }).done(function(transitions) {
+      if (transitions.length !== 0) {
+        transitions.forEach(function(transition, index) {
+          transition['params'] = JSON.parse(transition['params']);
+        });
+        self.setState({transitions: transitions})
+        visualizer.setParams(transitions[0]['params']);
+        musicInterface.setTransitions(transitions);
+      } else {
+        var postRequest = self.postTransition(id, 0.0, visualizer.getParams())
+      }
     });
   },
 
   postTransition: function(id, time, params) {
-    $.ajax({
+    var self = this;
+    var request = $.ajax({
       type: "POST",
       url: "/visualizations/" + id + '/transitions',
       data: {'time': time, 'params': JSON.stringify(params)},
       dataType: 'json',
-      success: function(transitions) {
-        this.setState({transitions: transitions})
-      }.bind(this)
+    });
+
+    return request.done(function(transitions) {
+      transitions.forEach(function(transition, index) {
+          transition['params'] = JSON.parse(transition['params']);
+        });
+      self.setState({transitions: transitions})
+      musicInterface.addTransition(); 
     });
   },
 
   componentDidMount: function() {
     //TODO think of a better way of seperating this so that the timeline
     //is initiated at the right time.
-    $('.viz-container').append(musicInterface.renderer.domElement);
-    musicInterface.animate();
-    if (this.props.visualization.path != null) {
-      musicInterface.loadSong(this.props.visualization.path);
-      this.getTransitions(this.props.visualization.id)
+    var self = this;
+    $('.viz-container').append(visualizer.renderer.domElement);
+    visualizer.animate();
+    if (this.props.visualization != undefined) {
+      musicInterface.loadSong(this.props.visualization.song_path);
+      musicInterface.waveSurfer.on('ready', function() {
+        self.getTransitions(self.props.visualization.id)
+      });
     }
   } 
 });
