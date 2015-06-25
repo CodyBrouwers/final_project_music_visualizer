@@ -1,6 +1,6 @@
 var VisualizationList = React.createClass({
 
-  _sortOptions: ['song_name', 'created_at', 'updated_at'],
+  _sortOptions: ['name', 'created_at', 'updated_at'],
 
   getInitialState: function(){
     return { sortBy: this._sortOptions[0] }
