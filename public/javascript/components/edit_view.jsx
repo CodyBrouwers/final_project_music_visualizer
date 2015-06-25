@@ -17,7 +17,6 @@ var EditView = React.createClass({
 
   render: function(){
     var self = this;
-    // var value = this.state.name
     return (
       <div>
         <h1>Edit View</h1>
@@ -76,8 +75,8 @@ var EditView = React.createClass({
     var self = this;
     $('.viz-container').append(visualizer.renderer.domElement);
     visualizer.animate();
-    if (this.props.visualization != undefined) {
-      musicInterface.loadSong(this.props.visualization.song_path);
+    if (this.props.visualization.path != undefined) {
+      musicInterface.loadSong(this.props.visualization.path);
       musicInterface.waveSurfer.on('ready', function() {
         self.getTransitions(self.props.visualization.id)
       });

@@ -1,7 +1,7 @@
 var VisualizationItem = React.createClass({
 
     handleClick: function(){
-      this.props.changeVisualization(this.props.v);
+      this.props.changeVisualization(this.props.viz);
       this.props.changePage('Edit'); 
     },
 
