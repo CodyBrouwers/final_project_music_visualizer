@@ -1,15 +1,29 @@
 var EditView = React.createClass({
 
+  // getInitialState: function () {
+  //     return {
+  //       name: this.props.visualization.name
+  //     }
+  //   },
+
   handleClick: function() {
     musicInterface.destroy();
     this.props.changePage('List');
   },
 
+  updateName: function(event){
+    var viz = this.props.visualization
+    viz.name = event.target.value;
+    Visualization.updateOne(viz);
+  },
+
   render: function(){
     var self = this;
+    // var value = this.state.name
     return (
       <div>
         <h1>Edit View</h1>
+        <input type="text" defaultValue={this.props.visualization.name} onBlur={this.updateName} />
         <p onClick={this.handleClick}>
         Back to List</p>
         <div className='viz-container'>

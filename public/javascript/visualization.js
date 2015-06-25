@@ -30,7 +30,7 @@ var Visualization = {
   _addVizRemotely: function(viz){
     $.ajax({
       type: "POST",
-      url: "/visualizations/new",
+      url: "/visualizations",
       dataType: 'json',
       data: {
         id: viz.id,
@@ -72,7 +72,7 @@ var Visualization = {
   _updateVizRemotely: function (viz) {
     $.ajax({
       type: "PUT",
-      url: "/visualizations/"+viz.id+"edit",
+      url: "/visualizations/"+viz.id+"/edit",
       dataType: 'json',
       data: viz,
       success: function() {
