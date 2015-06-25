@@ -115,7 +115,6 @@ var MusicInterface = {
   },
 
   addTransition: function() {
-    console.log(this.currentTransition)
     if (this.currentTransition) {
       var region = this.waveSurfer.addRegion({
         start: this.getCurrentTime(),

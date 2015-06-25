@@ -28,6 +28,12 @@ put '/visualizations/:viz_id/edit' do
   visualization.to_json
 end
 
+get '/visualizations/:viz_id/transitions' do
+  content_type :json
+  visualization = Visualization.find(params[:viz_id])
+  transitions = visualization ? visualization.transitions : '';
+  transitions.to_json;
+end
 
 post '/visualizations/:viz_id/transitions' do
   # console.log(params[:viz_id])
@@ -43,10 +49,11 @@ post '/visualizations/:viz_id/transitions' do
   end
 end
 
-get '/visualizations/:viz_id/transitions' do
+put '/visualizations/:viz_id/transitions/:transition_id' do
   content_type :json
-  visualization = Visualization.find(params[:viz_id])
-  transitions = visualization ? visualization.transitions : '';
-  transitions.to_json;
+  transition = Transition.find(params[:transition_id])
+  if transition
+    transition.update_attribute(:params, params[:params])
+  end
+  transition.to_json
 end
-

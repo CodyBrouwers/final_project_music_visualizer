@@ -16,8 +16,6 @@ var EditView = React.createClass({
 
   render: function(){
     var self = this;
-    // var postRequest = self.postTransition(id, 0.0, visualizer.getParams())
-
     return (
       <div>
         <h1>Edit View</h1>
@@ -31,24 +29,6 @@ var EditView = React.createClass({
         <AudioWave visualization={this.props.visualization} postTransition={this.postTransition} />
       </div>
     )
-  },
-
-  postTransition: function(id, time, params) {
-    var self = this;
-    var request = $.ajax({
-      type: "POST",
-      url: "/visualizations/" + id + '/transitions',
-      data: {'time': time, 'params': JSON.stringify(params)},
-      dataType: 'json',
-    });
-
-    return request.done(function(transitions) {
-      transitions.forEach(function(transition, index) {
-          transition['params'] = JSON.parse(transition['params']);
-        });
-      // self.setState({transitions: transitions})
-      musicInterface.addTransition(); 
-    });
   },
 
   componentDidMount: function() {
