@@ -51,7 +51,6 @@ var VisualizationList = React.createClass({
   }
 });
 
-//To Do: Should this be here or elsewhere?
 Visualization.registerChangeCallback(function () {
   React.render( < AppView />, document.getElementById('app'))
 })
