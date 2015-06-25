@@ -15,7 +15,7 @@ var AudioWave = React.createClass({
 
     addTransition: function() {
       var time = musicInterface.getCurrentTime();
-      this.props.postTransition(this.props.visualization.id, time, musicInterface.getVisualizerParams());
+      this.props.postTransition(this.props.visualization.id, time, visualizer.getParams());
     },
 
     render: function(){

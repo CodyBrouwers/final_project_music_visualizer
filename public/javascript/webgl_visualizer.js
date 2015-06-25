@@ -73,7 +73,9 @@ WebGLVisualizer = {
   getParams: function() {
     var params = [];
     paramsList = this.getParamsList(this.visualizerType);
-    paramsList.forEach( this.getParam, this);
+    paramsList.forEach(function(paramType, index) {
+      params[index] = this.getParam(paramType);
+    }, this);
     return params;
   },
 

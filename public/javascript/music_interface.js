@@ -22,6 +22,7 @@ var MusicInterface = {
     this.initData();
     visualizer.init();
     this.enableRegions();
+    this.duration = this.waveSurfer.getDuration();
   },
   
   grabAnalyser: function() {
@@ -65,6 +66,7 @@ var MusicInterface = {
 
   //Remove all nodes and stuff
   destroy: function() {
+    this.currentTransition = undefined;
     this.waveSurfer.destroy();
   },
 
@@ -103,7 +105,9 @@ var MusicInterface = {
   },
 
   getDuration: function() {
-    return this.waveSurfer.getDuration();
+    var time = this.waveSurfer.backend.getDuration();
+    console.log(time)
+    return time;
   },
   
   //Will need to have access to the events emitted by the region plug-in?
@@ -124,12 +128,13 @@ var MusicInterface = {
         drag: false,
         resize: false
       })
-      this.currentRegion.update({
+      this.currentTransition.update({
+        start: this.currentTransition.start,
         end: this.getCurrentTime(),
       })
-      this.currentRegion = region;
+      this.currentTransition = region;
     } else {
-      this.currentRegion = this.waveSurfer.addRegion({
+      this.currentTransition = this.waveSurfer.addRegion({
         start: this.getCurrentTime(),
         end: this.getDuration(),
         drag: false,
@@ -139,7 +144,35 @@ var MusicInterface = {
   },
 
   setTransitions: function(transitions) {
-    transitions.forEach(function(transition, index) {})
+    //Shouldn't really be in this object...
+    transitions.sort(function(a,b) {
+      return a.time - b.time;
+    });
+    if (transitions.length >= 2) {
+      console.log(transitions)
+      for (var index = 0; index < transitions.length - 1; index++) {
+        this.waveSurfer.addRegion({
+          start: transitions[index].time,
+          end: transitions[index+1].time,
+          drag: false,
+          resize: false
+        })
+      }
+      this.waveSurfer.addRegion({
+        start: transitions[index].time,
+        end: this.getDuration(),
+        drag: false,
+        resize: false
+      });
+    } else {
+      console.log(transitions[0])
+      this.waveSurfer.addRegion({
+        start: transitions[0].time,
+        end: this.getDuration(),
+        drag: false,
+        resize: false
+      })
+    }
   },
 
   // Generates random colour for regions
