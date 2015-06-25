@@ -18,6 +18,19 @@ var AudioWave = React.createClass({
       this.props.postTransition(this.props.visualization.id, time, visualizer.getParams());
     },
 
+    setCurrentRegionAndTransition: function(region) {
+      var transitions = this.props.transitions
+      musicInterface.currentRegion = region;
+      for (var i = 0; i < transitions.length; i++) {
+        var transition = transitions[i];
+        if (transition.id === musicInterface.currentRegion.id) {
+          visualizer.setParams(transition.params);
+          console.log(transition.params);
+          break;
+        }
+      }
+    },
+
     render: function(){
       return (
         <div className="wave-container">
@@ -35,7 +48,9 @@ var AudioWave = React.createClass({
         </div>
       );
     },
+
     componentDidMount: function () {
+      var self = this;
       musicInterface.init(visualizer);
 
       // Initializes timeline plugin and plays once ready
@@ -47,21 +62,24 @@ var AudioWave = React.createClass({
           container: "#wave-timeline"
         });
 
-        musicInterface.waveSurfer.on('region-click', function (region, e) {
-          //set current region properly
-          console.log(region);
-          musicInterface.currentTransition = region;
-        });
+        musicInterface.waveSurfer.on(
+          'region-click',
+          function (region, event) {
+            self.setCurrentRegionAndTransition(region);
+          }
+        );
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
           //This will need more work, but for now just reset completely?
           region.remove();
         });
 
-        musicInterface.waveSurfer.on('region-in', function (region, e) {
-          console.log(region);
-          musicInterface.currentTransition = region;
-        });
+        musicInterface.waveSurfer.on(
+          'region-in', 
+          function (region, event) {
+            self.setCurrentRegionAndTransition(region);
+          }
+        );
 
         // TODO - Load JSON data in when ready
         // loadRegions(JSON.parse(localStorage.transitions));

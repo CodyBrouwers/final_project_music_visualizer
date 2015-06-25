@@ -9,6 +9,7 @@ var ParameterMenu = React.createClass({
         'value': 'rgb('+red+','+green+','+blue+')'
       }];
       visualizer.setParams(param)
+      visualizer.getParams();
     },
     changeShape: function() {
       var param = [{

@@ -66,7 +66,7 @@ var MusicInterface = {
 
   //Remove all nodes and stuff
   destroy: function() {
-    this.currentTransition = undefined;
+    this.currentRegion = undefined;
     this.waveSurfer.destroy();
   },
 
@@ -120,54 +120,62 @@ var MusicInterface = {
     });
   },
 
-  addTransition: function() {
-    console.log(this.currentTransition)
-    if (this.currentTransition) {
+  addTransition: function(transition) {
+    if (this.currentRegion) {
       var region = this.waveSurfer.addRegion({
+        id: transition.id,
         start: this.getCurrentTime(),
-        end: this.currentTransition.end,
+        end: this.currentRegion.end,
+        color: this.randomColor(0.5)
       })
-      this.currentTransition = this.currentTransition.update({
-        start: this.currentTransition.start,
+      this.currentRegion = this.currentRegion.update({
+        start: this.currentRegion.start,
         end: this.getCurrentTime(),
-        color: this.randomColor(0.5),
+        color: this.randomColor(0.5)
       })
-      this.currentTransition = region;
+      this.currentRegion = region;
     } else {
-      this.currentTransition = this.waveSurfer.addRegion({
+      this.currentRegion = this.waveSurfer.addRegion({
+        id: transition.id,
         start: this.getCurrentTime(),
         end: this.getDuration(),
-        color: this.randomColor(0.5),
+        color: this.randomColor(0.5)
       })
     }
   },
 
   setTransitions: function(transitions) {
     //Shouldn't really be in this object...
+    var region;
     transitions.sort(function(a,b) {
       return a.time - b.time;
     });
     if (transitions.length >= 2) {
-      console.log(transitions)
       for (var index = 0; index < transitions.length - 1; index++) {
-        this.waveSurfer.addRegion({
+        region this.waveSurfer.addRegion({
+          id: transitions[index].id,
           start: transitions[index].time,
           end: transitions[index+1].time,
           color: this.randomColor(0.5),
         })
+        if (!this.currentRegion) {
+          this.currentRegion = region;
+        }
       }
       this.waveSurfer.addRegion({
+        id: transitions[index].id,
         start: transitions[index].time,
         end: this.getDuration(),
         color: this.randomColor(0.5),
       });
     } else {
-      console.log(transitions[0])
-      this.waveSurfer.addRegion({
+       region = this.waveSurfer.addRegion({
+        id: transitions[0].id,
         start: transitions[0].time,
         end: this.getDuration(),
         color: this.randomColor(0.5),
-      })
+      });
+      this.currentRegion = region;  
     }
   },
 
