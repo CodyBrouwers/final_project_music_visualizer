@@ -117,11 +117,11 @@ WebGLVisualizer = {
 
   setGeometry: function(shape) {
     console.log(shape)
-    if (shape === 'SphereGeometry') {
-      this.mesh.geometry = new THREE[shape]( 200, 30, 30 );
+    if (shape.type === 'SphereGeometry') {
+      this.mesh.geometry = new THREE[shape.type]( 200, 20, 20 );
     }
     else {
-      this.mesh.geometry = new THREE[shape]( 200, 200, 200 );
+      this.mesh.geometry = new THREE[shape.type]( 200, 200, 200 );
     }
   }
 }

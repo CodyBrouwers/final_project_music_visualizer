@@ -147,7 +147,7 @@ var MusicInterface = {
     });
     if (transitions.length >= 2) {
       for (var index = 0; index < transitions.length - 1; index++) {
-        region this.waveSurfer.addRegion({
+        region = this.waveSurfer.addRegion({
           id: transitions[index].id,
           start: transitions[index].time,
           end: transitions[index+1].time,

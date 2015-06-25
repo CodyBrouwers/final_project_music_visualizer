@@ -18,11 +18,10 @@ var AudioWave = React.createClass({
       var params = visualizer.getParams();
       var new_tran = Transition.createOne(this.props.visualization.id, time, params);
       musicInterface.addTransition(); 
-      // this.props.postTransition(this.props.visualization.id, time, visualizer.getParams());
     },
 
     setCurrentRegionAndTransition: function(region) {
-      var transitions = this.props.transitions
+      var transitions = Transision.getAll();
       musicInterface.currentRegion = region;
       for (var i = 0; i < transitions.length; i++) {
         var transition = transitions[i];

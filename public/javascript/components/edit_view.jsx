@@ -4,7 +4,7 @@ var visualizer = Object.create(WebGLVisualizer);
 var EditView = React.createClass({
 
   getInitialState: function() {
-    return { transitions: [] }
+    return { transitions: Transition.fetchAll }
   },
 
   handleClick: function() {
@@ -31,14 +31,9 @@ var EditView = React.createClass({
         Back to List</p>
         <h1 id="vizname">{this.props.visualization.name}</h1>
         <div className='viz-container'>
-          <ParameterMenu 
-          postTransition={this.postTransition} 
-          transitions={this.state.transitions} />
+          <ParameterMenu />
         </div>
-        <AudioWave 
-          visualization={this.props.visualization} 
-          postTransition={this.postTransition} 
-          transitions={this.state.transitions} />
+        <AudioWave visualization={this.props.visualization} />
       </div>
     )
   },
