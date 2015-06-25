@@ -21,6 +21,19 @@ var AudioWave = React.createClass({
       // this.props.postTransition(this.props.visualization.id, time, visualizer.getParams());
     },
 
+    setCurrentRegionAndTransition: function(region) {
+      var transitions = this.props.transitions
+      musicInterface.currentRegion = region;
+      for (var i = 0; i < transitions.length; i++) {
+        var transition = transitions[i];
+        if (transition.id === musicInterface.currentRegion.id) {
+          visualizer.setParams(transition.params);
+          console.log(transition.params);
+          break;
+        }
+      }
+    },
+
     render: function(){
       return (
         <div className="wave-container">
@@ -38,7 +51,9 @@ var AudioWave = React.createClass({
         </div>
       );
     },
+
     componentDidMount: function () {
+      var self = this;
       musicInterface.init(visualizer);
 
       // Loads song with path if there is one
@@ -54,13 +69,26 @@ var AudioWave = React.createClass({
           wavesurfer: musicInterface.waveSurfer,
           container: "#wave-timeline"
         });
+        
+        musicInterface.waveSurfer.on(
+          'region-click',
+          function (region, event) {
+            self.setCurrentRegionAndTransition(region);
+          }
+        );
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
+          //This will need more work, but for now just reset completely?
           region.remove();
         });
 
-        // TODO - Load JSON data in when ready
-        // loadRegions(JSON.parse(localStorage.transitions));
+        musicInterface.waveSurfer.on(
+          'region-in', 
+          function (region, event) {
+            self.setCurrentRegionAndTransition(region);
+          }
+        );
+
       });
     }
   })
