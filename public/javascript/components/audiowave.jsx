@@ -56,17 +56,13 @@ var AudioWave = React.createClass({
           container: "#wave-timeline"
         });
         
-        musicInterface.waveSurfer.on(
-          'region-click',
-          function (region, event) {
+        musicInterface.waveSurfer.on('region-click', function (region, event) {
             musicInterface.pause();
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           }
         );
 
-        musicInterface.waveSurfer.on(
-          'region-in', 
-          function (region, event) {
+        musicInterface.waveSurfer.on('region-in', function (region, event) {
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           }
         );

@@ -1,17 +1,34 @@
 var ParameterMenu = React.createClass({
-    changeColor: function() {
-      //HACK: Write this the react way...
-      var red = $('#input-red').val();
-      var green = $('#input-green').val();
-      var blue = $('#input-blue').val();
-      var param = [{
+
+    changeColorParams: function () {
+      var self = this;
+      var red = this.refs.red.getDOMNode().value
+      var green = this.refs.green.getDOMNode().value
+      var blue = this.refs.blue.getDOMNode().value
+      var colors = [{
         'type': 'color',
         'value': 'rgb('+red+','+green+','+blue+')'
       }];
-      visualizer.setParams(param)
-      visualizer.getParams();
-      Transition.updateTransition(this.props.visualization.id);
+      var old = visualizer.getParams();
+      visualizer.setParams(colors);
+      waitForRegions();
+      function waitForRegions() {
+        if (!musicInterface.regionsLoaded()) {
+          setTimeout(waitForRegions, 100);
+        } else {
+          Transition.updateTransition(self.props.visualization.id);
+        }
+      }
+      // this.updateColorParams;
     },
+    
+    // updateColorParams: function () {
+    //   var v = visualizer.getParams();
+    //   var r = this.refs.red.getDOMNode().value;
+    //   r = 0;
+    //   console.log(v);
+    // },
+
     changeShape: function() {
       var param = [{
       'type': 'geometry',
@@ -31,15 +48,15 @@ var ParameterMenu = React.createClass({
               <ul className="color">
                 <li>
                   <form htmlFor='input-red'>Red</form>
-                  <input id='input-red' type='number' name="red" val='240' onChange={this.changeColor}/>
+                  <input id='input-red' type='range' ref="red" max="255" defaultValue='240'  onChange={this.changeColorParams}/>
                 </li>
                 <li>
                   <form htmlFor='input-green'>Green</form>
-                  <input id='input-green' type='number' name="green" val='100' onChange={this.changeColor}/>
+                  <input id='input-green' type='range' ref="green" max="255" defaultValue='100' onChange={this.changeColorParams}/>
                 </li>
                 <li>
                   <form htmlFor='input-blue'>Blue</form>
-                  <input id='input-blue' type='number' name="blue" val='30' onChange={this.changeColor}/>
+                  <input id='input-blue' type='range' ref="blue" max="255" defaultValue='30' onChange={this.changeColorParams}/>
                 </li>
               </ul>
             </fieldset>
