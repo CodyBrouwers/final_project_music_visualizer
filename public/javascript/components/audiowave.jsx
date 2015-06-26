@@ -74,11 +74,7 @@ var AudioWave = React.createClass({
         musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
           //This will need more work, but for now just reset completely?
           region.remove();
-          // var c = self.setCurrentRegionAndTransition(region);
-          // console.log("Current transition: ", c);
-          // console.log("Current region: ", region);
         });
-
 
       });
     }

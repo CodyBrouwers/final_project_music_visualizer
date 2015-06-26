@@ -112,7 +112,6 @@ var Transition = {
   },
 
   updateOneRemotely: function(vizId, transition) {
-    // Transition._updateTransitionLocally(transition);
     Transition._updateTransitionRemotely(vizId, transition);
   },
 
@@ -137,6 +136,7 @@ var Transition = {
   },
 
   updateTransition: function(vizId){
+    console.log(vizId);
     var activeTransition = Transition.findCurrentTransition(musicInterface.currentRegion);
     var newParams = visualizer.getParams();
     activeTransition.params = newParams;

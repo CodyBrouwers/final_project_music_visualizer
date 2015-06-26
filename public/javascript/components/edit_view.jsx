@@ -31,7 +31,7 @@ var EditView = React.createClass({
         Back to List</p>
         <h1 id="vizname">{this.props.visualization.name}</h1>
         <div className='viz-container'>
-          <ParameterMenu />
+          <ParameterMenu visualization={this.props.visualization} />
         </div>
         <AudioWave visualization={this.props.visualization} />
       </div>
