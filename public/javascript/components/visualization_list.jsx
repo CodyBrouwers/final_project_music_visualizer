@@ -22,7 +22,7 @@ var VisualizationList = React.createClass({
 
   render: function(){
     var self = this;
-    var items = _.sortBy(Visualization._visualizations, function(viz){return viz[self.state.sortBy]});
+    var items = _.sortBy(Visualization.getAll(), function(viz){return viz[self.state.sortBy]});
     var items = items.map(function(viz){
       return <VisualizationItem 
         viz={viz} 
@@ -51,7 +51,6 @@ var VisualizationList = React.createClass({
   }
 });
 
-//To Do: Should this be here or elsewhere?
 Visualization.registerChangeCallback(function () {
   React.render( < AppView />, document.getElementById('app'))
 })

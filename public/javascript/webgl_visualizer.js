@@ -29,9 +29,9 @@ WebGLVisualizer = {
     this.visualizerType = 1;
 
     //TODO: remove this shiiit (don't use jQuery)
-    $('#input-red').val(red);
-    $('#input-green').val(green);
-    $('#input-blue').val(blue);
+    // $('#input-red').val(red);
+    // $('#input-green').val(green);
+    // $('#input-blue').val(blue);
 
   },
 
@@ -91,12 +91,16 @@ WebGLVisualizer = {
   },
 
   getParam: function(type) {
+    var value;
     switch (type) {
       case 'color':
-        return this.getColor();
+        value = this.getColor();
+        break;
       case 'geometry':
-        return this.mesh.geometry;
+        value = this.mesh.geometry.type;
+        break;
     }
+    return { 'type': type, 'value': value }
   },
 
   getColor: function() {
@@ -112,9 +116,8 @@ WebGLVisualizer = {
   },
 
   setGeometry: function(shape) {
-    console.log(shape)
     if (shape === 'SphereGeometry') {
-      this.mesh.geometry = new THREE[shape]( 200, 30, 30 );
+      this.mesh.geometry = new THREE[shape]( 200, 20, 20 );
     }
     else {
       this.mesh.geometry = new THREE[shape]( 200, 200, 200 );

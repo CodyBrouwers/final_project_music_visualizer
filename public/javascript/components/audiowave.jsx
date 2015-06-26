@@ -12,16 +12,18 @@ var AudioWave = React.createClass({
     toggleMute: function() {
       musicInterface.toggleMute();
     },
-
-    addTransition: function() {
-      var time = musicInterface.getCurrentTime();
-      this.props.postTransition(this.props.visualization.id, time, visualizer.getParams());
+    addTransition: function () {
+      Transition.addTransition(this.props.visualization.id);
+    },
+    updateTransition: function() {
+      Transition.updateTransition(this.props.visualization.id);
     },
 
     render: function(){
       return (
         <div className="wave-container">
           <div className="controls">
+            <button onClick={this.updateTransition}>Update</button>
             <button onClick={this.backward}>Backwards</button>
             <button onClick={this.playPause}>Play/Pause</button>
             <button onClick={this.forward}>Forwards</button>
@@ -35,8 +37,15 @@ var AudioWave = React.createClass({
         </div>
       );
     },
+
     componentDidMount: function () {
+      var self = this;
       musicInterface.init(visualizer);
+
+      // Loads song with path if there is one
+      if (this.props.visualization.path != undefined) {
+        musicInterface.loadSong(this.props.visualization.path);  
+      }
 
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
@@ -46,18 +55,27 @@ var AudioWave = React.createClass({
           wavesurfer: musicInterface.waveSurfer,
           container: "#wave-timeline"
         });
+        
+        musicInterface.waveSurfer.on(
+          'region-click',
+          function (region, event) {
+            musicInterface.pause();
+            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
+          }
+        );
 
-        musicInterface.waveSurfer.on('region-click', function (region, e) {
-          // Play on click, loop on shift click
-          e.shiftKey ? region.playLoop() : region.play();
-        });
+        musicInterface.waveSurfer.on(
+          'region-in', 
+          function (region, event) {
+            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
+          }
+        );
 
-        musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
+        musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
+          //This will need more work, but for now just reset completely?
           region.remove();
         });
 
-        // TODO - Load JSON data in when ready
-        // loadRegions(JSON.parse(localStorage.transitions));
       });
     }
   })

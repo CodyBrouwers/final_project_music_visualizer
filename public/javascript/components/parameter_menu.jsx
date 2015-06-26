@@ -9,6 +9,8 @@ var ParameterMenu = React.createClass({
         'value': 'rgb('+red+','+green+','+blue+')'
       }];
       visualizer.setParams(param)
+      visualizer.getParams();
+      Transition.updateTransition(this.props.visualization.id);
     },
     changeShape: function() {
       var param = [{
@@ -16,6 +18,7 @@ var ParameterMenu = React.createClass({
       'value': event.target.value
       }];
       visualizer.setParams(param)
+      Transition.updateTransition(this.props.visualization.id);
     },
     render: function(){
       return (
