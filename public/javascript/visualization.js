@@ -8,6 +8,12 @@ var Visualization = {
   
   _callbacks: [],
 
+  _runCallbacks: function () {
+    for(i = 0; i < Visualization._callbacks.length; i++) {
+      Visualization._callbacks[i]();
+    }
+  },
+
   _createNewViz: function(){
     var id = uuid();
     return { id: id,
@@ -16,15 +22,9 @@ var Visualization = {
     }
   },
 
-  _runCallbacks: function () {
-    for(i = 0; i < Visualization._callbacks.length; i++) {
-      Visualization._callbacks[i]();
-    }
-  },
-
   _addVizLocally: function(viz) {
     Visualization._visualizations[viz.id] = viz;
-    Visualization._runCallbacks();
+    // Visualization._runCallbacks();
   },
 
   _addVizRemotely: function(viz){
@@ -99,7 +99,7 @@ var Visualization = {
   },
 
   fetchAll: function() {
-    var vizs = Visualization._fetchAllFromRemote();
+    Visualization._fetchAllFromRemote();
     return null;
   },
 

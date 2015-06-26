@@ -66,13 +66,19 @@ var MusicInterface = {
 
   //Remove all nodes and stuff
   destroy: function() {
-    this.currentTransition = undefined;
+    this.currentRegion = undefined;
     this.waveSurfer.destroy();
   },
 
   //Need to have access to all the playback functions from waveSurfer.js
   playPause: function() {
     this.waveSurfer.playPause();
+  },
+
+  pause: function () {
+    if (!this.waveSurfer.backend.isPaused()) {
+      this.waveSurfer.pause();  
+    }
   },
 
   skipBackward: function() {
@@ -95,10 +101,6 @@ var MusicInterface = {
   loadBlob: function(file) {
     this.waveSurfer.loadBlob(file);
   },
-  
-  initTimeLine: function() {
-    // this.timeLine =
-  },
 
   getCurrentTime: function() {
     return this.waveSurfer.getCurrentTime();
@@ -106,7 +108,6 @@ var MusicInterface = {
 
   getDuration: function() {
     var time = this.waveSurfer.backend.getDuration();
-    console.log(time)
     return time;
   },
   
@@ -115,63 +116,67 @@ var MusicInterface = {
   // Enables Region Selection
   enableRegions: function () {
     this.waveSurfer.initRegions({
-      color: this.randomColor(0.5)
+      drag: false,
+      resize: false
     });
   },
 
-  addTransition: function() {
-    console.log(this.currentTransition)
-    if (this.currentTransition) {
+  addRegion: function(transition) {
+    if (this.currentRegion) {
       var region = this.waveSurfer.addRegion({
+        id: transition.id,
         start: this.getCurrentTime(),
-        end: this.currentTransition.end,
-        drag: false,
-        resize: false
+        end: this.currentRegion.end,
+        color: this.randomColor(0.5)
       })
-      this.currentTransition.update({
-        start: this.currentTransition.start,
+      this.currentRegion = this.currentRegion.update({
+        start: this.currentRegion.start,
         end: this.getCurrentTime(),
+        color: this.randomColor(0.5)
       })
-      this.currentTransition = region;
+      this.currentRegion = region;
     } else {
-      this.currentTransition = this.waveSurfer.addRegion({
+      this.currentRegion = this.waveSurfer.addRegion({
+        id: transition.id,
         start: this.getCurrentTime(),
         end: this.getDuration(),
-        drag: false,
-        resize: false
+        color: this.randomColor(0.5)
       })
     }
   },
 
-  setTransitions: function(transitions) {
+  setRegion: function(transitions) {
     //Shouldn't really be in this object...
+    var region;
     transitions.sort(function(a,b) {
       return a.time - b.time;
     });
     if (transitions.length >= 2) {
-      console.log(transitions)
       for (var index = 0; index < transitions.length - 1; index++) {
-        this.waveSurfer.addRegion({
+        region = this.waveSurfer.addRegion({
+          id: transitions[index].id,
           start: transitions[index].time,
           end: transitions[index+1].time,
-          drag: false,
-          resize: false
+          color: this.randomColor(0.5),
         })
+        if (!this.currentRegion) {
+          this.currentRegion = region;
+        }
       }
       this.waveSurfer.addRegion({
+        id: transitions[index].id,
         start: transitions[index].time,
         end: this.getDuration(),
-        drag: false,
-        resize: false
+        color: this.randomColor(0.5),
       });
     } else {
-      console.log(transitions[0])
-      this.waveSurfer.addRegion({
+       region = this.waveSurfer.addRegion({
+        id: transitions[0].id,
         start: transitions[0].time,
         end: this.getDuration(),
-        drag: false,
-        resize: false
-      })
+        color: this.randomColor(0.5),
+      });
+      this.currentRegion = region;  
     }
   },
 
