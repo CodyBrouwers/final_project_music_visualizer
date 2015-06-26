@@ -1,3 +1,67 @@
+html {
+  background: white;
+}
+
+body{
+  font-family: 'Lato';
+  color: #FFF;
+  background: #191919;
+
+}
+
+#header {
+  position: relative;
+  height: 20vh;
+  width: 100vw;
+  margin: auto;
+}
+
+#logo-text {
+  position: absolute;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  left: 20px;
+  margin: 0px;
+  font-size:80px;
+  width: 300px;
+/*  background: url(images/fire.jpg) no-repeat;
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;*/
+}
+
+#btn-new-viz {
+  position: absolute;
+  top: 35px;
+  right: 20px;
+  border-style: solid;
+  height: 50px;
+  width: 200px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 50px;
+  border-color: #FFF;
+  border-width: 1px;
+  transition: all .2s ease;
+
+}
+
+#btn-new-viz:hover {
+  background: #2f2f2f;
+  cursor: hand;
+
+}
+
+.sort-button {
+  display: none;
+  margin: auto;
+}
+
+
+#container { 
+  background: #000;
+  padding-left: 1px;
+}
+
 .menu-button {
   display: none;
   position: absolute;
@@ -90,16 +154,11 @@
   color: #000;
 }
 
-.viz-container {
-  position: relative;
-}
-
-
 /* Grid hover caption effect */
 
 .viz {
-  height: 250px;
-  width: 250px;
+  height: 254px;
+  width: 254px;
   float: left;
   margin: 1px;
   transition: all 2s;

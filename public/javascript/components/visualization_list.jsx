@@ -20,6 +20,8 @@ var VisualizationList = React.createClass({
     this.props.changeVisualization(newViz);
   },
 
+// TODO: Add back in sort into return {sortButtons}
+ 
   render: function(){
     var self = this;
     var items = _.sortBy(Visualization.getAll(), function(viz){return viz[self.state.sortBy]});
@@ -27,7 +29,8 @@ var VisualizationList = React.createClass({
       return <VisualizationItem 
         viz={viz} 
         key={ "visualization-item-" + viz.id} 
-        changePage={self.props.changePage} 
+        changePage={self.props.changePage}
+        url = "http://lorempixel.com/250/250/fashion"
         changeVisualization={self.props.changeVisualization} />;
     })
 
@@ -38,11 +41,12 @@ var VisualizationList = React.createClass({
     })
     return (
       <div>
-        <h1>List View</h1>
-        <button onClick={this.postNewViz}>
-          New Visual
-        </button>
-        {sortButtons}
+        <div id="header">
+          <h1 id="logo-text">NWMP</h1>
+            <div id="btn-new-viz" onClick={this.postNewViz}>
+              Create New Visualization
+            </div>
+        </div>
         <div id="container" ref="container">
           {items}
         </div>
