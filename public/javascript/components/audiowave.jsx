@@ -12,45 +12,19 @@ var AudioWave = React.createClass({
     toggleMute: function() {
       musicInterface.toggleMute();
     },
-
-    addTransition: function() {
-      var time = musicInterface.getCurrentTime();
-      var params = visualizer.getParams();
-      var new_transition = Transition.createOne(this.props.visualization.id, time, params);
-      musicInterface.addTransition(new_transition); 
+    addTransition: function () {
+      Transition.addTransition(this.props.visualization.id);
     },
-
-    updateTransition: function(){
-      var active = this.findCurrentTransition(musicInterface.currentRegion);
-      console.log("this is the active transition", active);
-      
-    },
-
-    findCurrentTransition: function(region){
-      var transitions = Transition.getAll();
-      for (var i = 0; i < transitions.length; i++) {
-        var transition = transitions[i];
-        if (transition.id === musicInterface.currentRegion.id) {
-          return transition;
-        }
-      }
-    },
-
-    setCurrentTransition: function(transition){
-      visualizer.setParams(transition.params);
-    },
-
-    setCurrentRegionAndTransition: function(region) {
-      var transition = this.findCurrentTransition(region);
-      this.setCurrentTransition(transition);
+    updateTransition: function() {
+      Transition.updateTransition(this.props.visualization.id);
     },
 
     render: function(){
       return (
         <div className="wave-container">
           <div className="controls">
-            <button onClick={this.updateTransition}>Backwards</button>
-            // <button onClick={this.backward}>Backwards</button>
+            <button onClick={this.updateTransition}>Update</button>
+            <button onClick={this.backward}>Backwards</button>
             <button onClick={this.playPause}>Play/Pause</button>
             <button onClick={this.forward}>Forwards</button>
             <button onClick={this.toggleMute}>Mute</button>
@@ -85,21 +59,26 @@ var AudioWave = React.createClass({
         musicInterface.waveSurfer.on(
           'region-click',
           function (region, event) {
-            self.findCurrentTransition(region);
+            musicInterface.pause();
+            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           }
         );
-
-        musicInterface.waveSurfer.on('region-dblclick', function (region, e) {
-          //This will need more work, but for now just reset completely?
-          region.remove();
-        });
 
         musicInterface.waveSurfer.on(
           'region-in', 
           function (region, event) {
-            self.setCurrentRegionAndTransition(region);
+            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           }
         );
+
+        musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
+          //This will need more work, but for now just reset completely?
+          region.remove();
+          // var c = self.setCurrentRegionAndTransition(region);
+          // console.log("Current transition: ", c);
+          // console.log("Current region: ", region);
+        });
+
 
       });
     }

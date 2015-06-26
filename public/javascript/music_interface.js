@@ -75,6 +75,12 @@ var MusicInterface = {
     this.waveSurfer.playPause();
   },
 
+  pause: function () {
+    if (!this.waveSurfer.backend.isPaused()) {
+      this.waveSurfer.pause();  
+    }
+  },
+
   skipBackward: function() {
     this.waveSurfer.skipBackward();
   },
@@ -115,7 +121,7 @@ var MusicInterface = {
     });
   },
 
-  addTransition: function(transition) {
+  addRegion: function(transition) {
     if (this.currentRegion) {
       var region = this.waveSurfer.addRegion({
         id: transition.id,
@@ -139,7 +145,7 @@ var MusicInterface = {
     }
   },
 
-  setTransitions: function(transitions) {
+  setRegion: function(transitions) {
     //Shouldn't really be in this object...
     var region;
     transitions.sort(function(a,b) {

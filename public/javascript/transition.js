@@ -14,11 +14,11 @@ var Transition = {
     }
   },
 
-  _createNewTransition: function (viz_id, time, params) {
+  _createNewTransition: function (vizId, time, params) {
     var id = uuid();    
     return {
       id: id,
-      visualization_id: viz_id,
+      visualization_id: vizId,
       time: time,
       params: params
     }
@@ -28,10 +28,10 @@ var Transition = {
     Transition._transitions.push(transition);
   },
 
-  _addTransitionRemotely: function(viz_id, transition){
+  _addTransitionRemotely: function(vizId, transition){
     $.ajax({
       type: "POST",
-      url: "/visualizations/"+viz_id+"/transitions",
+      url: "/visualizations/"+vizId+"/transitions",
       dataType: 'json',
       data: {
         id: transition.id,
@@ -40,7 +40,6 @@ var Transition = {
       },
       success: function(data) {
         console.log('Posted new transition');
-        console.log("List of transitions: ", Transition._transitions);
         data.params = JSON.parse(data.params);
       },
       error: function(jqxhr, string) {
@@ -51,21 +50,21 @@ var Transition = {
     });
   },
 
-  _fetchAllFromRemote: function(viz_id) {
+  _fetchAllFromRemote: function(vizId) {
     $.ajax({
         type: "GET",
-        url: "/visualizations/"+viz_id+"/transitions",
+        url: "/visualizations/"+vizId+"/transitions",
         dataType: 'json',
         success: function(transitions) {
-          Transition._storeAllLocally(viz_id, transitions);
+          Transition._storeAllLocally(vizId, transitions);
           visualizer.setParams(Transition._transitions[0].params);
-          musicInterface.setTransitions(Transition._transitions);
+          musicInterface.setRegion(Transition._transitions);
           Transition._runCallbacks();
         }
     });
   },
 
-  _storeAllLocally: function(viz_id, transitions) {
+  _storeAllLocally: function(vizId, transitions) {
     if (transitions.length !== 0) {
       transitions.forEach(function(transition, index) {
         transition.params = JSON.parse(transition.params);
@@ -74,9 +73,9 @@ var Transition = {
     } else {
       var time = 0;
       var params = visualizer.getParams();
-      var new_transition = Transition._createNewTransition(viz_id, time, params);
+      var new_transition = Transition._createNewTransition(vizId, time, params);
       Transition._addTransitionLocally(new_transition);
-      Transition._addTransitionRemotely(viz_id, new_transition);
+      Transition._addTransitionRemotely(vizId, new_transition);
     }
   },
 
@@ -85,14 +84,14 @@ var Transition = {
     // Transition._runCallbacks();
   },
 
-  _updateTransitionRemotely: function (viz, transition) {
+  _updateTransitionRemotely: function (vizId, transition) {
     $.ajax({
       type: "PUT",
-      url: "/visualizations/"+viz.id+"/transitions",
+      url: "/visualizations/"+vizId+"/transitions/"+transition.id,
       dataType: 'json',
       data: {
         id: transition.id,
-        params: transition.params
+        params: JSON.stringify(transition.params)
       },
       success: function() {
         console.log('Updated');
@@ -105,20 +104,20 @@ var Transition = {
 
   // Create a new transition locally and store
   // it in the db.
-  createOne: function(viz_id, time, params) {
-    var transition = Transition._createNewTransition(viz_id, time, params);
+  createOne: function(vizId, time, params) {
+    var transition = Transition._createNewTransition(vizId, time, params);
     Transition._addTransitionLocally(transition);
-    Transition._addTransitionRemotely(viz_id, transition);
+    Transition._addTransitionRemotely(vizId, transition);
     return transition;
   },
 
-  updateOne: function(transition) {
-    Transition._updateTransitionLocally(transition);
-    Transition._updateTransitionRemotely(transition);
+  updateOneRemotely: function(vizId, transition) {
+    // Transition._updateTransitionLocally(transition);
+    Transition._updateTransitionRemotely(vizId, transition);
   },
 
-  fetchAll: function(viz_id, callback) {
-    Transition._fetchAllFromRemote(viz_id);
+  fetchAll: function(vizId, callback) {
+    Transition._fetchAllFromRemote(vizId);
     return null;
   },
 
@@ -128,5 +127,40 @@ var Transition = {
 
   registerChangeCallback: function(fn) {
     Transition._callbacks.push(fn);
-  }
+  },
+
+  addTransition: function(vizId) {
+    var time = musicInterface.getCurrentTime();
+    var params = visualizer.getParams();
+    var new_transition = Transition.createOne(vizId, time, params);
+    musicInterface.addRegion(new_transition); 
+  },
+
+  updateTransition: function(vizId){
+    var activeTransition = Transition.findCurrentTransition(musicInterface.currentRegion);
+    var newParams = visualizer.getParams();
+    activeTransition.params = newParams;
+    Transition.updateOneRemotely(vizId, activeTransition);
+  },
+
+  findCurrentTransition: function(region){
+    var transitions = Transition.getAll();
+    for (var i = 0; i < transitions.length; i++) {
+      var transition = transitions[i];
+      if (transition.id === region.id) {
+        return transition;
+      }
+    }
+  },
+
+  setCurrentTransition: function(transition){
+    visualizer.setParams(transition.params);
+  },
+
+  setCurrentRegionAndTransition: function(vizId, region) {
+    musicInterface.currentRegion = region;
+    var transition = this.findCurrentTransition(region);
+    this.setCurrentTransition(transition);
+    return transition;
+  },
 }

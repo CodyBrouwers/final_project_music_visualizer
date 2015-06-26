@@ -97,7 +97,7 @@ WebGLVisualizer = {
         value = this.getColor();
         break;
       case 'geometry':
-        value = this.mesh.geometry;
+        value = this.mesh.geometry.type;
         break;
     }
     return { 'type': type, 'value': value }
@@ -116,12 +116,11 @@ WebGLVisualizer = {
   },
 
   setGeometry: function(shape) {
-    console.log(shape)
-    if (shape.type === 'SphereGeometry') {
-      this.mesh.geometry = new THREE[shape.type]( 200, 20, 20 );
+    if (shape === 'SphereGeometry') {
+      this.mesh.geometry = new THREE[shape]( 200, 20, 20 );
     }
     else {
-      this.mesh.geometry = new THREE[shape.type]( 200, 200, 200 );
+      this.mesh.geometry = new THREE[shape]( 200, 200, 200 );
     }
   }
 }
