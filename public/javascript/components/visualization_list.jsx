@@ -1,3 +1,5 @@
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var VisualizationList = React.createClass({
 
   _sortOptions: ['name', 'created_at', 'updated_at'],
@@ -48,7 +50,7 @@ var VisualizationList = React.createClass({
             </div>
         </div>
         <div id="container" ref="container">
-          {items}
+            {items}
         </div>
       </div>
     )
