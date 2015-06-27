@@ -20,7 +20,6 @@ var EditView = React.createClass({
 
   render: function(){
     var self = this;
-    musicInterface.init(visualizer);
     return (
       <div>
         <h1>Edit View</h1>
@@ -44,7 +43,6 @@ var EditView = React.createClass({
     $('.viz-container').append(visualizer.renderer.domElement);
     visualizer.animate();
     Transition.fetchAll(self.props.visualization.id);
-
   } 
 
 });
