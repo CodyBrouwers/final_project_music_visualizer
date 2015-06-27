@@ -13,13 +13,14 @@ var VisualizationList = React.createClass({
   },
 
   postNewViz: function() {
-    // TODO create new viz object
-    // add it to visualizations
-    // store it to the database
-    // change pages
+
     var newViz = Visualization.createOne();
     this.props.changePage('Edit');
     this.props.changeVisualization(newViz);
+  },
+
+  changeSort: function (sortOption) {
+    this.setState({sortBy: sortOption});
   },
 
 // TODO: Add back in sort into return {sortButtons}
@@ -45,7 +46,7 @@ var VisualizationList = React.createClass({
       <div>
         <div id="header">
           <h1 id="logo-text">NWMP</h1>
-          <SortMenu sortOptions={ this._sortOptions } sortBy={ this.state.sortBy } />
+          <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } />
           <div id="btn-new-viz" onClick={this.postNewViz}>
             Create New Visualization
           </div>
