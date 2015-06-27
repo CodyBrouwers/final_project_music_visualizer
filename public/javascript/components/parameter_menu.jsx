@@ -54,9 +54,11 @@ var ParameterMenu = React.createClass({
     componentDidMount: function () {
       var self = this
       var wave = document.getElementById('wave');
+      var play = document.getElementById('play');
       wave.addEventListener("click", self.updateAllParams);
-      musicInterface.waveSurfer.on("region-in", self.updateAllParams);
-
+      play.addEventListener("click", function () {
+        musicInterface.waveSurfer.on("region-in", self.updateAllParams);
+      });
     },
 
     render: function(){

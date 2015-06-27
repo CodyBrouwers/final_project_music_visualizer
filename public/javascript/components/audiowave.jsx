@@ -25,7 +25,7 @@ var AudioWave = React.createClass({
           <div className="controls">
             <button onClick={this.updateTransition}>Update</button>
             <button onClick={this.backward}>Backwards</button>
-            <button onClick={this.playPause}>Play/Pause</button>
+            <button id="play" onClick={this.playPause}>Play/Pause</button>
             <button onClick={this.forward}>Forwards</button>
             <button onClick={this.toggleMute}>Mute</button>
             <button onClick={this.addTransition}>Add Transition</button>
@@ -40,6 +40,7 @@ var AudioWave = React.createClass({
 
     componentDidMount: function () {
       var self = this;
+      musicInterface.init(visualizer);
 
       // Loads song with path if there is one
       if (this.props.visualization.path != undefined) {
