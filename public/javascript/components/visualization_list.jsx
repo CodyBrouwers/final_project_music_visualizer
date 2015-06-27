@@ -45,7 +45,7 @@ var VisualizationList = React.createClass({
       <div>
         <div id="header">
           <h1 id="logo-text">NWMP</h1>
-          <SortMenu sortOptions={ this.props._sortOptions } sortBy={ this.state.sortBy } />
+          <SortMenu sortOptions={ this._sortOptions } sortBy={ this.state.sortBy } />
           <div id="btn-new-viz" onClick={this.postNewViz}>
             Create New Visualization
           </div>
