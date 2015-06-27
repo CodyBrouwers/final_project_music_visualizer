@@ -40,7 +40,6 @@ var AudioWave = React.createClass({
 
     componentDidMount: function () {
       var self = this;
-      musicInterface.init(visualizer);
 
       // Loads song with path if there is one
       if (this.props.visualization.path != undefined) {

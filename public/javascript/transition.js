@@ -123,10 +123,6 @@ var Transition = {
     return Transition._transitions;
   },
 
-  registerChangeCallback: function (fn) {
-    Transition._callbacks.push(fn);
-  },
-
   addTransition: function (vizId) {
     var time = musicInterface.getCurrentTime();
     var params = visualizer.getParams();
@@ -164,4 +160,8 @@ var Transition = {
     this.setCurrentTransition(transition);
     return transition;
   },
+
+  registerChangeCallback: function (fn) {
+    Transition._callbacks.push(fn);
+  }
 }
