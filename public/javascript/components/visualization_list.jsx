@@ -36,18 +36,19 @@ var VisualizationList = React.createClass({
         changeVisualization={self.props.changeVisualization} />;
     })
 
-    var sortButtons = _.map(self._sortOptions, function(sortOption){
-      return <div className="sort-button" onClick={function(){
-        self.setState({sortBy: sortOption});
-      }}>{sortOption}</div>;
-    })
+    // var sortButtons = _.map(self._sortOptions, function(sortOption){
+    //   return <div className="sort-button" onClick={function(){
+    //     self.setState({sortBy: sortOption});
+    //   }}>{sortOption}</div>;
+    // })
     return (
       <div>
         <div id="header">
           <h1 id="logo-text">NWMP</h1>
-            <div id="btn-new-viz" onClick={this.postNewViz}>
-              Create New Visualization
-            </div>
+          <SortMenu sortOptions={ this.props._sortOptions } sortBy={ this.state.sortBy } />
+          <div id="btn-new-viz" onClick={this.postNewViz}>
+            Create New Visualization
+          </div>
         </div>
         <div id="container" ref="container">
             {items}
