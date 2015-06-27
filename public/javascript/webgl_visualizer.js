@@ -2,19 +2,29 @@ WebGLVisualizer = {
 
   //Need to have access to visualizer and it's parameters
   init: function() {
+    this.start = Date.now(),
 
     this.scene = new THREE.Scene();
     
     this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-    this.camera.position.z = 1000;
+    this.camera.position.z = 50;
 
     var red = 240;
     var green = 50;
     var blue = 10;
     this.color = 'rgb(' + red + ',' + green + ',' + blue + ')'
     var myColor = new THREE.Color(this.color);
-    var geometry = new THREE.BoxGeometry( 200, 200, 200 );
-    this.material = new THREE.MeshPhongMaterial( { color: myColor } );
+    var geometry = new THREE.BoxGeometry( 20, 20, 20 );
+    this.material = new THREE.ShaderMaterial( {
+      uniforms: {
+      time: { // float initialized to 0
+          type: "f", 
+          value: 0.0 
+        }
+      },
+      vertexShader: document.getElementById( 'vertexShader' ).textContent,
+      fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+    } );
 
     this.mesh = new THREE.Mesh( geometry, this.material );
     this.scene.add( this.mesh );
@@ -48,6 +58,7 @@ WebGLVisualizer = {
     this.mesh.scale.z = scale;
 
     musicInterface.updateData();
+    this.material.uniforms[ 'time' ].value = .00025 * ( Date.now() - this.start );
     this.renderer.render(this.scene, this.camera);
   },
 
@@ -117,10 +128,13 @@ WebGLVisualizer = {
 
   setGeometry: function(shape) {
     if (shape === 'SphereGeometry') {
-      this.mesh.geometry = new THREE[shape]( 200, 20, 20 );
+      this.mesh.geometry = new THREE[shape]( 20, 100, 100 );
+    }
+    else if (shape === 'IcosahedronGeometry') {
+      this.mesh.geometry = new THREE[shape]( 20, 4 );
     }
     else {
-      this.mesh.geometry = new THREE[shape]( 200, 200, 200 );
+      this.mesh.geometry = new THREE[shape]( 20, 20, 20 );
     }
   }
 }

@@ -51,6 +51,10 @@ var ParameterMenu = React.createClass({
                   <input type="radio" name="shape" value="SphereGeometry" onClick={this.changeShape}/>
                 </li>
                 <li>
+                  <label>Not Sphere?</label>
+                  <input type="radio" name="shape" value="IcosahedronGeometry" onClick={this.changeShape}/>
+                </li>
+                <li>
                   <label>Cube</label>
                   <input type="radio" name="shape" value="BoxGeometry" onClick={this.changeShape}/>
                 </li>
