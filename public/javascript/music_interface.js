@@ -180,6 +180,16 @@ var MusicInterface = {
     }
   },
 
+  regionsLoaded: function () {
+    if (this.currentRegion) {
+      return true;
+    }
+  },
+
+  getCurrentRegion: function () {
+    return this.currentRegion;
+  },
+
   // Generates random colour for regions
   randomColor: function (alpha) {
     return 'rgba(' + [
