@@ -2,7 +2,6 @@ var uuid = function() {
     return Math.floor(Math.random()*100000)
 }
 
-
 function debounce(func, wait, immediate) {
   var timeout;
   return function() {
@@ -121,7 +120,7 @@ var Transition = {
   _debouncedUpdateTransitionRemotely: debounce(
     function (vizId, transition) {
       Transition._updateTransitionRemotely(vizId, transition);
-    }, 1000),
+    }, 5000),
 
   // Create a new transition locally and store in the db.
   createOne: function(vizId, time, params) {
