@@ -8,6 +8,7 @@ var EditView = React.createClass({
   },
 
   handleClick: function() {
+    visualizer.cancelAnimate();
     musicInterface.destroy();
     this.props.changePage('List');
   },
@@ -41,9 +42,9 @@ var EditView = React.createClass({
   componentDidMount: function() {
     var self = this;
     $('.viz-container').append(visualizer.renderer.domElement);
-    visualizer.animate();
+    id = visualizer.animate();
     Transition.fetchAll(self.props.visualization.id);
-  } 
+  }
 
 });
 
