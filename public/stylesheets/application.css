@@ -82,6 +82,7 @@ body{
 
 #search-bar {
   position: absolute;
+  color: #FFF ;
   top: 41px;
   left: 450px;
   margin: 3px;
@@ -97,7 +98,7 @@ body{
 
 .example-appear {
   opacity: 0.01;
-  transition: opacity 0s ease-in;
+  transition: opacity .2s ease-in;
 }
 
 .example-appear.example-appear-active {
