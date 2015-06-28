@@ -31,7 +31,7 @@ WebGLVisualizer = {
   },
 
   animate: function(frame) {
-    requestAnimationFrame(this.animate.bind(this));
+    animationID = requestAnimationFrame(this.animate.bind(this));
     this.mesh.rotation.x += 0.01;
     this.mesh.rotation.y += 0.02;
 
