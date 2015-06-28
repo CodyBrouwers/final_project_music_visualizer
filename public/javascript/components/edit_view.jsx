@@ -42,7 +42,7 @@ var EditView = React.createClass({
   componentDidMount: function() {
     var self = this;
     $('.viz-container').append(visualizer.renderer.domElement);
-    id = visualizer.animate();
+    visualizer.animate();
     Transition.fetchAll(self.props.visualization.id);
   }
 
