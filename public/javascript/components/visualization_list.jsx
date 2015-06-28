@@ -59,6 +59,7 @@ var VisualizationList = React.createClass({
         <div id="header">
           <h1 className="logo-text">NWMP</h1>
           <SearchBar filterText={this.state.filterText} onFilterInput={this.handleFilterInput} />
+          <img id="sort-icon" src="../img/sortIcon.svg" />
           <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } />
           <div id="btn-new-viz" onClick={this.postNewViz}>
             Create New Visualization

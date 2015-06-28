@@ -59,10 +59,25 @@ body{
 
 }
 
+#sort-icon {
+  fill: #FFF;
+  position: absolute;
+  top: 50px;
+  right: 150px;
+  width: 20%;
+  height: 20%;
+  transition: all .2s ease-in;
+}
+
+#sort-icon:hover {
+  transform: translate(-200px, 0px);
+}
+
+
 .sort-button {
   margin: 3px;
   font-size: 14px;
-  display: inline-block;
+  display: none;
   border-style: solid;
   height: 30px;
   width: 95px;
