@@ -10,6 +10,7 @@ var EditView = React.createClass({
   handleClick: function() {
     visualizer.cancelAnimate();
     musicInterface.destroy();
+    musicInterface.currentRegion = null;
     this.props.changePage('List');
   },
 
