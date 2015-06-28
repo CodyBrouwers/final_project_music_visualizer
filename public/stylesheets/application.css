@@ -19,7 +19,7 @@ body{
   background: rgba(25, 25, 25, 0);
 }
 
-#logo-text {
+.logo-text {
   position: absolute;
   color: #a6b894;
   padding-bottom: 10px;
@@ -105,6 +105,10 @@ body{
 img {
   height: 100%;
   width: 100%;
+}
+
+.viz-container {
+  padding-top: 20vh;
 }
 
 .wave-container {

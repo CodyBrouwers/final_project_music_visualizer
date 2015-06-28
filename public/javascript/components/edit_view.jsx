@@ -22,14 +22,10 @@ var EditView = React.createClass({
     var self = this;
     return (
       <div>
-        <h1>Edit View</h1>
-        <input 
-          type="text" 
-          defaultValue={this.props.visualization.name} 
-          onBlur={this.updateName} />
-        <p onClick={this.handleClick}>
-        Back to List</p>
-        <h1 id="vizname">{this.props.visualization.name}</h1>
+        <div id="header">
+          <h1 className="logo-text">NWMP</h1>
+          <h1 id="vizname">{this.props.visualization.name}</h1>
+        </div>
         <div className='viz-container'>
           <ParameterMenu visualization={this.props.visualization} />
         </div>
@@ -50,3 +46,10 @@ var EditView = React.createClass({
 Transition.registerChangeCallback(function () {
   React.render( < AppView />, document.getElementById('app'))
 });
+
+// input of song name:
+
+// <input 
+//           type="text" 
+//           defaultValue={this.props.visualization.name} 
+//           onBlur={this.updateName} />
