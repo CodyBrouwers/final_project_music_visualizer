@@ -1,3 +1,5 @@
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var VisualizationList = React.createClass({
 
   _sortOptions: ['name', 'created_at', 'updated_at'],
@@ -11,15 +13,18 @@ var VisualizationList = React.createClass({
   },
 
   postNewViz: function() {
-    // TODO create new viz object
-    // add it to visualizations
-    // store it to the database
-    // change pages
+
     var newViz = Visualization.createOne();
     this.props.changePage('Edit');
     this.props.changeVisualization(newViz);
   },
 
+  changeSort: function (sortOption) {
+    this.setState({sortBy: sortOption});
+  },
+
+// TODO: Add back in sort into return {sortButtons}
+ 
   render: function(){
     var self = this;
     var items = _.sortBy(Visualization.getAll(), function(viz){return viz[self.state.sortBy]});
@@ -27,24 +32,27 @@ var VisualizationList = React.createClass({
       return <VisualizationItem 
         viz={viz} 
         key={ "visualization-item-" + viz.id} 
-        changePage={self.props.changePage} 
+        changePage={self.props.changePage}
+        url = "http://lorempixel.com/250/250/fashion"
         changeVisualization={self.props.changeVisualization} />;
     })
 
-    var sortButtons = _.map(self._sortOptions, function(sortOption){
-      return <div className="sort-button" onClick={function(){
-        self.setState({sortBy: sortOption});
-      }}>{sortOption}</div>;
-    })
+    // var sortButtons = _.map(self._sortOptions, function(sortOption){
+    //   return <div className="sort-button" onClick={function(){
+    //     self.setState({sortBy: sortOption});
+    //   }}>{sortOption}</div>;
+    // })
     return (
       <div>
-        <h1>List View</h1>
-        <button onClick={this.postNewViz}>
-          New Visual
-        </button>
-        {sortButtons}
+        <div id="header">
+          <h1 className="logo-text">NWMP</h1>
+          <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } />
+          <div id="btn-new-viz" onClick={this.postNewViz}>
+            Create New Visualization
+          </div>
+        </div>
         <div id="container" ref="container">
-          {items}
+            {items}
         </div>
       </div>
     )
