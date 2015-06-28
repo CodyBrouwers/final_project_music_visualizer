@@ -2,6 +2,22 @@ var uuid = function() {
     return Math.floor(Math.random()*100000)
 }
 
+
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
 var Transition = {
 
   _transitions: [],
@@ -102,6 +118,11 @@ var Transition = {
     });
   },
 
+  _debouncedUpdateTransitionRemotely: debounce(
+    function (vizId, transition) {
+      Transition._updateTransitionRemotely(vizId, transition);
+    }, 1000),
+
   // Create a new transition locally and store in the db.
   createOne: function(vizId, time, params) {
     var transition = Transition._createNewTransition(vizId, time, params);
@@ -111,7 +132,7 @@ var Transition = {
   },
 
   updateOneRemotely: function(vizId, transition) {
-    Transition._updateTransitionRemotely(vizId, transition);
+    this._debouncedUpdateTransitionRemotely(vizId, transition)
   },
 
   fetchAll: function(vizId, callback) {
@@ -134,7 +155,7 @@ var Transition = {
     var activeTransition = Transition.findCurrentTransition(musicInterface.getCurrentRegion());
     var newParams = visualizer.getParams();
     activeTransition.params = newParams;
-    // Transition.updateOneRemotely(vizId, activeTransition);
+    Transition.updateOneRemotely(vizId, activeTransition);
   },
 
   findCurrentTransition: function (region) {
