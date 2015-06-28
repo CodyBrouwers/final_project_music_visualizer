@@ -11,6 +11,7 @@ var EditView = React.createClass({
     visualizer.cancelAnimate();
     musicInterface.destroy();
     musicInterface.currentRegion = null;
+    Transition._transitions = [];
     this.props.changePage('List');
   },
 
