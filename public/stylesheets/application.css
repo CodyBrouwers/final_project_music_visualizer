@@ -80,9 +80,24 @@ body{
   right: 300px;
 }
 
+#search-bar {
+  position: absolute;
+  top: 41px;
+  left: 450px;
+  margin: 3px;
+  font-size: 14px;
+  width: auto;
+  height: 30px;
+  display: inline-block;
+  border-style: solid;
+  border-color: #FFF;
+  border-width: 1px;
+  background: rgba(25, 25, 25, .4); 
+}
+
 .example-appear {
   opacity: 0.01;
-  transition: opacity 4s ease-in;
+  transition: opacity 0s ease-in;
 }
 
 .example-appear.example-appear-active {

@@ -5,7 +5,7 @@ var VisualizationList = React.createClass({
   _sortOptions: ['name', 'created_at', 'updated_at'],
 
   getInitialState: function(){
-    return { sortBy: this._sortOptions[0] }
+    return { sortBy: this._sortOptions[0], filterText: '' }
   },
   
   componentDidMount: function(){
@@ -23,12 +23,24 @@ var VisualizationList = React.createClass({
     this.setState({sortBy: sortOption});
   },
 
+  handleFilterInput: function(filterText){
+    console.log("handleFilterInput: ", filterText);
+    this.setState({
+      filterText: filterText
+    });
+  },
+
 // TODO: Add back in sort into return {sortButtons}
  
   render: function(){
+    var props = this.props;
     var self = this;
     var items = _.sortBy(Visualization.getAll(), function(viz){return viz[self.state.sortBy]});
-    var items = items.map(function(viz){
+    items = items.filter(function(viz){
+      console.log(self.state.filterText.toLowerCase());
+      return viz.name.toLowerCase().indexOf(self.state.filterText.toLowerCase()) > -1;
+    })
+    items = items.map(function(viz){
       return <VisualizationItem 
         viz={viz} 
         key={ "visualization-item-" + viz.id} 
@@ -46,6 +58,7 @@ var VisualizationList = React.createClass({
       <div>
         <div id="header">
           <h1 className="logo-text">NWMP</h1>
+          <SearchBar filterText={this.state.filterText} onFilterInput={this.handleFilterInput} />
           <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } />
           <div id="btn-new-viz" onClick={this.postNewViz}>
             Create New Visualization
