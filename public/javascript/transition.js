@@ -120,7 +120,7 @@ var Transition = {
   _debouncedUpdateTransitionRemotely: debounce(
     function (vizId, transition) {
       Transition._updateTransitionRemotely(vizId, transition);
-    }, 5000),
+    }, 1000),
 
   // Create a new transition locally and store in the db.
   createOne: function(vizId, time, params) {
