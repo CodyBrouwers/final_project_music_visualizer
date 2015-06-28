@@ -2,6 +2,21 @@ var uuid = function() {
     return Math.floor(Math.random()*100000)
 }
 
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
 var Transition = {
 
   _transitions: [],
@@ -102,8 +117,12 @@ var Transition = {
     });
   },
 
-  // Create a new transition locally and store
-  // it in the db.
+  _debouncedUpdateTransitionRemotely: debounce(
+    function (vizId, transition) {
+      Transition._updateTransitionRemotely(vizId, transition);
+    }, 5000),
+
+  // Create a new transition locally and store in the db.
   createOne: function(vizId, time, params) {
     var transition = Transition._createNewTransition(vizId, time, params);
     Transition._addTransitionLocally(transition);
@@ -112,7 +131,7 @@ var Transition = {
   },
 
   updateOneRemotely: function(vizId, transition) {
-    Transition._updateTransitionRemotely(vizId, transition);
+    this._debouncedUpdateTransitionRemotely(vizId, transition)
   },
 
   fetchAll: function(vizId, callback) {
@@ -124,33 +143,31 @@ var Transition = {
     return Transition._transitions;
   },
 
-  registerChangeCallback: function(fn) {
-    Transition._callbacks.push(fn);
-  },
-
-  addTransition: function(vizId) {
+  addTransition: function (vizId) {
     var time = musicInterface.getCurrentTime();
     var params = visualizer.getParams();
     var new_transition = Transition.createOne(vizId, time, params);
     musicInterface.addRegion(new_transition); 
   },
 
-  updateTransition: function(vizId){
-    console.log(vizId);
-    var activeTransition = Transition.findCurrentTransition(musicInterface.currentRegion);
+  updateTransition: function (vizId) {
+    var activeTransition = Transition.findCurrentTransition(musicInterface.getCurrentRegion());
     var newParams = visualizer.getParams();
     activeTransition.params = newParams;
     Transition.updateOneRemotely(vizId, activeTransition);
   },
 
-  findCurrentTransition: function(region){
+  findCurrentTransition: function (region) {
     var transitions = Transition.getAll();
+    var current_transition;
     for (var i = 0; i < transitions.length; i++) {
       var transition = transitions[i];
       if (transition.id === region.id) {
+        current_transition = transition;
         return transition;
       }
     }
+    return current_transition;
   },
 
   setCurrentTransition: function(transition){
@@ -163,4 +180,8 @@ var Transition = {
     this.setCurrentTransition(transition);
     return transition;
   },
+
+  registerChangeCallback: function (fn) {
+    Transition._callbacks.push(fn);
+  }
 }

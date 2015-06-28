@@ -25,7 +25,7 @@ var AudioWave = React.createClass({
           <div className="controls">
             <button onClick={this.updateTransition}>Update</button>
             <button onClick={this.backward}>Backwards</button>
-            <button onClick={this.playPause}>Play/Pause</button>
+            <button id="play" onClick={this.playPause}>Play/Pause</button>
             <button onClick={this.forward}>Forwards</button>
             <button onClick={this.toggleMute}>Mute</button>
             <button onClick={this.addTransition}>Add Transition</button>
@@ -56,17 +56,13 @@ var AudioWave = React.createClass({
           container: "#wave-timeline"
         });
         
-        musicInterface.waveSurfer.on(
-          'region-click',
-          function (region, event) {
+        musicInterface.waveSurfer.on('region-click', function (region, event) {
             musicInterface.pause();
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           }
         );
 
-        musicInterface.waveSurfer.on(
-          'region-in', 
-          function (region, event) {
+        musicInterface.waveSurfer.on('region-in', function (region, event) {
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           }
         );

@@ -28,11 +28,6 @@ WebGLVisualizer = {
 
     this.visualizerType = 1;
 
-    //TODO: remove this shiiit (don't use jQuery)
-    // $('#input-red').val(red);
-    // $('#input-green').val(green);
-    // $('#input-blue').val(blue);
-
   },
 
   animate: function(frame) {
