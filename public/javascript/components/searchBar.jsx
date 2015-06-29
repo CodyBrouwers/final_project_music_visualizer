@@ -7,7 +7,6 @@ var SearchBar = React.createClass ({
   },
 
   render: function(){
-    console.log(this.props.filterText);
     return (
       <div>
         <input id="search-bar" ref="filterText" value={this.props.filterText} onChange={this.handleChange} type="search" placeholder="Search by Song Name" />

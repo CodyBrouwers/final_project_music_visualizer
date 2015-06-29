@@ -5,7 +5,13 @@ var VisualizationList = React.createClass({
   _sortOptions: ['name', 'created_at', 'updated_at'],
 
   getInitialState: function(){
-    return { sortBy: this._sortOptions[0], filterText: '' }
+    return (
+      { 
+      sortBy: this._sortOptions[0], 
+      filterText: '', 
+      sortMenuDisplay: false 
+      }
+    )
   },
   
   componentDidMount: function(){
@@ -21,6 +27,15 @@ var VisualizationList = React.createClass({
 
   changeSort: function (sortOption) {
     this.setState({sortBy: sortOption});
+  },
+
+  displaySortButtons: function() {
+    console.log(this.state.sortMenuDisplay);
+    if (this.state.sortMenuDisplay === false) {
+      this.setState({sortMenuDisplay: true});
+    } else {
+      this.setState({sortMenuDisplay: false});
+    }
   },
 
   handleFilterInput: function(filterText){
@@ -59,8 +74,8 @@ var VisualizationList = React.createClass({
         <div id="header">
           <h1 className="logo-text">NWMP</h1>
           <SearchBar filterText={this.state.filterText} onFilterInput={this.handleFilterInput} />
-          <img id="sort-icon" src="../img/sortIcon.svg" />
-          <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } />
+          <SortMenuHeader displaySortButtons={this.displaySortButtons} />
+          { this.state.sortMenuDisplay && <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } /> }
           <div id="btn-new-viz" onClick={this.postNewViz}>
             Create New Visualization
           </div>

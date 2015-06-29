@@ -59,8 +59,17 @@ body{
 
 }
 
-#sort-icon {
-  fill: #FFF;
+#sort-header {
+  position: absolute;
+  top: 0px;
+  right: 275px;
+  background: url(../img/tie-dye-option2.png) repeat;
+  font-size: 40px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/*#sort-icon {
   position: absolute;
   top: 50px;
   right: 150px;
@@ -68,16 +77,11 @@ body{
   height: 20%;
   transition: all .2s ease-in;
 }
-
-#sort-icon:hover {
-  transform: translate(-200px, 0px);
-}
-
-
+*/
 .sort-button {
   margin: 3px;
   font-size: 14px;
-  display: none;
+  display: block;
   border-style: solid;
   height: 30px;
   width: 95px;
@@ -92,7 +96,7 @@ body{
 .sort-menu {
   position: absolute;
   top: 42px;
-  right: 300px;
+  right: 350px;
 }
 
 #search-bar {
