@@ -65,6 +65,78 @@ var Transition = {
     });
   },
 
+  _deleteTransitionLocally: function (transition) {
+    for (var i = 0; i < Transition._transitions.length; i++) {
+      if (Transition._transitions[i] === transition) {
+        if (Transition._transitions.length > 1) {
+          Transition._transitions.splice(i,i);
+          return;
+        } else {
+          Transition._transitions.splice(i,i+1);
+          return;
+        }
+      }
+    }
+  },
+
+  _deleteTransitionRemotely: function(vizId, transition) {
+    $.ajax({
+      type: "DELETE",
+      url: "/visualizations/"+vizId+"/transitions/"+transition.id,
+      dataType: 'json',
+      data: {
+        id: transition.id,
+      },
+      success: function() {
+        console.log('Transition deleted');
+      },
+      error: function() {
+        alert('error deleting transition');
+      }  
+    });
+  },
+
+  _deleteAllTransitionsLocally: function () {
+    Transition._transitions.length = 0;
+  },
+
+  _deleteAllTransitionsRemotely: function(vizId) {
+    $.ajax({
+      type: "DELETE",
+      url: "/visualizations/"+vizId+"/transitions",
+      dataType: 'json',
+      success: function() {
+        console.log('All transitions deleted');
+      },
+      error: function() {
+        alert('error deleting all transitions');
+      }  
+    });
+  },
+
+  _updateTransitionLocally: function(transition) {
+    Transition._transitions.push(transition);
+    // Transition._runCallbacks();
+  },
+
+  _updateTransitionRemotely: function (vizId, transition) {
+    $.ajax({
+      type: "PUT",
+      url: "/visualizations/"+vizId+"/transitions/"+transition.id,
+      dataType: 'json',
+      data: {
+        id: transition.id,
+        params: JSON.stringify(transition.params)
+      },
+      success: function() {
+        console.log('Updated');
+      },
+      error: function() {
+        alert('error saving updated transition');
+      }  
+    });
+  },
+
   _fetchAllFromRemote: function(vizId) {
     $.ajax({
         type: "GET",
@@ -94,40 +166,22 @@ var Transition = {
     }
   },
 
-  _updateTransitionLocally: function(transition) {
-    Transition._transitions.push(transition);
-    // Transition._runCallbacks();
-  },
-
-  _updateTransitionRemotely: function (vizId, transition) {
-    $.ajax({
-      type: "PUT",
-      url: "/visualizations/"+vizId+"/transitions/"+transition.id,
-      dataType: 'json',
-      data: {
-        id: transition.id,
-        params: JSON.stringify(transition.params)
-      },
-      success: function() {
-        console.log('Updated');
-      },
-      error: function() {
-        alert('error saving updated transition');
-      }  
-    });
-  },
-
   _debouncedUpdateTransitionRemotely: debounce(
     function (vizId, transition) {
       Transition._updateTransitionRemotely(vizId, transition);
     }, 1000),
 
   // Create a new transition locally and store in the db.
-  createOne: function(vizId, time, params) {
+  createTransition: function(vizId, time, params) {
     var transition = Transition._createNewTransition(vizId, time, params);
     Transition._addTransitionLocally(transition);
     Transition._addTransitionRemotely(vizId, transition);
     return transition;
+  },
+
+  deleteTransition: function (vizId, transition) {
+    Transition._deleteTransitionLocally(transition);
+    Transition._deleteTransitionRemotely(vizId, transition);
   },
 
   updateOneRemotely: function(vizId, transition) {
@@ -146,8 +200,25 @@ var Transition = {
   addTransition: function (vizId) {
     var time = musicInterface.getCurrentTime();
     var params = visualizer.getParams();
-    var new_transition = Transition.createOne(vizId, time, params);
-    musicInterface.addRegion(new_transition); 
+    var newTransition = Transition.createTransition(vizId, time, params);
+    musicInterface.addRegion(newTransition); 
+  },
+
+  removeTransition: function (vizId) {
+    var activeRegion = musicInterface.getCurrentRegion();
+    var activeTransition = Transition.findCurrentTransition(activeRegion);
+    if (activeTransition) {
+      Transition.deleteTransition(vizId, activeTransition);
+      musicInterface.removeRegion(activeRegion);  
+    } else {
+      alert("There is no transition to delete here");
+    }
+  },
+
+  removeAllTransitions: function (vizId) {
+    musicInterface.removeAllRegions();
+    Transition._deleteAllTransitionsLocally();
+    Transition._deleteAllTransitionsRemotely(vizId);
   },
 
   updateTransition: function (vizId) {
