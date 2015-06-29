@@ -24,8 +24,8 @@ var AudioWave = React.createClass({
       return (
         <div className="wave-container">
           <div className="controls">
-            <button id="play" onClick={this.playPause}>Play/Pause</button>
-            <button onClick={this.addTransition}>Add Transition</button>
+            <i className="fa fa-play-circle fa-5" id="play" onClick={this.playPause}></i>
+            <button onClick={this.addTransition}>Add Transition Point</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>

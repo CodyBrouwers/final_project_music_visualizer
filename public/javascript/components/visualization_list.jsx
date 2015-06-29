@@ -72,6 +72,7 @@ var VisualizationList = React.createClass({
       <div>
         <div id="header">
           <h1 className="logo-text">NWMP</h1>
+          <i id="search-icon" className="fa fa-search"></i>
           <SearchBar filterText={this.state.filterText} onFilterInput={this.handleFilterInput} />
           <SortMenuHeader displaySortButtons={this.displaySortButtons} />
           { this.state.sortMenuDisplay && <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } /> }

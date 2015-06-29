@@ -222,8 +222,8 @@ img {
 #vizname {
   position:fixed;
   top: 480px;
-  left: 200px;
-  font-weight:'100';
+  left: 245px;
+  font-weight:100;
   z-index: 2;
 
 }
@@ -352,19 +352,36 @@ img {
   text-align: center;
   padding-bottom: 15px;
   padding-top: 15px;
+  font-weight: 100;
 
 }
 
 .controls button {
   border-style: solid;
-/*  text-align: center;
-  vertical-align: middle;
-  line-height: 50px;*/
   border-color: #FFF;
   border-width: 1px;
   background: rgba(25, 25, 25, .4);
 }
 
+i#play {
+  font-size: 2.5em;
+  position: fixed;
+  top: 503px;
+  left: 200px;
+  transition: all 0.2s ease-in;
 
+}
+
+i#play:hover {
+  cursor: pointer;
+  color: #A3FFA3;
+}
+
+#search-icon {
+  font-size:2em;
+  position: relative;
+  top: 43px;
+  left: 410px;
+}
 
 
