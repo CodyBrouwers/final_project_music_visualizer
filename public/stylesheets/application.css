@@ -230,12 +230,10 @@ img {
 }
 
 .wave-container {
-  position: absolute;
-  max-width: 900px;
-  top: 425px;
-  left: 425px;
-  /*margin-right: auto;
-  margin-left: auto;*/
+  position: fixed;
+  min-width: 900px;
+  top: 500px;
+  left: 200px;
   background-color: rgba(0, 0, 0, 0);
   z-index: 2;
 }
@@ -334,8 +332,6 @@ img {
 .menu input {
   color: #000;
 }
-
-
 
 .controls {
   text-align: center;

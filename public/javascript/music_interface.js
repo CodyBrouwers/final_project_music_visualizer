@@ -13,7 +13,8 @@ var MusicInterface = {
       waveColor: 'violet',
       progressColor: 'purple',
       cursorColor: 'navy',
-      scrollParent: false
+      scrollParent: false,
+      height: '55'
     };
 
     // Initializes with above options
