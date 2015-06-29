@@ -377,11 +377,33 @@ i#play:hover {
   color: #A3FFA3;
 }
 
+i#pause {
+  font-size: 2.5em;
+  position: fixed;
+  top: 503px;
+  left: 200px;
+  transition: all 0.2s ease-in;
+
+}
+
+i#pause:hover {
+  cursor: pointer;
+  color: #A3FFA3;
+}
+
 #search-icon {
   font-size:2em;
   position: relative;
   top: 43px;
   left: 410px;
+}
+
+#sort-icon {
+  color: #FFF;
+  font-size:2em;
+  position: relative;
+  top: 43px;
+  right: 250px;
 }
 
 
