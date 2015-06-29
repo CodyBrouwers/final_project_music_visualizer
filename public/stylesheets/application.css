@@ -1,6 +1,4 @@
-html,body {
-/*  min-height: 100%;
-  min-width: 100%;*/
+html {
 }
 
 
@@ -19,6 +17,17 @@ body{
   background: rgba(25, 25, 25, 0);
 }
 
+div.logo {
+  height: 130px;
+  width: 400px;
+  transition: all 0.2s ease-in;
+}
+
+div.logo:hover {
+  transform: scale(1.05,1.05);
+  cursor: pointer;
+}
+
 .logo-text {
   position: absolute;
   color: #a6b894;
@@ -35,6 +44,10 @@ body{
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #FFF;
+}
+
+input:focus::-webkit-input-placeholder {
+    color: transparent;
 }
 
 #search-bar {
@@ -72,13 +85,13 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   border-width: 1px;
   background: rgba(25, 25, 25, .4);
   transition: all .2s ease-in;
-
 }
 
 #btn-new-viz:hover {
   /*background: #2f2f2f;*/
   color: #00FFE3;
   border-color: #00FFE3;
+  cursor: pointer;
   /*background: url(../img/tie-dye-option3.png) repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;*/
@@ -108,6 +121,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
 #sort-header:hover {
   color: #00FFE3;
   border-color: #00FFE3;
+  cursor: pointer;
 }
   
 .sort-menu {
@@ -139,6 +153,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #FFF;
   border-color: #E26BF0;
   background: #E26BF0;
+  cursor: pointer;
 }
 
 .sortslide-appear {
@@ -205,10 +220,10 @@ img {
 }*/
 
 #vizname {
-  position:relative;
-  top: 25px;
-  text-align: center;
-  font-weight: 100;
+  position:fixed;
+  top: 480px;
+  left: 200px;
+  font-weight:'100';
   z-index: 2;
 
 }
@@ -337,6 +352,17 @@ img {
   text-align: center;
   padding-bottom: 15px;
   padding-top: 15px;
+
+}
+
+.controls button {
+  border-style: solid;
+/*  text-align: center;
+  vertical-align: middle;
+  line-height: 50px;*/
+  border-color: #FFF;
+  border-width: 1px;
+  background: rgba(25, 25, 25, .4);
 }
 
 
