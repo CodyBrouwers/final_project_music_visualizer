@@ -22,14 +22,14 @@ var EditView = React.createClass({
     var self = this;
     return (
       <div>
+        <div className='viz-container'>
         <div id="header">
           <h1 className="logo-text">NWMP</h1>
           <h1 id="vizname">{this.props.visualization.name}</h1>
         </div>
-        <div className='viz-container'>
           <ParameterMenu visualization={this.props.visualization} />
+          <AudioWave visualization={this.props.visualization} />
         </div>
-        <AudioWave visualization={this.props.visualization} />
       </div>
     )
   },
