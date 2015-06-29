@@ -45,7 +45,7 @@ body{
   border-color: #FFF;
   border-width: 1px;
   background: rgba(25, 25, 25, .4);
-  transition: all .2s ease;
+  transition: all .2s ease-in;
 
 }
 
@@ -61,24 +61,8 @@ body{
 
 #sort-header {
   position: absolute;
-  top: 0px;
-  right: 275px;
-  background: url(../img/tie-dye-option2.png) repeat;
-  font-size: 40px;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/*#sort-icon {
-  position: absolute;
-  top: 50px;
-  right: 150px;
-  width: 20%;
-  height: 20%;
-  transition: all .2s ease-in;
-}
-*/
-.sort-button {
+  top: 42px;
+  right: 550px;
   margin: 3px;
   font-size: 14px;
   display: block;
@@ -90,14 +74,48 @@ body{
   line-height: 30px;
   border-color: #FFF;
   border-width: 1px;
+  background: rgba(25, 25, 25, .4);
+  transition: all .2s ease-in; 
+}
+
+#sort-header:hover {
+  color: #00FFE3;
+  border-color: #00FFE3;
+}
+  
+.sort-menu {
+  position: absolute;
+  top: 45px;
+  right: 323px;
+}
+
+.sort-button {
+  margin: 0px;
+  top: 5px;
+  font-size: 14px;
+  display: inline-block;
+  border-style: solid;
+  height: 30px;
+  width: 75px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+  border-color: #FFF;
+  border-width: 1px;
   background: rgba(25, 25, 25, .4); 
 }
 
-.sort-menu {
-  position: absolute;
-  top: 42px;
-  right: 350px;
+/*.sortbutslide-appear {
+  opacity: 0.01;
+  transition: opacity .2s ease-in;
+  
 }
+
+.sortbutslide-appear.sorbuttslide-appear-active {
+  opacity: 1;
+}
+*/
+
 
 #search-bar {
   position: absolute;

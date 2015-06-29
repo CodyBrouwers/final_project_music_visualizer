@@ -6,7 +6,7 @@ var SortMenuHeader = React.createClass ({
 
   render: function(){
     return (
-    <p id="sort-header" onClick={this.handleClick} >sort</p>
+    <div id="sort-header" onClick={this.handleClick} >Sort</div>
     )
   } 
 
