@@ -175,10 +175,21 @@ img {
 }*/
 
 #vizname {
+  position:relative;
+  top: 20px;
   text-align: center;
+  font-weight: 100;
 }
 
-
+.menu {
+  position: fixed;
+  color: #c8c8c8;
+  top: 150px;
+  left: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 160px;
+  -webkit-transition: all 0.4s ease;
+}
 
 .menu-button {
   display: none;
@@ -200,15 +211,6 @@ img {
   color: #fff;
 }
 
-.menu {
-  position: fixed;
-  color: #c8c8c8;
-  top: 150px;
-  left: 15px;
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 160px;
-  -webkit-transition: all 0.4s ease;
-}
 .close {
   position: absolute;
   color: #c8c8c8;
@@ -273,5 +275,18 @@ img {
   color: #000;
 }
 
-/* Grid hover caption effect */
+.wave-container {
+  position: relative;
+  max-width: 100%
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.controls {
+  text-align: center;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
 

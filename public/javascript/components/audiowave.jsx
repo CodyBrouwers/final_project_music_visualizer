@@ -24,7 +24,6 @@ var AudioWave = React.createClass({
       return (
         <div className="wave-container">
           <div className="controls">
-            <button onClick={this.updateTransition}>Update</button>
             <button onClick={this.backward}>Backwards</button>
             <button id="play" onClick={this.playPause}>Play/Pause</button>
             <button onClick={this.forward}>Forwards</button>
