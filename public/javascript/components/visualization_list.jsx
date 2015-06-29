@@ -30,7 +30,6 @@ var VisualizationList = React.createClass({
   },
 
   displaySortButtons: function() {
-    console.log(this.state.sortMenuDisplay);
     if (this.state.sortMenuDisplay === false) {
       this.setState({sortMenuDisplay: true});
     } else {

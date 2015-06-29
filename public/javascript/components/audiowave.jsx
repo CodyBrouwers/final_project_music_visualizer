@@ -19,6 +19,7 @@ var AudioWave = React.createClass({
       Transition.updateTransition(this.props.visualization.id);
     },
 
+    //Removed the drage and drop component: <p id="drop">Drop your file here</p>
     render: function(){
       return (
         <div className="wave-container">
@@ -33,7 +34,7 @@ var AudioWave = React.createClass({
           <div id="wave"></div>
           <div id="wave-timeline"></div>
 
-          <p id="drop">Drop your file here</p>
+          
         </div>
       );
     },

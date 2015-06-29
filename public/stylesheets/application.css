@@ -105,18 +105,6 @@ body{
   background: rgba(25, 25, 25, .4); 
 }
 
-/*.sortbutslide-appear {
-  opacity: 0.01;
-  transition: opacity .2s ease-in;
-  
-}
-
-.sortbutslide-appear.sorbuttslide-appear-active {
-  opacity: 1;
-}
-*/
-
-
 #search-bar {
   position: absolute;
   color: #FFF ;
@@ -145,7 +133,6 @@ body{
 #container { 
   padding-top: 20vh;
   background: #191919;
-  /*padding-left: 1px;*/
 }
 
 .viz {
@@ -160,14 +147,14 @@ img {
   width: 100%;
 }
 
-.viz-container {
-  padding-top: 20vh;
-}
-
 .wave-container {
   max-width: 900px;
   margin-right: auto;
   margin-left: auto;
+}
+
+#waveform {
+
 }
 
 .controls {
@@ -176,16 +163,16 @@ img {
   padding-top: 15px;
 }
 
-#drop {
+/*#drop {
   border: 3px dashed #ddd;
   text-align: center;
   padding-top: 30px;
   padding-bottom: 30px;
-}
+}*/
 
-#drop.wavesurfer-dragover {
+/*#drop.wavesurfer-dragover {
   border-color: #333;
-}
+}*/
 
 #vizname {
   text-align: center;
@@ -212,11 +199,12 @@ img {
   cursor: pointer;
   color: #fff;
 }
+
 .menu {
-  position: absolute;
+  position: fixed;
   color: #c8c8c8;
-  top: 80px;
-  left: 0px;
+  top: 150px;
+  left: 15px;
   background-color: rgba(0, 0, 0, 0.3);
   width: 160px;
   -webkit-transition: all 0.4s ease;
