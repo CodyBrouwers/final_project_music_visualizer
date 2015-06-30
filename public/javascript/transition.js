@@ -65,6 +65,20 @@ var Transition = {
     });
   },
 
+  _fetchAllFromRemote: function(vizId) {
+    $.ajax({
+        type: "GET",
+        url: "/visualizations/"+vizId+"/transitions",
+        dataType: 'json',
+        success: function(transitions) {
+          musicInterface.setUpRegions(transitions);
+          Transition._storeAllLocally(vizId, transitions);
+          visualizer.setParams(Transition._transitions[0].params);
+          Transition._runCallbacks();
+        }
+    });
+  },
+
   _deleteTransitionLocally: function (transition) {
     for (var i = 0; i < Transition._transitions.length; i++) {
       if (Transition._transitions[i] === transition) {
@@ -145,7 +159,7 @@ var Transition = {
         success: function(transitions) {
           Transition._storeAllLocally(vizId, transitions);
           visualizer.setParams(Transition._transitions[0].params);
-          musicInterface.setRegion(Transition._transitions);
+          musicInterface.setUpRegions(Transition._transitions);
           Transition._runCallbacks();
         }
     });

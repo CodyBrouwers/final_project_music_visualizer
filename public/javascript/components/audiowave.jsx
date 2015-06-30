@@ -55,7 +55,7 @@ var AudioWave = React.createClass({
           wavesurfer: musicInterface.waveSurfer,
           container: "#wave-timeline"
         });
-        
+
         musicInterface.waveSurfer.on('region-click', function (region, event) {
             musicInterface.pause();
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);

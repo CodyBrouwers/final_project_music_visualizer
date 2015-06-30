@@ -8,8 +8,10 @@ var EditView = React.createClass({
   },
 
   handleClick: function() {
+    musicInterface.currentRegion = undefined;
     visualizer.cancelAnimate();
     musicInterface.destroy();
+    Transition._transitions = [];
     this.props.changePage('List');
   },
 
