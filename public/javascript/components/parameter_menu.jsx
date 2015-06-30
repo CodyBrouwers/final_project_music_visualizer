@@ -63,7 +63,7 @@ var ParameterMenu = React.createClass({
 
     render: function(){
       return (
-        <div>
+        <div className="menu-drawer">
           <div className="menu">
             <fieldset>
               <legend>Color</legend>

@@ -1,8 +1,10 @@
 html {
+  min-width: 100%;
+  max-width: 100%;
 }
 
 
-body{
+body {
   font-family: 'Lato';
   color: #FFF;
   background: #191919;
@@ -15,27 +17,41 @@ body{
   margin: auto;
   z-index: 1000;
   background: rgba(25, 25, 25, 0);
+  display:flex;
 }
 
-div.logo {
-  height: 130px;
-  width: 400px;
+div.header-left {
+  height: 20vh;
+  align-items: center;
+  width: 30vw;
   transition: all 0.2s ease-in;
+  display:flex;
+  flex-direction: row;
 }
 
-div.logo:hover {
+div.header-left:hover {
   transform: scale(1.05,1.05);
   cursor: pointer;
+  align-items: center;
+}
+
+div.header-right {
+  height: 20vh;
+  width: 70vw;
+  align-items: center;
+  transition: all 0.2s ease-in;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
 }
 
 .logo-text {
-  position: absolute;
   color: #a6b894;
-  padding-bottom: 10px;
-  left: 20px;
-  margin: 0px;
-  font-size:100px;
-  width: 400px;
+  margin-left: 2vw;
+  margin-top: 0vh;
+  margin-bottom: 0vh;
+  font-size:6.5vmax;
   z-index: 2;
   background: url(../img/tie-dye-option3.png) repeat;
   -webkit-background-clip: text;
@@ -51,10 +67,8 @@ input:focus::-webkit-input-placeholder {
 }
 
 #search-bar {
-  position: absolute;
-  top: 41px;
-  left: 700px;
-  margin: 3px;
+
+  margin-right: 2vw;
   font-size: 14px;
   width: auto;
   height: 30px;
@@ -72,10 +86,8 @@ input:focus::-webkit-input-placeholder {
 }
 
 #btn-new-viz {
-  position: absolute;
-  top: 35px;
-  right: 20px;
   border-style: solid;
+  margin-right: 3vw;
   height: 50px;
   width: 200px;
   text-align: center;
@@ -98,11 +110,12 @@ input:focus::-webkit-input-placeholder {
 
 }
 
+#sort-feature {
+  margin-right: 15vw;
+  position:relative;
+}
+
 #sort-header {
-  position: absolute;
-  top: 42px;
-  right: 290px;
-  margin: 3px;
   font-size: 14px;
   display: block;
   border-style: solid;
@@ -125,15 +138,16 @@ input:focus::-webkit-input-placeholder {
 }
   
 .sort-menu {
+  z-index: 1001;
   position: absolute;
-  top: 76px;
-  right: 293px;
-  z-index: -1;
+  top: 5vh;
+  left: 0vw;
 }
 
 .sort-button {
+  /*position: relative;*/
   margin: 0px;
-  top: 5px;
+  /*top: 5px;*/
   font-size: 14px;
   display: block;
   border-style: solid;
@@ -144,6 +158,7 @@ input:focus::-webkit-input-placeholder {
   line-height: 30px;
   border-color: #FFF;
   border-width: 1px;
+  z-index: 1001;
   background: rgba(25, 25, 25, .4); 
   transition: all 0.3s ease-in;
   
@@ -158,8 +173,8 @@ input:focus::-webkit-input-placeholder {
 
 .sortslide-appear {
   opacity: 0.01;
-  transform: translate(0px,-50px);
-  transition: all .1s ease-in;
+  transform: translate(0px,0px);
+  transition: all .3s ease-in;
 }
 
 .sortslide-appear.sortslide-appear-active {
@@ -193,13 +208,6 @@ img {
   width: 100%;
 }
 
-.wave-container {
-  position: fixed;
-  top: 600px;
-  max-width: 900px;
-  margin-right: auto;
-  margin-left: auto;
-}
 
 
 .controls {
@@ -221,8 +229,8 @@ img {
 
 #vizname {
   position:fixed;
-  top: 480px;
-  left: 245px;
+  top: 78vh;
+  left: 23vw;
   font-weight:100;
   z-index: 2;
 
@@ -246,22 +254,23 @@ img {
 
 .wave-container {
   position: fixed;
-  min-width: 900px;
-  top: 500px;
-  left: 200px;
+  min-width: 60vw;
+  top: 80vh;
+  margin-left: 20vw;
   background-color: rgba(0, 0, 0, 0);
   z-index: 2;
 }
 
 .menu {
-  position: fixed;
-  color: #c8c8c8;
-  top: 150px;
-  left: 15px;
+  position: absolute;
+  color: #FFF;
+  top: 15vh;
+  left: 2vw;
   background-color: rgba(0, 0, 0, 0.3);
   width: 160px;
   z-index: 2;
   -webkit-transition: all 0.4s ease;
+
 }
 
 .menu-button {
@@ -366,8 +375,8 @@ img {
 i#play {
   font-size: 2.5em;
   position: fixed;
-  top: 503px;
-  left: 200px;
+  top: 81vh;
+  left: 20vw;
   transition: all 0.2s ease-in;
 
 }
@@ -380,8 +389,8 @@ i#play:hover {
 i#pause {
   font-size: 2.5em;
   position: fixed;
-  top: 503px;
-  left: 200px;
+  top: 81vh;
+  left: 20vw;
   transition: all 0.2s ease-in;
 
 }
@@ -393,17 +402,86 @@ i#pause:hover {
 
 #search-icon {
   font-size:2em;
-  position: relative;
-  top: 39px;
-  left: 660px;
+  margin-right: 1vw;  
 }
 
-#sort-icon {
-  color: #FFF;
-  font-size:2em;
-  position: relative;
-  top: 43px;
-  right: 250px;
+/*Menu Drawer Code*/
+
+.menu-drawer {
+  margin-top: 0%;
+  position: absolute;
+  top: 0vh;
+  left: 80vw;
+  display: block;
+  width: 20vw;
+  height: 100vh;
+  
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1002;
+  transition: all 0.35s ease-in;
 }
+
+.menu-drawer.hidden {
+  position: absolute;
+  left: 100vw;
+  display: block;
+  width: 20vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#toggle {
+  position: absolute;
+  top: 5vh;
+  right: 8vw;
+  font-size: 14px;
+  display: block;
+  border-style: solid;
+  height: 30px;
+  width: 95px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+  border-color: #FFF;
+  border-width: 1px;
+  background: rgba(25, 25, 25, .4); 
+  z-index: 1004;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
