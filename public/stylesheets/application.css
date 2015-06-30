@@ -53,7 +53,7 @@ input:focus::-webkit-input-placeholder {
 #search-bar {
   position: absolute;
   top: 41px;
-  left: 450px;
+  left: 700px;
   margin: 3px;
   font-size: 14px;
   width: auto;
@@ -101,7 +101,7 @@ input:focus::-webkit-input-placeholder {
 #sort-header {
   position: absolute;
   top: 42px;
-  right: 550px;
+  right: 290px;
   margin: 3px;
   font-size: 14px;
   display: block;
@@ -126,8 +126,8 @@ input:focus::-webkit-input-placeholder {
   
 .sort-menu {
   position: absolute;
-  top: 45px;
-  right: 323px;
+  top: 76px;
+  right: 293px;
   z-index: -1;
 }
 
@@ -135,10 +135,10 @@ input:focus::-webkit-input-placeholder {
   margin: 0px;
   top: 5px;
   font-size: 14px;
-  display: inline-block;
+  display: block;
   border-style: solid;
   height: 30px;
-  width: 75px;
+  width: 95px;
   text-align: center;
   vertical-align: middle;
   line-height: 30px;
@@ -158,7 +158,7 @@ input:focus::-webkit-input-placeholder {
 
 .sortslide-appear {
   opacity: 0.01;
-  transform: translate(-100px,0px);
+  transform: translate(0px,-50px);
   transition: all .1s ease-in;
 }
 
@@ -394,8 +394,8 @@ i#pause:hover {
 #search-icon {
   font-size:2em;
   position: relative;
-  top: 43px;
-  left: 410px;
+  top: 39px;
+  left: 660px;
 }
 
 #sort-icon {
