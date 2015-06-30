@@ -16,16 +16,30 @@ var SoundCloud = {
           url: "http://api.sndcdn.com/i1/tracks/"+songID+"/streams?client_id="+clientID,
           dataType: 'json',
           success: function(trackLinks) {
+            // Gets artwork url from track and gets larger version
+            var art = track.artwork_url;
+            var imgLink = art.replace("large", "t300x300");
+
+            // Gets streaming link and sets streamURL with key
             var stream = trackLinks.http_mp3_128_url;
-            var trackKey = stream.match(/\w{12}/);
-            streamURL = "http://media.soundcloud.com/stream/"+trackKey;
-            viz.path = streamURL;
-            Visualization.updateOne(viz);
+            if (stream) {
+              var trackKey = stream.match(/\w{12}/);
+              streamURL = "http://media.soundcloud.com/stream/"+trackKey;
+
+              // Sets new viz properties and updates and loads song
+              viz.path = streamURL;
+              viz.image = imgLink;
+              viz.name = track.title
+              Visualization.updateOne(viz);
+              musicInterface.loadSong(streamURL);
+            } else {
+              alert("This song cannot be used with NWMP unfortunately");
+            }
+          },
+          error: function (error) {
+            console.log(error);
           }
-        }).done(function () {
-          musicInterface.loadSong(streamURL);
-          // Transition.addInitialRegionAndTransition(viz.id);
-        });
+        })
       }
     });
   }

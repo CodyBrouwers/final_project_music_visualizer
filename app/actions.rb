@@ -14,7 +14,8 @@ post '/visualizations' do
   visualization = Visualization.create!(
     id: params[:id],
     path: params[:path],
-    name: params[:name]
+    name: params[:name],
+    image: params[:image]
   )
   visualization.to_json
 end
@@ -23,7 +24,7 @@ put '/visualizations/:viz_id/edit' do
   content_type :json
   visualization = Visualization.find(params[:viz_id])
   if visualization
-    visualization.update(path: params[:path], name: params[:name])
+    visualization.update(path: params[:path], name: params[:name], image: params[:image])
   end
   visualization.to_json
 end
