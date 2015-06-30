@@ -148,7 +148,6 @@ var MusicInterface = {
   },
 
   addRegion: function(transition) {
-    console.log("gets into addRegion");
     if (this.currentRegion) {
       var region = this.addOneRegion(
         transition.id,
@@ -171,14 +170,11 @@ var MusicInterface = {
 
   setUpRegions: function(transitions) {
     //Shouldn't really be in this object...
-    console.log("Number of Transitions :", transitions.length);
-    console.log("Transitions:", transitions);
     var region;
     transitions.sort(function(a,b) {
       return a.time - b.time;
     });
     if (transitions.length === 0 ) {
-      console.log("transitions length is 0");
       // this.currentRegion = this.addInitialRegion();
     } else if (transitions.length === 1) {
       this.currentRegion = this.addOneRegion(
