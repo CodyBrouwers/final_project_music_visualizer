@@ -23,7 +23,7 @@ put '/visualizations/:viz_id/edit' do
   content_type :json
   visualization = Visualization.find(params[:viz_id])
   if visualization
-    visualization.update_attribute(:name, params[:name])
+    visualization.update(path: params[:path], name: params[:name])
   end
   visualization.to_json
 end

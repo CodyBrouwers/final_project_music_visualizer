@@ -94,7 +94,6 @@ var MusicInterface = {
     this.waveSurfer.toggleMute();
   },
 
-  //TODO: Need to have access to loading and drag/dropping of files
   loadSong: function(path) {
     this.waveSurfer.load(path);
   },
@@ -111,8 +110,6 @@ var MusicInterface = {
     var time = this.waveSurfer.backend.getDuration();
     return time;
   },
-  
-  //Will need to have access to the events emitted by the region plug-in?
 
   // Enables Region Selection
   enableRegions: function () {
@@ -120,15 +117,26 @@ var MusicInterface = {
   },
 
   addOneRegion: function(id, start, end, color) {
-     var myEnd = end ? end : this.getDuration();
+    var myEnd = end ? end : this.getDuration();
     return this.waveSurfer.addRegion({
         id: id,
         start: start,
         end: myEnd,
         color: this.randomColor(0.5),
         drag:false,
-        resise: false
+        resize: false
       })
+  },
+
+  addInitialRegion: function (transition) {
+    return this.waveSurfer.addRegion({
+        id: transition.id,
+        start: 0,
+        end: this.getDuration(),
+        color: this.randomColor(0.2),
+        drag: false,
+        resize: false
+    })
   },
 
   removeRegion: function (region) {
@@ -140,6 +148,7 @@ var MusicInterface = {
   },
 
   addRegion: function(transition) {
+    console.log("gets into addRegion");
     if (this.currentRegion) {
       var region = this.addOneRegion(
         transition.id,
@@ -162,11 +171,22 @@ var MusicInterface = {
 
   setUpRegions: function(transitions) {
     //Shouldn't really be in this object...
+    console.log("Number of Transitions :", transitions.length);
+    console.log("Transitions:", transitions);
     var region;
     transitions.sort(function(a,b) {
       return a.time - b.time;
     });
-    if (transitions.length >= 2) {
+    if (transitions.length === 0 ) {
+      console.log("transitions length is 0");
+      // this.currentRegion = this.addInitialRegion();
+    } else if (transitions.length === 1) {
+      this.currentRegion = this.addOneRegion(
+        transitions[0].id,
+        transitions[0].time,
+        this.getDuration()
+      );
+    } else {
       this.currentRegion = this.addOneRegion(
         transitions[0].id,
         transitions[0].time,
@@ -182,12 +202,6 @@ var MusicInterface = {
       this.addOneRegion(
         transitions[index].id,
         transitions[index].time,
-        this.getDuration()
-      );
-    } else {
-      this.currentRegion = this.addOneRegion(
-        transitions[0].id,
-        transitions[0].time,
         this.getDuration()
       );
     }

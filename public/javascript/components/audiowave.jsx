@@ -27,6 +27,11 @@ var AudioWave = React.createClass({
     removeAllTransitions: function() {
       Transition.removeAllTransitions(this.props.visualization.id);
     },
+    loadSong: function () {
+      var url = this.refs.url.getDOMNode().value;
+      var streamURL = SoundCloud.loadStreamUrl(this.props.visualization, url);
+      this.refs.url.getDOMNode().value = '';
+    },
 
     playButtonToggle: function() {
       if (this.state.displayPlay === true) {
@@ -41,7 +46,6 @@ var AudioWave = React.createClass({
       this.playButtonToggle();
     },
 
-    //Removed the drage and drop component: <p id="drop">Drop your file here</p>
     render: function(){
       return (
         <div className="wave-container">
@@ -54,7 +58,10 @@ var AudioWave = React.createClass({
           <div id="wave"></div>
           <div id="wave-timeline"></div>
 
-          
+          <form htmlFor='songURL'>Paste your SoundCloud URL here</form>
+          <input id='songURL' type='text' ref="url" style={{color: '#000'}} />
+          <button onClick={this.loadSong}>Load</button>
+
         </div>
       );
     },
@@ -62,15 +69,19 @@ var AudioWave = React.createClass({
     componentDidMount: function () {
       var self = this;
       musicInterface.init(visualizer);
+      Transition.fetchAll(self.props.visualization.id);
 
       // Loads song with path if there is one
       if (this.props.visualization.path != undefined) {
-        musicInterface.loadSong(this.props.visualization.path);  
+        musicInterface.loadSong(this.props.visualization.path);
       }
 
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
+
+        var transitions = Transition.getAll();
+        musicInterface.setUpRegions(transitions);
 
         timeline.init({
           wavesurfer: musicInterface.waveSurfer,
@@ -89,7 +100,6 @@ var AudioWave = React.createClass({
         );
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
-          //This will need more work, but for now just reset completely?
           Transition.removeTransition(self.props.visualization.id);
         });
 
