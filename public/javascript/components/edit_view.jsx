@@ -18,17 +18,22 @@ var EditView = React.createClass({
     Visualization.updateOne(viz);
   },
 
+  showRight: function() {
+    this.refs.right.show();
+  },
+
   render: function(){
     var self = this;
     return (
       <div>
+        <ParameterMenu visualization={this.props.visualization} />
+        <div id="toggle">Hide</div>
         <div className='viz-container'>
-        <div id="header">
-          <div className="header-left" onClick={self.handleClick}>
-            <h1 className="logo-text">NWMP</h1>
+          <div id="header">
+            <div className="header-left" onClick={self.handleClick}>
+              <h1 className="logo-text">NWMP</h1>
+            </div>
           </div>
-        </div>
-          <ParameterMenu visualization={this.props.visualization} />
           <h1 id="vizname">{this.props.visualization.name}</h1>
           <AudioWave visualization={this.props.visualization} />
         </div>
@@ -41,6 +46,9 @@ var EditView = React.createClass({
     $('.viz-container').append(visualizer.renderer.domElement);
     visualizer.animate();
     Transition.fetchAll(self.props.visualization.id);
+    $('#toggle').on('click', function(){
+      $('.menu-drawer').toggleClass('hidden');
+    })
   } 
 
 });

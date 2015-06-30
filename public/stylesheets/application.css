@@ -260,14 +260,15 @@ img {
 }
 
 .menu {
-  position: fixed;
-  color: #c8c8c8;
-  top: 25vh;
+  position: absolute;
+  color: #FFF;
+  top: 15vh;
   left: 2vw;
   background-color: rgba(0, 0, 0, 0.3);
   width: 160px;
   z-index: 2;
   -webkit-transition: all 0.4s ease;
+
 }
 
 .menu-button {
@@ -401,6 +402,84 @@ i#pause:hover {
   font-size:2em;
   margin-right: 1vw;  
 }
+
+/*Menu Drawer Code*/
+
+.menu-drawer {
+  margin-top: 0%;
+  position: absolute;
+  top: 0vh;
+  left: 80vw;
+  display: block;
+  width: 20vw;
+  height: 100vh;
+  
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1002;
+  transition: all 0.35s ease-in;
+}
+
+.menu-drawer.hidden {
+  position: absolute;
+  left: 100vw;
+  display: block;
+  width: 20vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#toggle {
+  position: absolute;
+  top: 5vh;
+  right: 8vw;
+  font-size: 14px;
+  display: block;
+  border-style: solid;
+  height: 30px;
+  width: 95px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+  border-color: #FFF;
+  border-width: 1px;
+  background: rgba(25, 25, 25, .4); 
+  z-index: 1004;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
