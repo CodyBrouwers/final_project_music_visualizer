@@ -121,6 +121,14 @@ var MusicInterface = {
     });
   },
 
+  removeRegion: function (region) {
+    region.remove();
+  },
+
+  removeAllRegions: function () {
+    this.waveSurfer.clearRegions();
+  },
+
   addRegion: function(transition) {
     if (this.currentRegion) {
       var region = this.waveSurfer.addRegion({

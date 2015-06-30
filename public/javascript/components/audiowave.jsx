@@ -15,20 +15,20 @@ var AudioWave = React.createClass({
     addTransition: function () {
       Transition.addTransition(this.props.visualization.id);
     },
-    updateTransition: function() {
-      Transition.updateTransition(this.props.visualization.id);
+    removeAllTransitions: function() {
+      Transition.removeAllTransitions(this.props.visualization.id);
     },
 
     render: function(){
       return (
         <div className="wave-container">
           <div className="controls">
-            <button onClick={this.updateTransition}>Update</button>
             <button onClick={this.backward}>Backwards</button>
             <button id="play" onClick={this.playPause}>Play/Pause</button>
             <button onClick={this.forward}>Forwards</button>
             <button onClick={this.toggleMute}>Mute</button>
             <button onClick={this.addTransition}>Add Transition</button>
+            <button onClick={this.removeAllTransitions}>Clear All Transitions</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
@@ -69,7 +69,7 @@ var AudioWave = React.createClass({
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
           //This will need more work, but for now just reset completely?
-          region.remove();
+          Transition.removeTransition(self.props.visualization.id);
         });
 
       });
