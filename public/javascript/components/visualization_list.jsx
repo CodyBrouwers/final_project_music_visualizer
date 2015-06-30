@@ -51,7 +51,6 @@ var VisualizationList = React.createClass({
     var self = this;
     var items = _.sortBy(Visualization.getAll(), function(viz){return viz[self.state.sortBy]});
     items = items.filter(function(viz){
-      console.log(self.state.filterText.toLowerCase());
       return viz.name.toLowerCase().indexOf(self.state.filterText.toLowerCase()) > -1;
     })
     items = items.map(function(viz){
@@ -71,14 +70,19 @@ var VisualizationList = React.createClass({
     return (
       <div>
         <div id="header">
-          <h1 className="logo-text">NWMP</h1>
-          <i id="search-icon" className="fa fa-search"></i>
-          <i id="sort-icon" classname="fa fa-sort"></i>
-          <SearchBar filterText={this.state.filterText} onFilterInput={this.handleFilterInput} />
-          <SortMenuHeader displaySortButtons={this.displaySortButtons} />
-          { this.state.sortMenuDisplay && <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } /> }
-          <div id="btn-new-viz" onClick={this.postNewViz}>
-            Create New Visualization
+          <div className="header-left">
+            <h1 className="logo-text">NWMP</h1>
+          </div>
+          <div className="header-right">
+            <i id="search-icon" className="fa fa-search"></i>
+            <SearchBar filterText={this.state.filterText} onFilterInput={this.handleFilterInput} />
+            <div id="sort-feature">
+              <SortMenuHeader displaySortButtons={this.displaySortButtons} />
+              { this.state.sortMenuDisplay && <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } /> }
+            </div>
+            <div id="btn-new-viz" onClick={this.postNewViz}>
+              Create New Visualization
+            </div>
           </div>
         </div>
         <div id="container" ref="container">

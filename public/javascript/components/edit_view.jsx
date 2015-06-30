@@ -24,7 +24,7 @@ var EditView = React.createClass({
       <div>
         <div className='viz-container'>
         <div id="header">
-          <div className="logo" onClick={self.handleClick}>
+          <div className="header-left" onClick={self.handleClick}>
             <h1 className="logo-text">NWMP</h1>
           </div>
         </div>
