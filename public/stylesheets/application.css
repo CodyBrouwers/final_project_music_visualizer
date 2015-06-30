@@ -23,18 +23,21 @@ body {
 div.header-left {
   height: 20vh;
   align-items: center;
-  width: 20vw;
+  width: 30vw;
   transition: all 0.2s ease-in;
+  display:flex;
+  flex-direction: row;
 }
 
 div.header-left:hover {
   transform: scale(1.05,1.05);
   cursor: pointer;
+  align-items: center;
 }
 
 div.header-right {
   height: 20vh;
-  width: 80vw;
+  width: 70vw;
   align-items: center;
   transition: all 0.2s ease-in;
   display: flex;
@@ -44,12 +47,11 @@ div.header-right {
 }
 
 .logo-text {
-  position: absolute;
   color: #a6b894;
-  padding-bottom: 10px;
-  left: 3vh;
-  margin: 0vh;
-  font-size:6.5em;
+  margin-left: 2vw;
+  margin-top: 0vh;
+  margin-bottom: 0vh;
+  font-size:6.5vmax;
   z-index: 2;
   background: url(../img/tie-dye-option3.png) repeat;
   -webkit-background-clip: text;
