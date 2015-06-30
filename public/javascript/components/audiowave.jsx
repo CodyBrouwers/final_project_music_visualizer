@@ -1,4 +1,13 @@
 var AudioWave = React.createClass({
+
+  getInitialState: function(){
+    return (
+      { 
+      displayPlay: true
+      }
+    )
+  },
+
     //Playback
     backward: function() {
       musicInterface.skipBackward();
@@ -19,21 +28,33 @@ var AudioWave = React.createClass({
       Transition.removeAllTransitions(this.props.visualization.id);
     },
 
+    playButtonToggle: function() {
+      if (this.state.displayPlay === true) {
+        this.setState({displayPlay: false});
+      } else {
+        this.setState({displayPlay: true});
+      }
+    },
+
+    handleClick: function (){
+      this.playPause();
+      this.playButtonToggle();
+    },
+
+    //Removed the drage and drop component: <p id="drop">Drop your file here</p>
     render: function(){
       return (
         <div className="wave-container">
           <div className="controls">
-            <button onClick={this.backward}>Backwards</button>
-            <button id="play" onClick={this.playPause}>Play/Pause</button>
-            <button onClick={this.forward}>Forwards</button>
-            <button onClick={this.toggleMute}>Mute</button>
-            <button onClick={this.addTransition}>Add Transition</button>
+            {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
+            {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
+            <button onClick={this.addTransition}>Add Transition Point</button>
             <button onClick={this.removeAllTransitions}>Clear All Transitions</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
 
-          <p id="drop">Drop your file here</p>
+          
         </div>
       );
     },

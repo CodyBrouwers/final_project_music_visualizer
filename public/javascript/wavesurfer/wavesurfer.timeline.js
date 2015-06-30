@@ -30,8 +30,8 @@
             this.notchPercentHeight = this.params.notchPercentHeight || 90;
             this.primaryColor = this.params.primaryColor || '#000';
             this.secondaryColor = this.params.secondaryColor || '#c0c0c0';
-            this.primaryFontColor = this.params.primaryFontColor || '#000';
-            this.secondaryFontColor = this.params.secondaryFontColor || '#000';
+            this.primaryFontColor = this.params.primaryFontColor || '#FFF';
+            this.secondaryFontColor = this.params.secondaryFontColor || '#FFF';
             this.fontFamily = this.params.fontFamily || 'Arial';
             this.fontSize = this.params.fontSize || 10;
 

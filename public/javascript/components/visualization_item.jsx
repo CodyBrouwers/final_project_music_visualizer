@@ -9,7 +9,7 @@ var VisualizationItem = React.createClass({
 
     render: function() {
       return (
-        <ReactCSSTransitionGroup transitionName="example" transitionAppear={true}>
+        <ReactCSSTransitionGroup transitionName="example" transitionAppear={true} transitionLeave={true}>
         <a className="viz" onClick={this.handleClick}>
         <img src={this.props.url}
         title={this.props.viz.name}>

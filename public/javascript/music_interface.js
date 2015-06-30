@@ -11,9 +11,10 @@ var MusicInterface = {
     var options = {
       container: document.querySelector("#wave"),
       waveColor: 'violet',
-      progressColor: 'purple',
+      progressColor: '#00FFE3',
       cursorColor: 'navy',
-      scrollParent: false
+      scrollParent: false,
+      height: '55'
     };
 
     // Initializes with above options

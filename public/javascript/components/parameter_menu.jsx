@@ -64,8 +64,6 @@ var ParameterMenu = React.createClass({
     render: function(){
       return (
         <div>
-          <div className="close">- hide options</div>
-          <div className="menu-button">+ show options</div>
           <div className="menu">
             <fieldset>
               <legend>Color</legend>
@@ -97,10 +95,6 @@ var ParameterMenu = React.createClass({
                 </li>
               </ul>
             </fieldset>
-            <p>Source</p>
-            <ul>
-                <li className="track">Track</li>
-            </ul>
           </div>
         </div> 
       )
