@@ -1,6 +1,6 @@
 var SoundCloud = {
  
-  loadStreamUrl: function(trackURL) {
+  loadStreamUrl: function(viz, trackURL) {
     var clientID = "10ad4796eba0b699ba58581dcb84e252"
     SC.initialize({
       client_id: clientID
@@ -13,8 +13,11 @@ var SoundCloud = {
         dataType: 'json',
         success: function(trackLinks) {
           var streamURL = trackLinks.http_mp3_128_url;
-          console.log(streamURL);
           musicInterface.loadSong(streamURL);
+          viz.path = streamURL;
+          console.log(viz.path);
+          console.log("AFter: ", viz);
+          Visualization.updateOne(viz);
         }
       });
     });

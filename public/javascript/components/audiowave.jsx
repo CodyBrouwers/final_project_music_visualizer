@@ -19,8 +19,16 @@ var AudioWave = React.createClass({
       Transition.updateTransition(this.props.visualization.id);
     },
     loadSong: function () {
+      console.log("Beore: ", this.props.visualization);
       var url = this.refs.url.getDOMNode().value;
-      var streamURL = SoundCloud.loadStreamUrl(url);
+
+      var streamURL = SoundCloud.loadStreamUrl(this.props.visualization, url);
+      
+      // this.props.visualization.path = streamURL;
+      // console.log(this.props.visualization.path);
+      // console.log("AFter: ", this.props.visualization);
+      // Visualization.updateOne(this.props.visualization);
+      
     },
 
     render: function(){
