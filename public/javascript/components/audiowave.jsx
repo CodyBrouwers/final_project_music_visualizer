@@ -24,8 +24,8 @@ var AudioWave = React.createClass({
     addTransition: function () {
       Transition.addTransition(this.props.visualization.id);
     },
-    updateTransition: function() {
-      Transition.updateTransition(this.props.visualization.id);
+    removeAllTransitions: function() {
+      Transition.removeAllTransitions(this.props.visualization.id);
     },
 
     playButtonToggle: function() {
@@ -49,6 +49,7 @@ var AudioWave = React.createClass({
             {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
             {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
             <button onClick={this.addTransition}>Add Transition Point</button>
+            <button onClick={this.removeAllTransitions}>Clear All Transitions</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
@@ -75,7 +76,7 @@ var AudioWave = React.createClass({
           wavesurfer: musicInterface.waveSurfer,
           container: "#wave-timeline"
         });
-        
+
         musicInterface.waveSurfer.on('region-click', function (region, event) {
             musicInterface.pause();
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
@@ -89,7 +90,7 @@ var AudioWave = React.createClass({
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
           //This will need more work, but for now just reset completely?
-          region.remove();
+          Transition.removeTransition(self.props.visualization.id);
         });
 
       });

@@ -8,6 +8,10 @@ var EditView = React.createClass({
   },
 
   handleClick: function() {
+    musicInterface.currentRegion = undefined;
+    visualizer.cancelAnimate();
+    musicInterface.destroy();
+    Transition._transitions = [];
     this.props.changePage('List');
     musicInterface.destroy();
   },
@@ -41,7 +45,7 @@ var EditView = React.createClass({
     $('.viz-container').append(visualizer.renderer.domElement);
     visualizer.animate();
     Transition.fetchAll(self.props.visualization.id);
-  } 
+  }
 
 });
 
