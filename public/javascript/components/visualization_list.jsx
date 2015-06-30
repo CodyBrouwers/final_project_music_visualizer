@@ -13,8 +13,9 @@ var VisualizationList = React.createClass({
   },
 
   postNewViz: function() {
-
     var newViz = Visualization.createOne();
+    SoundCloud.init;
+    SoundCloud.loadStreamUrl('https://soundcloud.com/iameklo/eklo-lets-go-home-original-mix');
     this.props.changePage('Edit');
     this.props.changeVisualization(newViz);
   },
@@ -36,12 +37,6 @@ var VisualizationList = React.createClass({
         url = "http://lorempixel.com/250/250/fashion"
         changeVisualization={self.props.changeVisualization} />;
     })
-
-    // var sortButtons = _.map(self._sortOptions, function(sortOption){
-    //   return <div className="sort-button" onClick={function(){
-    //     self.setState({sortBy: sortOption});
-    //   }}>{sortOption}</div>;
-    // })
     return (
       <div>
         <div id="header">

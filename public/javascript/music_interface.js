@@ -93,7 +93,6 @@ var MusicInterface = {
     this.waveSurfer.toggleMute();
   },
 
-  //TODO: Need to have access to loading and drag/dropping of files
   loadSong: function(path) {
     this.waveSurfer.load(path);
   },
@@ -110,8 +109,6 @@ var MusicInterface = {
     var time = this.waveSurfer.backend.getDuration();
     return time;
   },
-  
-  //Will need to have access to the events emitted by the region plug-in?
 
   // Enables Region Selection
   enableRegions: function () {

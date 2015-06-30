@@ -18,6 +18,10 @@ var AudioWave = React.createClass({
     updateTransition: function() {
       Transition.updateTransition(this.props.visualization.id);
     },
+    loadSong: function () {
+      var url = this.refs.url.getDOMNode().value;
+      var streamURL = SoundCloud.loadStreamUrl(url);
+    },
 
     render: function(){
       return (
@@ -33,7 +37,9 @@ var AudioWave = React.createClass({
           <div id="wave"></div>
           <div id="wave-timeline"></div>
 
-          <p id="drop">Drop your file here</p>
+          <form htmlFor='songURL'>Paste your SoundCloud URL here</form>
+          <input id='songURL' type='text' ref="url" style={{color: '#000'}} />
+          <button onClick={this.loadSong}>Load</button>
         </div>
       );
     },
@@ -68,7 +74,6 @@ var AudioWave = React.createClass({
         );
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
-          //This will need more work, but for now just reset completely?
           region.remove();
         });
 
