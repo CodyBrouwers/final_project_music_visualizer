@@ -19,7 +19,6 @@ var VisualizationList = React.createClass({
   },
 
   postNewViz: function() {
-
     var newViz = Visualization.createOne();
     this.props.changePage('Edit');
     this.props.changeVisualization(newViz);
@@ -58,15 +57,8 @@ var VisualizationList = React.createClass({
         viz={viz} 
         key={ "visualization-item-" + viz.id} 
         changePage={self.props.changePage}
-        url = "http://lorempixel.com/250/250/fashion"
         changeVisualization={self.props.changeVisualization} />;
     })
-
-    // var sortButtons = _.map(self._sortOptions, function(sortOption){
-    //   return <div className="sort-button" onClick={function(){
-    //     self.setState({sortBy: sortOption});
-    //   }}>{sortOption}</div>;
-    // })
     return (
       <div>
         <div id="header">
