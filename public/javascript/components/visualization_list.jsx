@@ -57,7 +57,6 @@ var VisualizationList = React.createClass({
         viz={viz} 
         key={ "visualization-item-" + viz.id} 
         changePage={self.props.changePage}
-        url = "http://lorempixel.com/250/250/fashion"
         changeVisualization={self.props.changeVisualization} />;
     })
     return (

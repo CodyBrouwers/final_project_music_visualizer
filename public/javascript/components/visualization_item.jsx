@@ -11,7 +11,7 @@ var VisualizationItem = React.createClass({
       return (
         <ReactCSSTransitionGroup transitionName="example" transitionAppear={true} transitionLeave={true}>
         <a className="viz" onClick={this.handleClick}>
-        <img src={this.props.url}
+        <img src={this.props.viz.image}
         title={this.props.viz.name}>
         </img></a>
         </ReactCSSTransitionGroup>

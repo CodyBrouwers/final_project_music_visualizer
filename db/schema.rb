@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150624213635) do
+ActiveRecord::Schema.define(version: 20150630214549) do
 
   create_table "transitions", force: :cascade do |t|
     t.integer  "visualization_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150624213635) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "image"
   end
 
 end
