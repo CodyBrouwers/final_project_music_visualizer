@@ -90,6 +90,7 @@ var AudioWave = React.createClass({
 
         musicInterface.waveSurfer.on('region-click', function (region, event) {
             musicInterface.pause();
+            self.setState({displayPlay: true});
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           }
         );
