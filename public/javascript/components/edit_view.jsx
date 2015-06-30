@@ -8,8 +8,12 @@ var EditView = React.createClass({
   },
 
   handleClick: function() {
+    musicInterface.currentRegion = undefined;
+    visualizer.cancelAnimate();
     musicInterface.destroy();
+    Transition._transitions = [];
     this.props.changePage('List');
+    musicInterface.destroy();
   },
 
   updateName: function(event){
@@ -22,14 +26,16 @@ var EditView = React.createClass({
     var self = this;
     return (
       <div>
-        <div id="header">
-          <h1 className="logo-text">NWMP</h1>
-          <h1 id="vizname">{this.props.visualization.name}</h1>
-        </div>
         <div className='viz-container'>
-          <ParameterMenu visualization={this.props.visualization} />
+        <div id="header">
+          <div className="logo" onClick={self.handleClick}>
+            <h1 className="logo-text">NWMP</h1>
+          </div>
         </div>
-        <AudioWave visualization={this.props.visualization} />
+          <ParameterMenu visualization={this.props.visualization} />
+          <h1 id="vizname">{this.props.visualization.name}</h1>
+          <AudioWave visualization={this.props.visualization} />
+        </div>
       </div>
     )
   },
@@ -39,7 +45,7 @@ var EditView = React.createClass({
     $('.viz-container').append(visualizer.renderer.domElement);
     visualizer.animate();
     Transition.fetchAll(self.props.visualization.id);
-  } 
+  }
 
 });
 

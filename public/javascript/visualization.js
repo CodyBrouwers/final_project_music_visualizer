@@ -70,7 +70,6 @@ var Visualization = {
   },
 
   _updateVizRemotely: function (viz) {
-    console.log(viz.path);
     $.ajax({
       type: "PUT",
       url: "/visualizations/"+viz.id+"/edit",
@@ -81,7 +80,6 @@ var Visualization = {
         name: viz.name
       },
       success: function(data) {
-        console.log(data);
         console.log('Updated');
       },
       error: function() {

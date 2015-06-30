@@ -19,6 +19,7 @@ var AppView = React.createClass({
     },
 
     render: function(){
+
       if (this.state.page === 'List'){
         return <VisualizationList 
           key='list' 

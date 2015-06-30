@@ -1,4 +1,13 @@
 var AudioWave = React.createClass({
+
+  getInitialState: function(){
+    return (
+      { 
+      displayPlay: true
+      }
+    )
+  },
+
     //Playback
     backward: function() {
       musicInterface.skipBackward();
@@ -15,32 +24,36 @@ var AudioWave = React.createClass({
     addTransition: function () {
       Transition.addTransition(this.props.visualization.id);
     },
-    updateTransition: function() {
-      Transition.updateTransition(this.props.visualization.id);
+    removeAllTransitions: function() {
+      Transition.removeAllTransitions(this.props.visualization.id);
     },
     loadSong: function () {
-      console.log("Beore: ", this.props.visualization);
       var url = this.refs.url.getDOMNode().value;
-
       var streamURL = SoundCloud.loadStreamUrl(this.props.visualization, url);
-      
-      // this.props.visualization.path = streamURL;
-      // console.log(this.props.visualization.path);
-      // console.log("AFter: ", this.props.visualization);
-      // Visualization.updateOne(this.props.visualization);
-      
+      this.refs.url.getDOMNode().value = '';
+    },
+
+    playButtonToggle: function() {
+      if (this.state.displayPlay === true) {
+        this.setState({displayPlay: false});
+      } else {
+        this.setState({displayPlay: true});
+      }
+    },
+
+    handleClick: function (){
+      this.playPause();
+      this.playButtonToggle();
     },
 
     render: function(){
       return (
         <div className="wave-container">
           <div className="controls">
-            <button onClick={this.updateTransition}>Update</button>
-            <button onClick={this.backward}>Backwards</button>
-            <button id="play" onClick={this.playPause}>Play/Pause</button>
-            <button onClick={this.forward}>Forwards</button>
-            <button onClick={this.toggleMute}>Mute</button>
-            <button onClick={this.addTransition}>Add Transition</button>
+            {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
+            {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
+            <button onClick={this.addTransition}>Add Transition Point</button>
+            <button onClick={this.removeAllTransitions}>Clear All Transitions</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
@@ -48,6 +61,7 @@ var AudioWave = React.createClass({
           <form htmlFor='songURL'>Paste your SoundCloud URL here</form>
           <input id='songURL' type='text' ref="url" style={{color: '#000'}} />
           <button onClick={this.loadSong}>Load</button>
+
         </div>
       );
     },
@@ -69,7 +83,7 @@ var AudioWave = React.createClass({
           wavesurfer: musicInterface.waveSurfer,
           container: "#wave-timeline"
         });
-        
+
         musicInterface.waveSurfer.on('region-click', function (region, event) {
             musicInterface.pause();
             Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
@@ -82,7 +96,7 @@ var AudioWave = React.createClass({
         );
 
         musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
-          region.remove();
+          Transition.removeTransition(self.props.visualization.id);
         });
 
       });
