@@ -20,8 +20,6 @@ var VisualizationList = React.createClass({
 
   postNewViz: function() {
     var newViz = Visualization.createOne();
-    SoundCloud.init;
-    SoundCloud.loadStreamUrl('https://soundcloud.com/iameklo/eklo-lets-go-home-original-mix');
     this.props.changePage('Edit');
     this.props.changeVisualization(newViz);
   },

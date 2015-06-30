@@ -44,7 +44,6 @@ var EditView = React.createClass({
     var self = this;
     $('.viz-container').append(visualizer.renderer.domElement);
     visualizer.animate();
-    Transition.fetchAll(self.props.visualization.id);
   }
 
 });

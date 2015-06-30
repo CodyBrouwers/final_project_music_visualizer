@@ -71,7 +71,6 @@ var Transition = {
         url: "/visualizations/"+vizId+"/transitions",
         dataType: 'json',
         success: function(transitions) {
-          musicInterface.setUpRegions(transitions);
           Transition._storeAllLocally(vizId, transitions);
           visualizer.setParams(Transition._transitions[0].params);
           Transition._runCallbacks();
@@ -151,22 +150,8 @@ var Transition = {
     });
   },
 
-  _fetchAllFromRemote: function(vizId) {
-    $.ajax({
-        type: "GET",
-        url: "/visualizations/"+vizId+"/transitions",
-        dataType: 'json',
-        success: function(transitions) {
-          Transition._storeAllLocally(vizId, transitions);
-          visualizer.setParams(Transition._transitions[0].params);
-          musicInterface.setUpRegions(Transition._transitions);
-          Transition._runCallbacks();
-        }
-    });
-  },
-
   _storeAllLocally: function(vizId, transitions) {
-    if (transitions.length !== 0) {
+    if (transitions.length > 0) {
       transitions.forEach(function(transition, index) {
         transition.params = JSON.parse(transition.params);
         Transition._transitions.push(transition);
@@ -202,7 +187,7 @@ var Transition = {
     this._debouncedUpdateTransitionRemotely(vizId, transition)
   },
 
-  fetchAll: function(vizId, callback) {
+  fetchAll: function(vizId) {
     Transition._fetchAllFromRemote(vizId);
     return null;
   },
@@ -215,7 +200,13 @@ var Transition = {
     var time = musicInterface.getCurrentTime();
     var params = visualizer.getParams();
     var newTransition = Transition.createTransition(vizId, time, params);
-    musicInterface.addRegion(newTransition); 
+    musicInterface.addRegion(newTransition);
+  },
+
+  addInitialRegionAndTransition: function (vizId) {
+    var params = visualizer.getParams();
+    var newTransition = Transition.createTransition(vizId, 0, params);
+    musicInterface.addInitialRegion(newTransition);
   },
 
   removeTransition: function (vizId) {
