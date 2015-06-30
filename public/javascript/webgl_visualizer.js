@@ -32,7 +32,6 @@ WebGLVisualizer = {
 
   animate: function(frame) {
     animationID = requestAnimationFrame(this.animate.bind(this));
-    console.log(animationID);
     this.mesh.rotation.x += 0.01;
     this.mesh.rotation.y += 0.02;
 
@@ -46,9 +45,6 @@ WebGLVisualizer = {
   },
 
   cancelAnimate: function () {
-    console.log("animationID: ", animationID)
-    // If you comment the below line out then you'll see that the animationID is console logged continously
-    // where as the below line will stop it when you leave the edit page. 
     cancelAnimationFrame(animationID);
   },
 
