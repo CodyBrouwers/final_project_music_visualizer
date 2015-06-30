@@ -176,7 +176,6 @@ var MusicInterface = {
         this.getDuration()
       );
     } else {
-      console.log(transitions)
       this.currentRegion = this.addOneRegion(
         transitions[0].id,
         transitions[0].time,

@@ -71,7 +71,7 @@ var Transition = {
         url: "/visualizations/"+vizId+"/transitions",
         dataType: 'json',
         success: function(transitions) {
-          musicInterface.setUpRegions(transitions);          
+          musicInterface.setUpRegions(transitions);
           Transition._storeAllLocally(vizId, transitions);
           visualizer.setParams(Transition._transitions[0].params);
           Transition._runCallbacks();

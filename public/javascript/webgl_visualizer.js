@@ -45,9 +45,6 @@ WebGLVisualizer = {
   },
 
   cancelAnimate: function () {
-    console.log("animationID: ", animationID)
-    // If you comment the below line out then you'll see that the animationID is console logged continously
-    // where as the below line will stop it when you leave the edit page. 
     cancelAnimationFrame(animationID);
   },
 

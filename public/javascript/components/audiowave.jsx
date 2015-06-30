@@ -50,8 +50,6 @@ var AudioWave = React.createClass({
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
         var timeline = Object.create(WaveSurfer.Timeline);
-        var transitions = Transition.getAll()
-        musicInterface.setUpRegions(transitions);
 
         timeline.init({
           wavesurfer: musicInterface.waveSurfer,
