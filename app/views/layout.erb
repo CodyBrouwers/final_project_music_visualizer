@@ -16,8 +16,6 @@
 <body>
   <%= yield %>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
-  <script src="javascript/OrbitControls.js"></script>
   <script type="x-shader/x-fragment" id="fragmentShader">
      uniform float time;
     uniform sampler2D tMatCap;
@@ -195,6 +193,8 @@
 
   </script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+  <script src="javascript/OrbitControls.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
   <script src="https://fb.me/react-with-addons-0.13.3.js"></script>

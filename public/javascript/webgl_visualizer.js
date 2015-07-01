@@ -54,9 +54,9 @@ WebGLVisualizer = {
     this.renderer.setSize( window.innerWidth, window.innerHeight );
     var controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
 
-    window.addEventListener( 'resize', this.onWindowResize, false );
-
     this.visualizerType = 1;
+
+    window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
   },
 
@@ -67,7 +67,7 @@ WebGLVisualizer = {
 
     this.renderer.setSize( window.innerWidth, window.innerHeight );
 
-}
+  },
 
   animate: function(frame) {
     animationID = requestAnimationFrame(this.animate.bind(this));
@@ -142,8 +142,7 @@ WebGLVisualizer = {
         value = this.mesh.geometry.type;
         break;
       case 'matcap':
-        // value = this.material.uniforms.tMatCap.value
-        console.log(this.material.uniforms.tMatCap.value)
+        value = this.material.uniforms.tMatCap.value.sourceFile;
         break;
     }
     return { 'type': type, 'value': value }
@@ -162,11 +161,14 @@ WebGLVisualizer = {
   },
 
   setGeometry: function(shape) {
-    if (shape === 'SphereGeometry') {
-      this.mesh.geometry = new THREE[shape]( 20, 100, 100 );
+    if (shape === 'TorusKnotGeometry') {
+      this.mesh.geometry = new THREE[shape]( 16, 4, 256, 32, 2, 6);
     }
     else if (shape === 'IcosahedronGeometry') {
       this.mesh.geometry = new THREE[shape]( 20, 4 );
+    }
+    else if (shape === 'PlaneGeometry') {
+      this.mesh.geometry = new THREE[shape]( 30, 30, 32, 32);
     }
     else {
       this.mesh.geometry = new THREE[shape]( 20, 20, 20, 32, 32, 32 );

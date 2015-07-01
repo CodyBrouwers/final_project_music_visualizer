@@ -21,10 +21,14 @@ var ParameterMenu = React.createClass({
       'type': 'geometry',
       'value': event.target.value
       }];
-      if (event.target.value === "SphereGeometry") {
-        self.refs.sphere.getDOMNode().checked = 'true';
+      if (event.target.value === "IcosahedronGeometry") {
+        self.refs.icosahedron.getDOMNode().checked = 'true';
       } else if (event.target.value === "BoxGeometry") {
         self.refs.box.getDOMNode().checked = 'true';
+      } else if (event.target.value === "TorusKnotGeometry") {
+        self.refs.torusKnot.getDOMNode().checked = 'true';
+      } else if (event.target.value === "PlaneGeometry") {
+        self.refs.plane.getDOMNode().checked = 'true';
       }
       visualizer.setParams(shape)
       if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
@@ -38,8 +42,8 @@ var ParameterMenu = React.createClass({
         'type': 'matcap',
         'value': (event.target.src.slice(21))
       }];
-      console.log(event.target.src.slice(21))
       visualizer.setParams(matCap)
+      console.log(visualizer.material.uniforms.tMatCap.value)
       if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
         Transition.updateTransition(self.props.visualization.id);
       }
@@ -57,10 +61,14 @@ var ParameterMenu = React.createClass({
       
       // Change shape selection on click of new region
       var shape = params[1].value;
-      if (shape === "SphereGeometry") {
-        self.refs.sphere.getDOMNode().checked = 'true';
+      if (shape === "IcosahedronGeometry") {
+        self.refs.icosahedron.getDOMNode().checked = 'true';
       } else if (shape === "BoxGeometry") {
         self.refs.box.getDOMNode().checked = 'true';
+      } else if (shape === "TorusKnotGeometry") {
+        self.refs.torusKnot.getDOMNode().checked = 'true';
+      } else if (shape === "PlaneGeometry") {
+        self.refs.plane.getDOMNode().checked = 'true';
       }
     },
 
@@ -104,17 +112,22 @@ var ParameterMenu = React.createClass({
               <legend>Shape</legend>
               <ul className='shape'>
                 <li>
-                  <label>Sphere</label>
-                  <input type="radio" ref="sphere" name="shape" value="SphereGeometry" onClick={this.changeShape}/>
+                  <label>Torus Knot</label>
+                  <input type="radio" ref="torusKnot" name="shape" value="TorusKnotGeometry" onClick={this.changeShape}/>
                 </li>
                 <li>
                   <label>Not Sphere?</label>
-                  <input type="radio" name="shape" value="IcosahedronGeometry" onClick={this.changeShape}/>
+                  <input type="radio" ref="icosahedron" name="shape" value="IcosahedronGeometry" onClick={this.changeShape}/>
                 </li>
                 <li>
                   <label>Cube</label>
                   <input type="radio" ref="box" name="shape" value="BoxGeometry" onClick={this.changeShape}/>
                 </li>
+                <li>
+                  <label>Plane</label>
+                  <input type="radio" ref="plane" name="shape" value="PlaneGeometry" onClick={this.changeShape}/>
+                </li>
+                
               </ul>
             </fieldset>
             <fieldset>
