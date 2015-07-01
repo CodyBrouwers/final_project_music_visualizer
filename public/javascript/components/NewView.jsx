@@ -2,7 +2,6 @@ var NewView = React.createClass({
 
   createNew: function () {
     var url = this.refs.url.getDOMNode().value;
-    console.log(this.props.visualization);
     var streamURL = SoundCloud.loadStreamUrl(this.props.visualization, url);
     this.props.changePage('Edit'); 
     this.refs.url.getDOMNode().value = '';
