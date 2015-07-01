@@ -9,6 +9,7 @@ var EditView = React.createClass({
 
   handleClick: function() {
     musicInterface.currentRegion = undefined;
+    window.removeEventListener('resize', visualizer.onWindowResize)
     visualizer.cancelAnimate();
     musicInterface.destroy();
     Transition._transitions = [];

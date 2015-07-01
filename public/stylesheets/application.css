@@ -513,6 +513,11 @@ i#pause:hover {
   z-index: 1004;
 }
 
+img.matcap {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
 
 #spinner-gif {
   position: absolute;
