@@ -448,8 +448,13 @@ i#pause:hover {
   z-index: 1004;
 }
 
-
-
+#small-edit-image {
+  height: 15%;
+  width: 15%;
+  float: left;
+  margin-left: -6em;
+  margin-top: 1em;
+}
 
 
 
