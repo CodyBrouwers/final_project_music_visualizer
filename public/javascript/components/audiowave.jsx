@@ -50,6 +50,7 @@ var AudioWave = React.createClass({
       return (
         <div className="wave-container">
           <div className="controls">
+            <img id="small-edit-image" src={this.props.visualization.image} ></img>
             {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
             {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
             <button onClick={this.addTransition}>Add Transition Point</button>
@@ -57,11 +58,6 @@ var AudioWave = React.createClass({
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
-
-          <form htmlFor='songURL'>Paste your SoundCloud URL here</form>
-          <input id='songURL' type='text' ref="url" style={{color: '#000'}} />
-          <button onClick={this.loadSong}>Load</button>
-
         </div>
       );
     },
