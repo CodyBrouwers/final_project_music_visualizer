@@ -3,7 +3,8 @@ var AudioWave = React.createClass({
   getInitialState: function(){
     return (
       { 
-      displayPlay: true
+      displayPlay: true,
+      displaySpinner: true
       }
     )
   },
@@ -48,15 +49,18 @@ var AudioWave = React.createClass({
 
     render: function(){
       return (
-        <div className="wave-container">
-          <div className="controls">
-            {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
-            {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
-            <button id="add-trans" onClick={this.addTransition}>Add Transition Point</button>
-            <button id="clear-trans" onClick={this.removeAllTransitions}>Clear All Transitions</button>
+        <div>
+          {this.state.displaySpinner && <img id="spinner-gif" src="../img/blackspin.gif" />}
+          <div className="wave-container">
+            <div className="controls">
+              {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
+              {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
+              <button id="add-trans" onClick={this.addTransition}>Add Transition Point</button>
+              <button id="clear-trans" onClick={this.removeAllTransitions}>Clear All Transitions</button>
+            </div>
+            <div id="wave"></div>
+            <div id="wave-timeline"></div>
           </div>
-          <div id="wave"></div>
-          <div id="wave-timeline"></div>
         </div>
       );
     },
@@ -73,6 +77,7 @@ var AudioWave = React.createClass({
 
       // Initializes timeline plugin and plays once ready
       musicInterface.waveSurfer.on('ready', function () {
+        self.setState({displaySpinner: false});
         var timeline = Object.create(WaveSurfer.Timeline);
 
         var transitions = Transition.getAll();

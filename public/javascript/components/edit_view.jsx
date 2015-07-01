@@ -40,7 +40,6 @@ var EditView = React.createClass({
           </div>
           <h1 id="vizname">{this.props.visualization.name}</h1>
           <AudioWave visualization={this.props.visualization} />
-          <img id="spinner-gif" src="../img/blackspin.gif" />
         </div>
       </div>
     )

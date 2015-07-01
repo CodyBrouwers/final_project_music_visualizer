@@ -460,7 +460,7 @@ i#pause:hover {
   position: absolute;
   height: 40px;
   width: 40px;
-  z-index: 2;
+  z-index: 2000;
   top: 90vh;
   left: 50vw;
 }
