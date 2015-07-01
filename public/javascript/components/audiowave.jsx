@@ -65,41 +65,41 @@ var AudioWave = React.createClass({
     componentDidMount: function () {
       var self = this;
       musicInterface.init(visualizer);
-      Transition.fetchAll(self.props.visualization.id);
+      var transitions;
 
       // Loads song with path if there is one
       if (this.props.visualization.path != undefined) {
         musicInterface.loadSong(this.props.visualization.path);
       }
 
-      // Initializes timeline plugin and plays once ready
-      musicInterface.waveSurfer.on('ready', function () {
-        var timeline = Object.create(WaveSurfer.Timeline);
+      $(document).ajaxComplete(function () {
+          transitions = Transition.getAll();
 
-        var transitions = Transition.getAll();
-        musicInterface.setUpRegions(transitions);
+        // Initializes timeline plugin and sets up regions once ready
+        musicInterface.waveSurfer.on('ready', function () {
+          var timeline = Object.create(WaveSurfer.Timeline);
+          timeline.init({
+            wavesurfer: musicInterface.waveSurfer,
+            container: "#wave-timeline"
+          });
+          
+          musicInterface.setUpRegions(transitions);
 
-        timeline.init({
-          wavesurfer: musicInterface.waveSurfer,
-          container: "#wave-timeline"
+          musicInterface.waveSurfer.on('region-click', function (region, event) {
+              musicInterface.pause();
+              self.setState({displayPlay: true});
+              Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
+            }
+          );
+          musicInterface.waveSurfer.on('region-in', function (region, event) {
+              Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
+            }
+          );
+          musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
+            Transition.removeTransition(self.props.visualization.id);
+          });
+
         });
-
-        musicInterface.waveSurfer.on('region-click', function (region, event) {
-            musicInterface.pause();
-            self.setState({displayPlay: true});
-            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
-          }
-        );
-
-        musicInterface.waveSurfer.on('region-in', function (region, event) {
-            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
-          }
-        );
-
-        musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
-          Transition.removeTransition(self.props.visualization.id);
-        });
-
       });
     }
   })

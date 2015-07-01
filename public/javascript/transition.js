@@ -246,14 +246,10 @@ var Transition = {
     return current_transition;
   },
 
-  setCurrentTransition: function(transition){
-    visualizer.setParams(transition.params);
-  },
-
   setCurrentRegionAndTransition: function(vizId, region) {
     musicInterface.currentRegion = region;
     var transition = this.findCurrentTransition(region);
-    this.setCurrentTransition(transition);
+    visualizer.setParams(transition.params);
     return transition;
   },
 

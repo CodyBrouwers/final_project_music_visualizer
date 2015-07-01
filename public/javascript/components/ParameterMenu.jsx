@@ -32,10 +32,14 @@ var ParameterMenu = React.createClass({
       }
     },
 
-    updateAllParams: function () {
+    updateAllParams: function (parameters) {
       var self = this
-      var params = visualizer.getParams();
-
+      var params;
+      if (parameters) {
+        params = parameters;
+      } else {
+        params = visualizer.getParams();
+      }
       // Change colors sliders on click of new region
       var colors = params[0].value.slice(4,-1).split(',');
       self.refs.red.getDOMNode().value = parseInt(colors[0]);
@@ -53,12 +57,26 @@ var ParameterMenu = React.createClass({
 
     componentDidMount: function () {
       var self = this
+
+      $(document).ajaxComplete(function (event, xhr, settings) {
+        if (!$.isEmptyObject(self.refs) && settings.type === "GET") {
+          var transitions = Transition.getAll();
+          var firstParams = transitions[0].params;
+          self.updateAllParams(firstParams);
+        }
+      });
+
       var wave = document.getElementById('wave');
       var play = document.getElementById('play');
-      wave.addEventListener("click", self.updateAllParams);
-      play.addEventListener("click", function () {
-        musicInterface.waveSurfer.on("region-in", self.updateAllParams);
+      wave.addEventListener("click", function () {
+        self.updateAllParams()
       });
+      play.addEventListener("click", function () {
+        musicInterface.waveSurfer.on("region-in", function () {
+          self.updateAllParams();
+        });
+      });
+
     },
 
     render: function(){
@@ -70,15 +88,15 @@ var ParameterMenu = React.createClass({
               <ul className="color">
                 <li>
                   <form htmlFor='input-red'>Red</form>
-                  <input id='input-red' type='range' ref="red" max="255" defaultValue="240" onChange={this.changeColorParams}/>
+                  <input id='input-red' type='range' ref="red" max="255" defaultValue="0" onChange={this.changeColorParams}/>
                 </li>
                 <li>
                   <form htmlFor='input-green'>Green</form>
-                  <input id='input-green' type='range' ref="green" max="255" defaultValue="100" onChange={this.changeColorParams}/>
+                  <input id='input-green' type='range' ref="green" max="255" defaultValue="0" onChange={this.changeColorParams}/>
                 </li>
                 <li>
                   <form htmlFor='input-blue'>Blue</form>
-                  <input id='input-blue' type='range' ref="blue" max="255" defaultValue="30" onChange={this.changeColorParams}/>
+                  <input id='input-blue' type='range' ref="blue" max="255" defaultValue="0" onChange={this.changeColorParams}/>
                 </li>
               </ul>
             </fieldset>
