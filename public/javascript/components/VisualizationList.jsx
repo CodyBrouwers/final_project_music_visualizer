@@ -20,8 +20,6 @@ var VisualizationList = React.createClass({
   },
 
   postNewViz: function() { 
-    var newViz = Visualization.createOne();
-    this.props.changeVisualization(newViz);
   },
 
   changeSort: function (sortOption) {
@@ -37,12 +35,10 @@ var VisualizationList = React.createClass({
   },
 
   displaySoundcloudModal: function() {
-    this.postNewViz();
     this.setState({displaySoundcloudModal: true})
   },
 
   hideSoundcloudModal: function() {
-    // this.postNewViz();
     this.setState({displaySoundcloudModal: false})
   },
 
@@ -90,7 +86,12 @@ var VisualizationList = React.createClass({
         <div id="container" ref="container">
             {items}
         </div>
-        {this.state.displaySoundcloudModal && <SoundcloudInput visualization={this.props.visualization} changePage={this.props.changePage} hideSoundcloudModal={this.hideSoundcloudModal} />}
+        {this.state.displaySoundcloudModal && 
+          <SoundcloudInput 
+          visualization={this.props.visualization} 
+          changeVisualization={this.props.changeVisualization}
+          changePage={this.props.changePage}
+          hideSoundcloudModal={this.hideSoundcloudModal} />}
       </div>
     )
   }
