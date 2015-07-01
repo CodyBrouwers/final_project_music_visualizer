@@ -456,6 +456,14 @@ i#pause:hover {
   z-index: 1004;
 }
 
+#spinner-gif {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  z-index: 2;
+  top: 90vh;
+  left: 50vw;
+}
 
 
 
