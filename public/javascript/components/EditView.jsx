@@ -51,7 +51,12 @@ var EditView = React.createClass({
     $('#toggle').on('click', function(){
       $('.menu-drawer').toggleClass('hidden');
     })
-  } 
+  },
+
+  componentWillMount: function () {
+    Transition.fetchAll(this.props.visualization.id);
+  }
+
 
 });
 
