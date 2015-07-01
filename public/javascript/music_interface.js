@@ -1,6 +1,7 @@
 String.prototype.capitalize = function() {
   return this[0].toUpperCase() + this.slice(1);
 }
+var counter = 0;
 
 var MusicInterface = {
 
@@ -29,6 +30,7 @@ var MusicInterface = {
   grabAnalyser: function() {
     //Need to have access to the analyser from webaudio.
     this.analyser = this.waveSurfer.backend.analyser;
+    this.analyser.fftSize = 1024;
   },
   
   //Should define our own data properties? 
@@ -40,6 +42,8 @@ var MusicInterface = {
     var binCount = this.analyser.frequencyBinCount;
     this.levelBins = Math.floor(binCount / this.levelsCount);
     this.freqByteData = new Uint8Array(binCount);
+    this.oldFreqData = new Uint8Array(binCount);
+    this.analyser.getByteFrequencyData(this.oldFreqData);
   },
 
   updateData: function() {
@@ -58,6 +62,47 @@ var MusicInterface = {
       total += t;
     }
     this.level = total / this.levelsCount;
+  },
+
+  getTimeData: function() {
+    var dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+    this.analyser.getByteTimeDomainData(dataArray);
+    return dataArray;
+  },
+
+  getByteData: function() {
+    var length = this.freqByteData.length;
+    if (this.waveSurfer.backend.isPaused()) return (new Uint8Array(12 * length));
+    var dataColor = new Uint8Array(12 * length);
+    for (var i = 0; i < length; i++) {
+      
+      var freqDataPoint = this.freqByteData[length - i]
+      this.oldFreqData[length - i] = Math.max(this.oldFreqData[length - i]-10, freqDataPoint);
+      
+      dataColor[ i * 3 ]     = this.oldFreqData[length - i];
+      dataColor[ i * 3 + 1 ] = dataColor[ i * 3 ];  
+      dataColor[ i * 3 + 2 ] = dataColor[ i * 3 ];
+    }
+    for (var j = length; j < length * 2; j++) {
+      dataColor[ j * 3 ]     = this.oldFreqData[j - length];
+      dataColor[ j * 3 + 1 ] = dataColor[ j * 3 ];
+      dataColor[ j * 3 + 2 ] = dataColor[ j * 3 ];
+    }
+    for (var i = length * 2; i < length * 3; i++) {
+      dataColor[ i * 3 ]     = this.oldFreqData[3 * length - i];
+      dataColor[ i * 3 + 1 ] = dataColor[ i * 3 ];  
+      dataColor[ i * 3 + 2 ] = dataColor[ i * 3 ];
+    }
+    for (var j = length * 3; j < length * 4; j++) {
+      dataColor[ j * 3 ]     = this.oldFreqData[j - 3*length];
+      dataColor[ j * 3 + 1 ] = dataColor[ j * 3 ];
+      dataColor[ j * 3 + 2 ] = dataColor[ j * 3 ];
+    }
+    var newDataColor = new Uint8Array(dataColor.length)
+    for (var m = 3; m < dataColor.length - 3; m++) {
+      newDataColor[m] = Math.floor(dataColor[m-3] + dataColor[m-2] + dataColor[m-1] + dataColor[m] + dataColor[m+1] + dataColor[m+2] + dataColor[m+3])/7
+    }
+    return newDataColor;
   },
 
   //Need to be able to add handler function for an event...

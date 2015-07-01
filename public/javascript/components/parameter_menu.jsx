@@ -32,6 +32,19 @@ var ParameterMenu = React.createClass({
       }
     },
 
+    changeMatCap: function() {
+      var self = this;
+      var matCap = [{
+        'type': 'matcap',
+        'value': (event.target.src.slice(21))
+      }];
+      console.log(event.target.src.slice(21))
+      visualizer.setParams(matCap)
+      if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
+        Transition.updateTransition(self.props.visualization.id);
+      }
+    },
+
     updateAllParams: function () {
       var self = this
       var params = visualizer.getParams();
@@ -62,6 +75,11 @@ var ParameterMenu = React.createClass({
     },
 
     render: function(){
+      numOfMatCaps = 9;
+      matCapItems = new Array(numOfMatCaps);
+      for (var i = 0; i < numOfMatCaps; i++) {
+        matCapItems[i] = (<MatCapItem imgIndex={i+1} changeMatCap={this.changeMatCap} />)
+      }
       return (
         <div className="menu-drawer">
           <div className="menu">
@@ -98,6 +116,10 @@ var ParameterMenu = React.createClass({
                   <input type="radio" ref="box" name="shape" value="BoxGeometry" onClick={this.changeShape}/>
                 </li>
               </ul>
+            </fieldset>
+            <fieldset>
+              <legend>Material</legend>
+              {matCapItems}
             </fieldset>
           </div>
         </div> 
