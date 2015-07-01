@@ -41,6 +41,11 @@ var VisualizationList = React.createClass({
     this.setState({displaySoundcloudModal: true})
   },
 
+  hideSoundcloudModal: function() {
+    // this.postNewViz();
+    this.setState({displaySoundcloudModal: false})
+  },
+
   handleFilterInput: function(filterText){
     console.log("handleFilterInput: ", filterText);
     this.setState({
@@ -85,7 +90,7 @@ var VisualizationList = React.createClass({
         <div id="container" ref="container">
             {items}
         </div>
-        {this.state.displaySoundcloudModal && <SoundcloudInput visualization={this.props.visualization} changePage={this.props.changePage} />}
+        {this.state.displaySoundcloudModal && <SoundcloudInput visualization={this.props.visualization} changePage={this.props.changePage} hideSoundcloudModal={this.hideSoundcloudModal} />}
       </div>
     )
   }

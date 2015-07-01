@@ -191,6 +191,7 @@ input:focus::-webkit-input-placeholder {
   opacity: 1;
 }
 
+
 .soundcloud-modal input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: gray;
   font-size: 1em;
@@ -239,6 +240,16 @@ input:focus::-webkit-input-placeholder {
 
 #soundcloud-load:hover {
   background: black;
+}
+
+#soundcloud-close {
+  position: fixed;
+  left: 73vw;
+  transition: all 0.1s ease-in;
+}
+
+#soundcloud-close:hover {
+  color: #00FFE3;
 }
 
 #container { 
