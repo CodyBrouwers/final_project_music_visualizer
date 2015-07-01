@@ -191,6 +191,76 @@ input:focus::-webkit-input-placeholder {
   opacity: 1;
 }
 
+/*.example-leave {
+  opacity: 1;
+  transition: opacity .2s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+}*/
+
+
+.soundcloud-modal input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: gray;
+  font-size: 1em;
+}
+
+.soundcloud-modal input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.soundcloud-modal {
+  position: fixed;
+  top: 30vh;
+  left: 25vw;
+  border-color: #FFF;
+  border-width: 1px;
+  background: rgba(255, 255, 255, .95);
+  width: 50vw;
+  height: 40vh;
+  color: black;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight:100;
+  font-style: italic;
+  z-index: 1000;
+}
+
+#songURL {
+  font-size: .5em;
+  width: 45vw;
+}
+
+#soundcloud-load {
+  vertical-align: middle;
+  line-height: 10vh;
+  border-color: #000;
+  border-width: 1px;
+  margin-top: 10vh;
+  margin-left: 15vw;
+  background: gray;
+  height: 10vh;
+  width: 20vw;
+  color: white;
+  font-weight:300;
+  transition: all .1s ease-in;
+}
+
+#soundcloud-load:hover {
+  background: black;
+}
+
+#soundcloud-close {
+  position: fixed;
+  left: 73vw;
+  transition: all 0.1s ease-in;
+}
+
+#soundcloud-close:hover {
+  color: #00FFE3;
+}
+
 #container { 
   padding-top: 20vh;
   background: #191919;
@@ -208,24 +278,24 @@ img {
   width: 100%;
 }
 
-
-
 .controls {
+  position: relative;
   text-align: center;
   padding-bottom: 15px;
   padding-top: 15px;
 }
 
-/*#drop {
-  border: 3px dashed #ddd;
-  text-align: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}*/
+#clear-trans {
+  position: absolute;
+  top: -6vh;
+  right: 0vw;
+}
 
-/*#drop.wavesurfer-dragover {
-  border-color: #333;
-}*/
+#add-trans {
+  position: absolute;
+  top: -6vh;
+  right: 12vw;
+}
 
 #vizname {
   position:fixed;
@@ -255,7 +325,7 @@ img {
 .wave-container {
   position: fixed;
   min-width: 60vw;
-  top: 80vh;
+  top: 83vh;
   margin-left: 20vw;
   background-color: rgba(0, 0, 0, 0);
   z-index: 2;
@@ -267,10 +337,9 @@ img {
   top: 15vh;
   left: 2vw;
   background-color: rgba(0, 0, 0, 0.3);
-  width: 160px;
+  /*width: 160px;*/
   z-index: 2;
   -webkit-transition: all 0.4s ease;
-
 }
 
 .menu-button {
@@ -329,6 +398,7 @@ img {
   position: relative;
   text-transform: lowercase;
   padding: 4px 0px 4px 10px;
+  margin-right: 2vw;
   font-size: 0.8em;
   letter-spacing: -0.01em;
   text-indent: 0.7em;
@@ -343,19 +413,14 @@ img {
   left: 0px;
   background-color: #ffffff;
 }
-.menu li:not(.selected):hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.menu li:not(.selected):hover { 
   cursor: pointer;
 }
-.stats {
-  position: absolute;
-  bottom: 60px;
-  right: 0px;
+
+.menu li label { 
+  margin-right: 1vw;
 }
 
-.menu input {
-  color: #000;
-}
 
 .controls {
   text-align: center;
@@ -454,6 +519,24 @@ img.matcap {
   height: 40px;
 }
 
+#spinner-gif {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  z-index: 2000;
+  top: 90vh;
+  left: 50vw;
+}
+
+
+
+#small-edit-image {
+  height: 10%;
+  width: 10%;
+  float: left;
+  margin-left: -6em;
+  margin-top: -1.5vh;
+}
 
 
 
