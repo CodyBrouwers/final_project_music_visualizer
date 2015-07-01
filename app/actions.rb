@@ -1,4 +1,7 @@
 # Homepage (Root path)
+
+#   headers 'Access-Control-Allow-Origin' => '*'
+#           # 'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']
 get '/' do
   erb :index
 end
