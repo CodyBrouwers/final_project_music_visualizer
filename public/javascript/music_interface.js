@@ -11,9 +11,10 @@ var MusicInterface = {
     var options = {
       container: document.querySelector("#wave"),
       waveColor: 'violet',
-      progressColor: 'purple',
+      progressColor: '#00FFE3',
       cursorColor: 'navy',
-      scrollParent: false
+      scrollParent: false,
+      height: '55'
     };
 
     // Initializes with above options
@@ -93,7 +94,6 @@ var MusicInterface = {
     this.waveSurfer.toggleMute();
   },
 
-  //TODO: Need to have access to loading and drag/dropping of files
   loadSong: function(path) {
     this.waveSurfer.load(path);
   },
@@ -110,74 +110,107 @@ var MusicInterface = {
     var time = this.waveSurfer.backend.getDuration();
     return time;
   },
-  
-  //Will need to have access to the events emitted by the region plug-in?
 
   // Enables Region Selection
   enableRegions: function () {
-    this.waveSurfer.initRegions({
-      drag: false,
-      resize: false
-    });
+    this.waveSurfer.initRegions();
+  },
+
+  addOneRegion: function(id, start, end, color) {
+    var myEnd = end ? end : this.getDuration();
+    return this.waveSurfer.addRegion({
+        id: id,
+        start: start,
+        end: myEnd,
+        color: this.randomColor(0.5),
+        drag:false,
+        resize: false
+      })
+  },
+
+  addInitialRegion: function (transition) {
+    return this.waveSurfer.addRegion({
+        id: transition.id,
+        start: 0,
+        end: this.getDuration(),
+        color: this.randomColor(0.2),
+        drag: false,
+        resize: false
+    })
+  },
+
+  removeRegion: function (region) {
+    region.remove();
+  },
+
+  removeAllRegions: function () {
+    this.waveSurfer.clearRegions();
   },
 
   addRegion: function(transition) {
     if (this.currentRegion) {
-      var region = this.waveSurfer.addRegion({
-        id: transition.id,
-        start: this.getCurrentTime(),
-        end: this.currentRegion.end,
-        color: this.randomColor(0.5)
-      })
+      var region = this.addOneRegion(
+        transition.id,
+        this.getCurrentTime(),
+        this.currentRegion.end
+      );
       this.currentRegion = this.currentRegion.update({
         start: this.currentRegion.start,
-        end: this.getCurrentTime(),
-        color: this.randomColor(0.5)
-      })
+        end: this.getCurrentTime()
+      });
       this.currentRegion = region;
     } else {
-      this.currentRegion = this.waveSurfer.addRegion({
-        id: transition.id,
-        start: this.getCurrentTime(),
-        end: this.getDuration(),
-        color: this.randomColor(0.5)
-      })
+      this.currentRegion = this.addOneRegion(
+        transition.id,
+        this.getCurrentTime(),
+        this.getDuration()
+      );
     }
   },
 
-  setRegion: function(transitions) {
+  setUpRegions: function(transitions) {
     //Shouldn't really be in this object...
     var region;
     transitions.sort(function(a,b) {
       return a.time - b.time;
     });
-    if (transitions.length >= 2) {
-      for (var index = 0; index < transitions.length - 1; index++) {
-        region = this.waveSurfer.addRegion({
-          id: transitions[index].id,
-          start: transitions[index].time,
-          end: transitions[index+1].time,
-          color: this.randomColor(0.5),
-        })
-        if (!this.currentRegion) {
-          this.currentRegion = region;
-        }
-      }
-      this.waveSurfer.addRegion({
-        id: transitions[index].id,
-        start: transitions[index].time,
-        end: this.getDuration(),
-        color: this.randomColor(0.5),
-      });
+    if (transitions.length === 0 ) {
+      // this.currentRegion = this.addInitialRegion();
+    } else if (transitions.length === 1) {
+      this.currentRegion = this.addOneRegion(
+        transitions[0].id,
+        transitions[0].time,
+        this.getDuration()
+      );
     } else {
-       region = this.waveSurfer.addRegion({
-        id: transitions[0].id,
-        start: transitions[0].time,
-        end: this.getDuration(),
-        color: this.randomColor(0.5),
-      });
-      this.currentRegion = region;  
+      this.currentRegion = this.addOneRegion(
+        transitions[0].id,
+        transitions[0].time,
+        transitions[1].time
+      );
+      for (var index = 1; index < transitions.length - 1; index++) {
+        this.addOneRegion(
+          transitions[index].id,
+          transitions[index].time,
+          transitions[index+1].time
+        );
+      }
+      this.addOneRegion(
+        transitions[index].id,
+        transitions[index].time,
+        this.getDuration()
+      );
     }
+  },
+
+  regionsLoaded: function () {
+    if (this.currentRegion) {
+      return true;
+    }
+  },
+
+  getCurrentRegion: function () {
+    return this.currentRegion;
   },
 
   // Generates random colour for regions

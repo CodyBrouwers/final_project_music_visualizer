@@ -1,5 +1,5 @@
+var animationID;
 WebGLVisualizer = {
-
   //Need to have access to visualizer and it's parameters
   init: function() {
     this.start = Date.now(),
@@ -38,17 +38,10 @@ WebGLVisualizer = {
 
     this.visualizerType = 1;
 
-    //TODO: remove this shiiit (don't use jQuery)
-    // $('#input-red').val(red);
-    // $('#input-green').val(green);
-    // $('#input-blue').val(blue);
-
   },
 
   animate: function(frame) {
-
-    requestAnimationFrame(this.animate.bind(this));
-
+    animationID = requestAnimationFrame(this.animate.bind(this));
     this.mesh.rotation.x += 0.01;
     this.mesh.rotation.y += 0.02;
 
@@ -60,6 +53,10 @@ WebGLVisualizer = {
     musicInterface.updateData();
     this.material.uniforms[ 'time' ].value = .00025 * ( Date.now() - this.start );
     this.renderer.render(this.scene, this.camera);
+  },
+
+  cancelAnimate: function () {
+    cancelAnimationFrame(animationID);
   },
 
   setParams: function(params) {

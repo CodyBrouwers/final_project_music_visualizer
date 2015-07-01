@@ -1,3 +1,5 @@
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var VisualizationItem = React.createClass({
 
     handleClick: function(){
@@ -6,10 +8,14 @@ var VisualizationItem = React.createClass({
     },
 
     render: function() {
-      return <a className="viz" onClick={this.handleClick}>
-        <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg" 
+      return (
+        <ReactCSSTransitionGroup transitionName="example" transitionAppear={true} transitionLeave={true}>
+        <a className="viz" onClick={this.handleClick}>
+        <img src={this.props.viz.image}
         title={this.props.viz.name}>
         </img></a>
+        </ReactCSSTransitionGroup>
+      )
     }
 
   });
