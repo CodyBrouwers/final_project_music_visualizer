@@ -191,6 +191,17 @@ input:focus::-webkit-input-placeholder {
   opacity: 1;
 }
 
+.soundcloud-input {
+  position: fixed;
+  top: 50vh;
+  left: 40vw;
+  border-color: #FFF;
+  border-width: 1px;
+  background: rgba(25, 25, 25, .9);
+  width: 30vw;
+  height: 20vh;
+}
+
 #container { 
   padding-top: 20vh;
   background: #191919;

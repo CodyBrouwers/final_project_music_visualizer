@@ -1,9 +1,10 @@
 var SoundcloudInput = React.createClass({
 
   createNew: function () {
+    console.log(this.props)
     var url = this.refs.url.getDOMNode().value;
     var streamURL = SoundCloud.loadStreamUrl(this.props.visualization, url);
-    this.props.changePage('Edit'); 
+    this.props.changePage('Edit');
     this.refs.url.getDOMNode().value = '';
   },
   

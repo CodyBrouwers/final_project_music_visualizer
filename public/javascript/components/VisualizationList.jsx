@@ -19,8 +19,7 @@ var VisualizationList = React.createClass({
     slipHover(this.refs.container.getDOMNode());
   },
 
-  postNewViz: function() {
-    this.props.changePage('New');
+  postNewViz: function() { 
     var newViz = Visualization.createOne();
     this.props.changeVisualization(newViz);
   },
@@ -38,6 +37,7 @@ var VisualizationList = React.createClass({
   },
 
   displaySoundcloudModal: function() {
+    this.postNewViz();
     this.setState({displaySoundcloudModal: true})
   },
 
@@ -85,7 +85,7 @@ var VisualizationList = React.createClass({
         <div id="container" ref="container">
             {items}
         </div>
-        {this.state.displaySoundcloudModal && <SoundcloudInput />}
+        {this.state.displaySoundcloudModal && <SoundcloudInput visualization={this.props.visualization} changePage={this.props.changePage} />}
       </div>
     )
   }

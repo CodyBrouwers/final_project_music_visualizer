@@ -23,14 +23,9 @@ var AppView = React.createClass({
       if (this.state.page === 'List'){
         return <VisualizationList 
           key='list' 
+          visualization={this.state.visualization}
           changePage={this.changePage}
           changeVisualization={this.changeVisualization} />;
-      } else if (this.state.page === 'New') {
-        return <NewView 
-                  key='new'
-          changePage={this.changePage}
-          changeVisualization={this.changeVisualization}
-          visualization={this.state.visualization}/>;
       } else {
         return <EditView 
           key='edit'
