@@ -13,7 +13,6 @@ var EditView = React.createClass({
     musicInterface.destroy();
     Transition._transitions = [];
     this.props.changePage('List');
-    musicInterface.destroy();
   },
 
   updateName: function(event){
@@ -52,7 +51,12 @@ var EditView = React.createClass({
     $('#toggle').on('click', function(){
       $('.menu-drawer').toggleClass('hidden');
     })
-  } 
+  },
+
+  componentWillMount: function () {
+    Transition.fetchAll(this.props.visualization.id);
+  }
+
 
 });
 

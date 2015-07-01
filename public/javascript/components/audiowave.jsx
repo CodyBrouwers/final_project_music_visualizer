@@ -50,18 +50,14 @@ var AudioWave = React.createClass({
       return (
         <div className="wave-container">
           <div className="controls">
+            <img id="small-edit-image" src={this.props.visualization.image} ></img>
             {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
             {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
-            <button onClick={this.addTransition}>Add Transition Point</button>
-            <button onClick={this.removeAllTransitions}>Clear All Transitions</button>
+            <button id="add-trans" onClick={this.addTransition}>Add Transition Point</button>
+            <button id="clear-trans" onClick={this.removeAllTransitions}>Clear All Transitions</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
-
-          <form htmlFor='songURL'>Paste your SoundCloud URL here</form>
-          <input id='songURL' type='text' ref="url" style={{color: '#000'}} />
-          <button onClick={this.loadSong}>Load</button>
-
         </div>
       );
     },
@@ -69,40 +65,41 @@ var AudioWave = React.createClass({
     componentDidMount: function () {
       var self = this;
       musicInterface.init(visualizer);
-      Transition.fetchAll(self.props.visualization.id);
+      var transitions;
 
       // Loads song with path if there is one
       if (this.props.visualization.path != undefined) {
         musicInterface.loadSong(this.props.visualization.path);
       }
 
-      // Initializes timeline plugin and plays once ready
-      musicInterface.waveSurfer.on('ready', function () {
-        var timeline = Object.create(WaveSurfer.Timeline);
+      $(document).ajaxComplete(function (event, xhr, settings) {
 
-        var transitions = Transition.getAll();
-        musicInterface.setUpRegions(transitions);
+        musicInterface.waveSurfer.on('ready', function () {
 
-        timeline.init({
-          wavesurfer: musicInterface.waveSurfer,
-          container: "#wave-timeline"
-        });
+          // Initializes timeline plugin and sets up regions once ready
+          var timeline = Object.create(WaveSurfer.Timeline);
+          timeline.init({
+            wavesurfer: musicInterface.waveSurfer,
+            container: "#wave-timeline"
+          });
 
-        musicInterface.waveSurfer.on('region-click', function (region, event) {
-            musicInterface.pause();
-            self.setState({displayPlay: true});
-            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
+          if (settings.type === "GET") {
+            transitions = Transition.getAll();           
+            musicInterface.setUpRegions(transitions);
           }
-        );
 
-        musicInterface.waveSurfer.on('region-in', function (region, event) {
-            Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
-          }
-        );
-
-        musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
-          Transition.removeTransition(self.props.visualization.id);
         });
+          musicInterface.waveSurfer.on('region-click', function (region, event) {
+              musicInterface.pause();
+              self.setState({displayPlay: true});
+              Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
+          });
+          musicInterface.waveSurfer.on('region-in', function (region, event) {
+              Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
+          });
+          musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
+            Transition.removeTransition(self.props.visualization.id);
+          });
 
       });
     }
