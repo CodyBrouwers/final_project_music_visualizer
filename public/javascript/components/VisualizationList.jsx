@@ -9,7 +9,8 @@ var VisualizationList = React.createClass({
       { 
       sortBy: this._sortOptions[0], 
       filterText: '', 
-      sortMenuDisplay: false 
+      sortMenuDisplay: false,
+      displaySoundcloudModal: false 
       }
     )
   },
@@ -18,10 +19,7 @@ var VisualizationList = React.createClass({
     slipHover(this.refs.container.getDOMNode());
   },
 
-  postNewViz: function() {
-    this.props.changePage('New');
-    var newViz = Visualization.createOne();
-    this.props.changeVisualization(newViz);
+  postNewViz: function() { 
   },
 
   changeSort: function (sortOption) {
@@ -34,6 +32,14 @@ var VisualizationList = React.createClass({
     } else {
       this.setState({sortMenuDisplay: false});
     }
+  },
+
+  displaySoundcloudModal: function() {
+    this.setState({displaySoundcloudModal: true})
+  },
+
+  hideSoundcloudModal: function() {
+    this.setState({displaySoundcloudModal: false})
   },
 
   handleFilterInput: function(filterText){
@@ -72,7 +78,7 @@ var VisualizationList = React.createClass({
               <SortMenuHeader displaySortButtons={this.displaySortButtons} />
               { this.state.sortMenuDisplay && <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } /> }
             </div>
-            <div id="btn-new-viz" onClick={this.postNewViz}>
+            <div id="btn-new-viz" onClick={this.displaySoundcloudModal}>
               Create New Visualization
             </div>
           </div>
@@ -80,6 +86,12 @@ var VisualizationList = React.createClass({
         <div id="container" ref="container">
             {items}
         </div>
+        {this.state.displaySoundcloudModal && 
+          <SoundcloudInput 
+          visualization={this.props.visualization} 
+          changeVisualization={this.props.changeVisualization}
+          changePage={this.props.changePage}
+          hideSoundcloudModal={this.hideSoundcloudModal} />}
       </div>
     )
   }

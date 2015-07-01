@@ -3,7 +3,8 @@ var AudioWave = React.createClass({
   getInitialState: function(){
     return (
       { 
-      displayPlay: true
+      displayPlay: true,
+      displaySpinner: true
       }
     )
   },
@@ -48,16 +49,19 @@ var AudioWave = React.createClass({
 
     render: function(){
       return (
-        <div className="wave-container">
-          <div className="controls">
+        <div>
+          {this.state.displaySpinner && <img id="spinner-gif" src="../img/blackspin.gif" />}
+          <div className="wave-container">
+            <div className="controls">
             <img id="small-edit-image" src={this.props.visualization.image} ></img>
-            {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
-            {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
-            <button id="add-trans" onClick={this.addTransition}>Add Transition Point</button>
-            <button id="clear-trans" onClick={this.removeAllTransitions}>Clear All Transitions</button>
+              {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
+              {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
+              <button id="add-trans" onClick={this.addTransition}>Add Transition Point</button>
+              <button id="clear-trans" onClick={this.removeAllTransitions}>Clear All Transitions</button>
+            </div>
+            <div id="wave"></div>
+            <div id="wave-timeline"></div>
           </div>
-          <div id="wave"></div>
-          <div id="wave-timeline"></div>
         </div>
       );
     },
@@ -72,9 +76,11 @@ var AudioWave = React.createClass({
         musicInterface.loadSong(this.props.visualization.path);
       }
 
-      $(document).ajaxComplete(function (event, xhr, settings) {
 
+
+      $(document).ajaxComplete(function (event, xhr, settings) {
         musicInterface.waveSurfer.on('ready', function () {
+        self.setState({displaySpinner: false});
 
           // Initializes timeline plugin and sets up regions once ready
           var timeline = Object.create(WaveSurfer.Timeline);
