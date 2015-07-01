@@ -9,7 +9,8 @@ var VisualizationList = React.createClass({
       { 
       sortBy: this._sortOptions[0], 
       filterText: '', 
-      sortMenuDisplay: false 
+      sortMenuDisplay: false,
+      displaySoundcloudModal: false 
       }
     )
   },
@@ -34,6 +35,10 @@ var VisualizationList = React.createClass({
     } else {
       this.setState({sortMenuDisplay: false});
     }
+  },
+
+  displaySoundcloudModal: function() {
+    this.setState({displaySoundcloudModal: true})
   },
 
   handleFilterInput: function(filterText){
@@ -72,7 +77,7 @@ var VisualizationList = React.createClass({
               <SortMenuHeader displaySortButtons={this.displaySortButtons} />
               { this.state.sortMenuDisplay && <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } /> }
             </div>
-            <div id="btn-new-viz" onClick={this.postNewViz}>
+            <div id="btn-new-viz" onClick={this.displaySoundcloudModal}>
               Create New Visualization
             </div>
           </div>
@@ -80,6 +85,7 @@ var VisualizationList = React.createClass({
         <div id="container" ref="container">
             {items}
         </div>
+        {this.state.displaySoundcloudModal && <SoundcloudInput />}
       </div>
     )
   }
