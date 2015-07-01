@@ -53,6 +53,7 @@ var AudioWave = React.createClass({
           {this.state.displaySpinner && <img id="spinner-gif" src="../img/blackspin.gif" />}
           <div className="wave-container">
             <div className="controls">
+            <img id="small-edit-image" src={this.props.visualization.image} ></img>
               {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
               {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
               <button id="add-trans" onClick={this.addTransition}>Add Transition Point</button>
