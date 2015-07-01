@@ -35,6 +35,7 @@ var ParameterMenu = React.createClass({
     updateAllParams: function (parameters) {
       var self = this
       var params;
+      // Checks if parameters are passed in, in which case it will load initial region and transition
       if (parameters) {
         params = parameters;
       } else {
