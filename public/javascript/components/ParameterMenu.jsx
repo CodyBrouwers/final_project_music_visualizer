@@ -152,7 +152,7 @@ var ParameterMenu = React.createClass({
             </fieldset>
             <fieldset>
               <legend>Material</legend>
-              {matCapItems}
+                {matCapItems}
             </fieldset>
           </div>
         </div> 

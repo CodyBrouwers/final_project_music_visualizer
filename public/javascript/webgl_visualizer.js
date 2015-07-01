@@ -58,6 +58,18 @@ WebGLVisualizer = {
 
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
+    this.composer = new THREE.EffectComposer(this.renderer);
+    compose.addPass( new THREE.RenderPass(scene, camera));
+
+    var dotScreenEffect = new THREE.ShaderPass( THREE.DotScreenShader );
+    dotScreenEffect.uniforms[ 'scale' ].value = 4;
+    composer.addPass( dotScreenEffect );
+
+    var rgbEffect = new THREE.ShaderPass( THREE.RGBShiftShader );
+    rgbEffect.uniforms[ 'amount' ].value = 0.0015;
+    rgbEffect.renderToScreen = true;
+    composer.addPass( rgbEffect );
+
   },
 
   onWindowResize: function() {
@@ -83,7 +95,7 @@ WebGLVisualizer = {
     this.material.uniforms[ 'time' ].value += .00025;
     this.material.uniforms.iChannel0.value.image.data = musicInterface.getByteData();
     this.material.uniforms.iChannel0.value.needsUpdate = true
-    this.renderer.render(this.scene, this.camera);
+    this.composer.render(this.scene, this.camera);
   },
 
   cancelAnimate: function () {
