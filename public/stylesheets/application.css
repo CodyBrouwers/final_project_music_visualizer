@@ -211,9 +211,22 @@ img {
 
 
 .controls {
+  position: relative;
   text-align: center;
   padding-bottom: 15px;
   padding-top: 15px;
+}
+
+#clear-trans {
+  position: absolute;
+  top: -6vh;
+  right: 0vw;
+}
+
+#add-trans {
+  position: absolute;
+  top: -6vh;
+  right: 12vw;
 }
 
 /*#drop {
@@ -255,7 +268,7 @@ img {
 .wave-container {
   position: fixed;
   min-width: 60vw;
-  top: 80vh;
+  top: 83vh;
   margin-left: 20vw;
   background-color: rgba(0, 0, 0, 0);
   z-index: 2;
@@ -270,7 +283,6 @@ img {
   width: 160px;
   z-index: 2;
   -webkit-transition: all 0.4s ease;
-
 }
 
 .menu-button {

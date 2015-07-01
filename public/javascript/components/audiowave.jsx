@@ -52,16 +52,11 @@ var AudioWave = React.createClass({
           <div className="controls">
             {this.state.displayPlay && <i className="fa fa-play fa-5" id="play" onClick={this.handleClick}></i>}
             {this.state.displayPlay === false && <i className="fa fa-pause fa-5" id="pause" onClick={this.handleClick}></i>}
-            <button onClick={this.addTransition}>Add Transition Point</button>
-            <button onClick={this.removeAllTransitions}>Clear All Transitions</button>
+            <button id="add-trans" onClick={this.addTransition}>Add Transition Point</button>
+            <button id="clear-trans" onClick={this.removeAllTransitions}>Clear All Transitions</button>
           </div>
           <div id="wave"></div>
           <div id="wave-timeline"></div>
-
-          <form htmlFor='songURL'>Paste your SoundCloud URL here</form>
-          <input id='songURL' type='text' ref="url" style={{color: '#000'}} />
-          <button onClick={this.loadSong}>Load</button>
-
         </div>
       );
     },
