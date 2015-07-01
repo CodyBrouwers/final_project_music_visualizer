@@ -77,12 +77,10 @@ var AudioWave = React.createClass({
       }
 
 
-      // Initializes timeline plugin and plays once ready
-      musicInterface.waveSurfer.on('ready', function () {
-        self.setState({displaySpinner: false});
-        var timeline = Object.create(WaveSurfer.Timeline);
+
       $(document).ajaxComplete(function (event, xhr, settings) {
         musicInterface.waveSurfer.on('ready', function () {
+        self.setState({displaySpinner: false});
 
           // Initializes timeline plugin and sets up regions once ready
           var timeline = Object.create(WaveSurfer.Timeline);
