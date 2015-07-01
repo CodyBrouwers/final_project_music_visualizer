@@ -191,15 +191,54 @@ input:focus::-webkit-input-placeholder {
   opacity: 1;
 }
 
-.soundcloud-input {
+.soundcloud-modal input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: gray;
+  font-size: 1em;
+}
+
+.soundcloud-modal input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.soundcloud-modal {
   position: fixed;
-  top: 50vh;
-  left: 40vw;
+  top: 30vh;
+  left: 25vw;
   border-color: #FFF;
   border-width: 1px;
-  background: rgba(25, 25, 25, .9);
-  width: 30vw;
-  height: 20vh;
+  background: rgba(255, 255, 255, .95);
+  width: 50vw;
+  height: 40vh;
+  color: black;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight:100;
+  font-style: italic;
+  z-index: 1000;
+}
+
+#songURL {
+  font-size: .5em;
+  width: 45vw;
+}
+
+#soundcloud-load {
+  vertical-align: middle;
+  line-height: 10vh;
+  border-color: #000;
+  border-width: 1px;
+  margin-top: 10vh;
+  margin-left: 15vw;
+  background: gray;
+  height: 10vh;
+  width: 20vw;
+  color: white;
+  font-weight:300;
+  transition: all .1s ease-in;
+}
+
+#soundcloud-load:hover {
+  background: black;
 }
 
 #container { 
@@ -219,8 +258,6 @@ img {
   width: 100%;
 }
 
-
-
 .controls {
   position: relative;
   text-align: center;
@@ -239,17 +276,6 @@ img {
   top: -6vh;
   right: 12vw;
 }
-
-/*#drop {
-  border: 3px dashed #ddd;
-  text-align: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}*/
-
-/*#drop.wavesurfer-dragover {
-  border-color: #333;
-}*/
 
 #vizname {
   position:fixed;

@@ -11,13 +11,15 @@ var SoundcloudInput = React.createClass({
   render: function(){
     var self = this;
     return (
-      <div className="soundcloud-input">
-        <form htmlFor='newVisualization'>Please Paste any SoundCloud URL:</form>
-        <input id='songURL' type='text' ref="url" placeholder="SoundCloud URL" style={{color: '#000'}} />
-        <button onClick={this.createNew} style={{color: '#000'}}>Load</button>
+      <div className="soundcloud-modal">
+        <p>Enter any SoundCloud URL below:</p>
+        <input id='songURL' type='text' ref="url" placeholder="SoundCloud URL" />
+        <div id="soundcloud-load" onClick={this.createNew}>Load</div>
       </div>
     )
   }
 
 });
+
+// <form htmlFor='newVisualization'>Please Paste any SoundCloud URL:</form>
 
