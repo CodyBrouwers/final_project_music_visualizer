@@ -456,6 +456,7 @@ i#pause:hover {
   z-index: 1004;
 }
 
+
 #spinner-gif {
   position: absolute;
   height: 40px;
@@ -465,6 +466,15 @@ i#pause:hover {
   left: 50vw;
 }
 
+
+
+#small-edit-image {
+  height: 15%;
+  width: 15%;
+  float: left;
+  margin-left: -6em;
+  margin-top: 1em;
+}
 
 
 

@@ -13,7 +13,6 @@ var EditView = React.createClass({
     musicInterface.destroy();
     Transition._transitions = [];
     this.props.changePage('List');
-    musicInterface.destroy();
   },
 
   updateName: function(event){

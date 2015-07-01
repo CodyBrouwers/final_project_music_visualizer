@@ -19,8 +19,8 @@ var VisualizationList = React.createClass({
   },
 
   postNewViz: function() {
+    this.props.changePage('New');
     var newViz = Visualization.createOne();
-    this.props.changePage('Edit');
     this.props.changeVisualization(newViz);
   },
 
