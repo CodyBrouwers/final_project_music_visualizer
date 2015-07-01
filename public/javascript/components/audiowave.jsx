@@ -72,34 +72,35 @@ var AudioWave = React.createClass({
         musicInterface.loadSong(this.props.visualization.path);
       }
 
-      $(document).ajaxComplete(function () {
-          transitions = Transition.getAll();
+      $(document).ajaxComplete(function (event, xhr, settings) {
 
-        // Initializes timeline plugin and sets up regions once ready
         musicInterface.waveSurfer.on('ready', function () {
+
+          // Initializes timeline plugin and sets up regions once ready
           var timeline = Object.create(WaveSurfer.Timeline);
           timeline.init({
             wavesurfer: musicInterface.waveSurfer,
             container: "#wave-timeline"
           });
-          
-          musicInterface.setUpRegions(transitions);
 
+          if (settings.type === "GET") {
+            transitions = Transition.getAll();           
+            musicInterface.setUpRegions(transitions);
+          }
+
+        });
           musicInterface.waveSurfer.on('region-click', function (region, event) {
               musicInterface.pause();
               self.setState({displayPlay: true});
               Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
-            }
-          );
+          });
           musicInterface.waveSurfer.on('region-in', function (region, event) {
               Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
-            }
-          );
+          });
           musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
             Transition.removeTransition(self.props.visualization.id);
           });
 
-        });
       });
     }
   })
