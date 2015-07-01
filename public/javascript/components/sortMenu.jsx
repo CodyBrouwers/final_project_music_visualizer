@@ -1,3 +1,5 @@
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var SortMenu = React.createClass ({
 
   render: function(){
@@ -7,7 +9,11 @@ var SortMenu = React.createClass ({
         self.props.changeSort(sortOption);
       }}>{sortOption}</div>;
     })
-    return (<div className="sort-menu">{buttons}</div>);
+    return (
+      <ReactCSSTransitionGroup transitionName="sortslide" transitionAppear={true} transitionLeave={true}>
+        <div className="sort-menu">{buttons}</div>
+      </ReactCSSTransitionGroup>
+      );
   } 
 
 });

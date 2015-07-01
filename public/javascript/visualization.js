@@ -18,7 +18,8 @@ var Visualization = {
     var id = uuid();
     return { id: id,
              path: null,
-             name: "Song: "+id
+             name: "Song: "+id,
+             image: 'https://www.wilde-life.com/sites/default/files/2014_sleep.jpg'
     }
   },
 
@@ -35,7 +36,8 @@ var Visualization = {
       data: {
         id: viz.id,
         path: viz.path,
-        name: viz.name
+        name: viz.name,
+        image: viz.image
       },
       success: function(data) {
         console.log('Posted new visualization');
@@ -74,8 +76,13 @@ var Visualization = {
       type: "PUT",
       url: "/visualizations/"+viz.id+"/edit",
       dataType: 'json',
-      data: viz,
-      success: function() {
+      data: {
+        id: viz.id,
+        path: viz.path,
+        name: viz.name,
+        image: viz.image
+      },
+      success: function(data) {
         console.log('Updated');
       },
       error: function() {

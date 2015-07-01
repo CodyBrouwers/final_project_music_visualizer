@@ -28,10 +28,10 @@
             this.width = drawer.width;
             this.height = this.params.height || 20;
             this.notchPercentHeight = this.params.notchPercentHeight || 90;
-            this.primaryColor = this.params.primaryColor || '#000';
+            this.primaryColor = this.params.primaryColor || '#FFF';
             this.secondaryColor = this.params.secondaryColor || '#c0c0c0';
-            this.primaryFontColor = this.params.primaryFontColor || '#000';
-            this.secondaryFontColor = this.params.secondaryFontColor || '#000';
+            this.primaryFontColor = this.params.primaryFontColor || '#FFF';
+            this.secondaryFontColor = this.params.secondaryFontColor || '#FFF';
             this.fontFamily = this.params.fontFamily || 'Arial';
             this.fontSize = this.params.fontSize || 10;
 
@@ -46,7 +46,7 @@
 
         destroy: function () {
             this.unAll();
-            if (this.wrapper) {
+            if (this.wrapper && this.wrapper.parentNode) {
                 this.wrapper.parentNode.removeChild(this.wrapper);
                 this.wrapper = null;
             }
