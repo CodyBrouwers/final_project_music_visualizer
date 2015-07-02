@@ -9,11 +9,6 @@ WebGLVisualizer = {
     this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
     this.camera.position.z = 50;
 
-    var red = 240;
-    var green = 50;
-    var blue = 10;
-    this.color = 'rgb(' + red + ',' + green + ',' + blue + ')'
-    var myColor = new THREE.Color(this.color);
     var geometry = new THREE.IcosahedronGeometry( 20, 4 );
     var texture = new THREE.DataTexture(musicInterface.getByteData(), 1024, 2, THREE.RGBFormat);
 
@@ -32,7 +27,7 @@ WebGLVisualizer = {
       }
     }
     this.material = new THREE.ShaderMaterial( {
-      color: myColor,
+      // color: myColor,
       uniforms: uniforms,
       vertexShader: document.getElementById( 'vertexShader' ).textContent,
       fragmentShader: document.getElementById( 'fragmentShader' ).textContent
@@ -167,9 +162,9 @@ WebGLVisualizer = {
   getParam: function(type) {
     var value;
     switch (type) {
-      case 'color':
-        value = this.getColor();
-        break;
+      // case 'color':
+      //   value = this.getColor();
+      //   break;
       case 'geometry':
         value = this.mesh.geometry.type;
         break;
@@ -251,7 +246,6 @@ WebGLVisualizer = {
     this.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
 
     Object.keys(effectsParam).forEach(function (effectName) {
-      console.log(effectName)
       if (effectsParam[effectName] !== self.effects[effectName].checked) {
         self.effects[effectName].checked = effectsParam[effectName]; 
       }

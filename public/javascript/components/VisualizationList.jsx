@@ -2,12 +2,12 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var VisualizationList = React.createClass({
 
-  _sortOptions: ['name', 'created_at', 'updated_at'],
+  _sortOptions: {'Name': 'name', 'Newest': 'created_at', 'Last Updated': 'updated_at'},
 
   getInitialState: function(){
     return (
       { 
-      sortBy: this._sortOptions[0], 
+      sortBy: this._sortOptions['Name'], 
       filterText: '', 
       sortMenuDisplay: false,
       displaySoundcloudModal: false 
@@ -23,7 +23,7 @@ var VisualizationList = React.createClass({
   },
 
   changeSort: function (sortOption) {
-    this.setState({sortBy: sortOption});
+    this.setState({sortBy: this._sortOptions[sortOption]});
   },
 
   displaySortButtons: function() {
@@ -79,7 +79,7 @@ var VisualizationList = React.createClass({
             <SearchBar filterText={this.state.filterText} onFilterInput={this.handleFilterInput} />
             <div id="sort-feature">
               <SortMenuHeader displaySortButtons={this.displaySortButtons} />
-              { this.state.sortMenuDisplay && <SortMenu sortOptions={ this._sortOptions } changeSort={ this.changeSort } /> }
+              { this.state.sortMenuDisplay && <SortMenu displaySortButtons ={this.displaySortButtons} sortOptions={ Object.keys(this._sortOptions) } changeSort={ this.changeSort } /> }
             </div>
             <div id="btn-new-viz" onClick={this.displaySoundcloudModal}>
               Create New Visualization

@@ -21,7 +21,6 @@ var ParameterMenu = React.createClass({
     },
 
     toggleEffect: function() {
-      console.log(event.target.value)
       var self = this;
       var effect = [{
         'type': 'effect',
