@@ -6,30 +6,32 @@ var ParameterMenu = React.createClass({
       'type': 'geometry',
       'value': event.target.value
       }];
-      if (event.target.value === "IcosahedronGeometry") {
-        self.refs.icosahedron.getDOMNode().checked = 'true';
-      } else if (event.target.value === "BoxGeometry") {
-        self.refs.box.getDOMNode().checked = 'true';
-      } else if (event.target.value === "TorusKnotGeometry") {
-        self.refs.torusKnot.getDOMNode().checked = 'true';
-      } else if (event.target.value === "PlaneGeometry") {
-        self.refs.plane.getDOMNode().checked = 'true';
-      }
+      this.selectShape(event.target.value);
       visualizer.setParams(shape)
-      if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
-        Transition.updateTransition(self.props.visualization.id);
-      }
+      this.updateTransition();
     },
 
     changeMatCap: function() {
-      var self = this;
       var matCap = [{
         'type': 'matcap',
         'value': (event.target.src.slice(21))
       }];
       visualizer.setParams(matCap)
-      console.log(visualizer.material.uniforms.tMatCap.value)
-      if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
+      this.updateTransition()
+    },
+
+    toggleEffect: function() {
+      var self = this;
+      var effect = [{
+        'type': 'effect',
+        'value': event.target.value }];
+      visualizer.setParams(effect);
+      self.updateTransition();
+    },
+
+    updateTransition: function() {
+      var self = this;
+      if (musicInterface.regionsLoaded() && !!self.props.visualization.path) {
         Transition.updateTransition(self.props.visualization.id);
       }
     },
@@ -44,25 +46,35 @@ var ParameterMenu = React.createClass({
       } else {
         params = visualizer.getParams();
       }
-      
       // Change shape selection on click of new region
-      var shape = params[1].value;
+      var shape = params[0].value;
+      this.selectShape(shape);
+      this.checkEffects(params[2].value)
+    },
+
+    selectShape: function(shape) {
       if (shape === "IcosahedronGeometry") {
-        self.refs.icosahedron.getDOMNode().checked = 'true';
+        this.refs.icosahedron.getDOMNode().checked = 'true';
       } else if (shape === "BoxGeometry") {
-        self.refs.box.getDOMNode().checked = 'true';
+        this.refs.box.getDOMNode().checked = 'true';
       } else if (shape === "TorusKnotGeometry") {
-        self.refs.torusKnot.getDOMNode().checked = 'true';
+        this.refs.torusKnot.getDOMNode().checked = 'true';
       } else if (shape === "PlaneGeometry") {
-        self.refs.plane.getDOMNode().checked = 'true';
+        this.refs.plane.getDOMNode().checked = 'true';
       }
+    },
+
+    checkEffects: function(effectParams) {
+      var self = this;
+      Object.keys(effectParams).forEach(function (effectKey) {
+        document.getElementById(effectKey).checked = effectParams[effectKey];
+      });
     },
 
     componentDidMount: function () {
       var self = this
 
       $(document).ajaxComplete(function (event, xhr, settings) {
-        console.log(settings);
         if (!$.isEmptyObject(self.refs) && settings.type === "GET") {
           var transitions = Transition.getAll();
           var firstParams = transitions[0].params;
@@ -84,11 +96,25 @@ var ParameterMenu = React.createClass({
     },
 
     render: function(){
-      numOfMatCaps = 9;
-      matCapItems = new Array(numOfMatCaps);
+      var numOfMatCaps = 9;
+      var matCapItems = new Array(numOfMatCaps);
       for (var i = 0; i < numOfMatCaps; i++) {
         matCapItems[i] = (<MatCapItem imgIndex={i+1} changeMatCap={this.changeMatCap} />)
       }
+      var effectArr = [
+        {name:"Vignette", value:"VignetteShader"},
+        // {name:"Bloom", value:"BloomShader"},
+        {name:"Film", value:"FilmShader"},
+        {name:"Technicolor", value:"TechnicolorShader"},
+        {name:"Glitch", value:"DigitalGlitch"},
+        {name:"Edge Highlights", value:"EdgeShader"},
+        {name:"Dot Screen", value:"DotScreenShader"},
+        {name:"RGB Shift", value:"RGBShiftShader"},
+        {name:"Kaleido Scope", value:"KaleidoShader"}]
+      var effectsItems = [];
+      effectArr.forEach(function(effect, index) {
+        effectsItems[index] = (<li><EffectCheckBox effectName={effect.name} effectValue={effect.value} toggleEffect={this.toggleEffect} /></li>)
+      }, this)
       return (
         <div className="menu-drawer">
           <div className="menu">
@@ -117,6 +143,12 @@ var ParameterMenu = React.createClass({
             <fieldset>
               <legend>Material</legend>
               {matCapItems}
+            </fieldset>
+            <fieldset>
+              <legend>Effects</legend>
+              <ul>
+                {effectsItems}
+              </ul>
             </fieldset>
           </div>
         </div> 
