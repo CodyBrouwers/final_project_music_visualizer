@@ -4,7 +4,7 @@ var visualizer = Object.create(WebGLVisualizer);
 var EditView = React.createClass({
 
   getInitialState: function() {
-    return { transitions: Transition.fetchAll }
+    return { transitions: Transition.fetchAll, toggleText: 'Hide' }
   },
 
   handleClick: function() {
@@ -22,8 +22,8 @@ var EditView = React.createClass({
     Visualization.updateOne(viz);
   },
 
-  showRight: function() {
-    this.refs.right.show();
+  changeToggleText: function(){
+    this.state.toggleText === 'Hide' ? this.setState({toggleText: 'View Controls'}) : this.setState({toggleText: 'Hide'});
   },
 
   render: function(){
@@ -31,7 +31,7 @@ var EditView = React.createClass({
     return (
       <div>
         <ParameterMenu visualization={this.props.visualization} />
-        <div id="toggle">Hide</div>
+        <div id="toggle" onClick={this.changeToggleText}>{this.state.toggleText}</div>
         <div className='viz-container'>
           <div id="header">
             <div className="header-left" onClick={self.handleClick}>
@@ -51,6 +51,7 @@ var EditView = React.createClass({
     visualizer.animate();
     $('#toggle').on('click', function(){
       $('.menu-drawer').toggleClass('hidden');
+      // $('#toggle').html($('#toggle').text() === 'Hide' ? 'Show Controls' : 'Hide');
     })
   },
 

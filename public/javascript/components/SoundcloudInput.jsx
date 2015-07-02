@@ -17,7 +17,7 @@ var SoundcloudInput = React.createClass({
       <ReactCSSTransitionGroup transitionName="example" transitionAppear={true} transitionLeave={true}>
       <div className="soundcloud-modal">
         <i id="soundcloud-close" className="fa fa-times fa-2" onClick={this.props.hideSoundcloudModal}></i>
-        <p>Enter any SoundCloud URL below:</p>
+        <p>Please enter a SoundCloud URL to begin:</p>
         <input id='songURL' type='text' ref="url" placeholder="SoundCloud URL" />
         <div id="soundcloud-load" onClick={this.createNew}>Load</div>
       </div>

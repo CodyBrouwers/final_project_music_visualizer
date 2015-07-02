@@ -503,7 +503,7 @@ i#pause:hover {
   display: block;
   border-style: solid;
   height: 30px;
-  width: 95px;
+  width: 130px;
   text-align: center;
   vertical-align: middle;
   line-height: 30px;
@@ -528,14 +528,13 @@ img.matcap {
   left: 50vw;
 }
 
-
-
 #small-edit-image {
-  height: 10%;
-  width: 10%;
-  float: left;
-  margin-left: -6em;
-  margin-top: -1.5vh;
+  width: 6vw;
+  height: 6vw;
+  position: fixed;
+  top: 82vh;
+  left: 13vw;
+  z-index: 2;
 }
 
 
