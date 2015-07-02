@@ -90,7 +90,7 @@ var AudioWave = React.createClass({
           });
 
           if (settings.type === "GET") {
-            transitions = Transition.getAll();           
+            transitions = Transition.getAll();
             musicInterface.setUpRegions(transitions);
           }
 

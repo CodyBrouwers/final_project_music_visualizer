@@ -143,7 +143,7 @@
                 $overlay = $('<div>', {
                     class: 'sliphover-overlay'
                 }).on('click', function() {
-                    $(".sliphover-container").remove();
+                    $(".sliphover-container").css('opacity', '0');
                     React.addons.TestUtils.Simulate.click($targetAParent[0]);
                 });
             } else {
