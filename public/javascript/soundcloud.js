@@ -34,7 +34,7 @@ var SoundCloud = {
               // Sets new viz properties and updates and loads song
               viz.path = streamURL;
               viz.image = imgLink;
-              viz.name = track.title
+              viz.name = track.title.split('(')[0]
               Visualization.updateOne(viz);
               musicInterface.loadSong(streamURL);
             } else {
