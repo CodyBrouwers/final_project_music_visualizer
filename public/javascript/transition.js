@@ -74,7 +74,8 @@ var Transition = {
           Transition._storeAllLocally(vizId, transitions);
           visualizer.setParams(Transition._transitions[0].params);
           Transition._runCallbacks();
-        }
+        },
+        error: console.log("No viz with that id")
     });
   },
 
@@ -120,6 +121,7 @@ var Transition = {
       dataType: 'json',
       success: function() {
         console.log('All transitions deleted');
+        Transition.addInitialRegionAndTransition(vizId);
       },
       error: function() {
         alert('error deleting all transitions');

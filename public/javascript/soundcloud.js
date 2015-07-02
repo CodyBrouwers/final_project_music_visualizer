@@ -14,11 +14,16 @@ var SoundCloud = {
         $.ajax({
           type: "GET",
           url: "http://api.sndcdn.com/i1/tracks/"+songID+"/streams?client_id="+clientID,
-          dataType: 'json',
+          dataType: 'jsonp',
           success: function(trackLinks) {
             // Gets artwork url from track and gets larger version
             var art = track.artwork_url;
-            var imgLink = art.replace("large", "t300x300");
+            var imgLink;
+            if (art) {
+              imgLink = art.replace("large", "t300x300");
+            } else {
+              imgLink = 'https://www.wilde-life.com/sites/default/files/2014_sleep.jpg';
+            }
 
             // Gets streaming link and sets streamURL with key
             var stream = trackLinks.http_mp3_128_url;

@@ -12,9 +12,9 @@ var MusicInterface = {
     var options = {
       container: document.querySelector("#wave"),
       waveColor: 'violet',
-      progressColor: '#00FFE3',
+      progressColor: '#FFFFFF',
       cursorColor: 'navy',
-      scrollParent: false,
+      scrollParent: true,
       height: '55'
     };
 
@@ -167,7 +167,7 @@ var MusicInterface = {
         id: id,
         start: start,
         end: myEnd,
-        color: this.randomColor(0.5),
+        color: color,
         drag:false,
         resize: false
       })
@@ -176,9 +176,9 @@ var MusicInterface = {
   addInitialRegion: function (transition) {
     return this.waveSurfer.addRegion({
         id: transition.id,
-        start: 0,
+        start: transition.time,
         end: this.getDuration(),
-        color: this.randomColor(0.2),
+        color: "rgba(0, 255, 227, 0.2)",
         drag: false,
         resize: false
     })
@@ -197,7 +197,8 @@ var MusicInterface = {
       var region = this.addOneRegion(
         transition.id,
         this.getCurrentTime(),
-        this.currentRegion.end
+        this.currentRegion.end,
+        this.randomColor(0.5)
       );
       this.currentRegion = this.currentRegion.update({
         start: this.currentRegion.start,
@@ -214,36 +215,43 @@ var MusicInterface = {
   },
 
   setUpRegions: function(transitions) {
-    //Shouldn't really be in this object...
     var region;
+    var color;
     transitions.sort(function(a,b) {
       return a.time - b.time;
     });
-    if (transitions.length === 0 ) {
-      // this.currentRegion = this.addInitialRegion();
-    } else if (transitions.length === 1) {
-      this.currentRegion = this.addOneRegion(
-        transitions[0].id,
-        transitions[0].time,
-        this.getDuration()
-      );
+    if (transitions.length === 1) {
+      this.currentRegion = this.addInitialRegion(transitions[0]);
     } else {
       this.currentRegion = this.addOneRegion(
         transitions[0].id,
         transitions[0].time,
-        transitions[1].time
+        transitions[1].time,
+        "rgba(0, 255, 227, 0.5)"
       );
       for (var index = 1; index < transitions.length - 1; index++) {
+        if (index % 2 === 1) {
+          color = "rgba(105, 31, 114, 0.5)";
+        } else {
+          color = "rgba(0, 255, 227, 0.5)";
+        }
         this.addOneRegion(
           transitions[index].id,
           transitions[index].time,
-          transitions[index+1].time
+          transitions[index+1].time,
+          color
         );
+      }
+      if (color === "rgba(0, 255, 227, 0.5)") {
+        color = "rgba(105, 31, 114, 0.5)";
+      } else {
+        color = "rgba(0, 255, 227, 0.5)";
       }
       this.addOneRegion(
         transitions[index].id,
         transitions[index].time,
-        this.getDuration()
+        this.getDuration(),
+        color
       );
     }
   },
