@@ -37,7 +37,7 @@ var ParameterMenu = React.createClass({
       console.log(event.target.value)
       var self = this;
       var effect = [{
-        'type': 'effects',
+        'type': 'effect',
         'value': event.target.value }];
       visualizer.setParams(effect);
       self.updateTransition();

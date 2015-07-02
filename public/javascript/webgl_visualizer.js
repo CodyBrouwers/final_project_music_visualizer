@@ -14,7 +14,7 @@ WebGLVisualizer = {
     var blue = 10;
     this.color = 'rgb(' + red + ',' + green + ',' + blue + ')'
     var myColor = new THREE.Color(this.color);
-    var geometry = new THREE.BoxGeometry( 20, 20, 20 );
+    var geometry = new THREE.IcosahedronGeometry( 20, 4 );
     var texture = new THREE.DataTexture(musicInterface.getByteData(), 1024, 2, THREE.RGBFormat);
 
     var uniforms = { 
@@ -63,14 +63,14 @@ WebGLVisualizer = {
     // 
     this.initEffects();
     
-    this.setUpEffects(this.effects);
+    this.setUpEffects();
   },
 
   initEffects: function() {
     var self = this;
     //array of hashes, with checked and value as options
     this.effects = {
-      "VignetteShader":{checked:true},
+      "VignetteShader":{checked:false},
       // "BloomShader":{checked:false},
       "FilmShader":{checked:false},
       "TechnicolorShader":{checked:false},
@@ -134,8 +134,11 @@ WebGLVisualizer = {
         case 'matcap':
           this.setMatCap(value);
           break;
-        case 'effects':
+        case 'effect':
           this.toggleEffect(value);
+          break;
+        case 'effects':
+          this.setEffects(value);
           break;
       }
     }, this);
@@ -174,7 +177,7 @@ WebGLVisualizer = {
         value = this.material.uniforms.tMatCap.value.sourceFile;
         break;
       case 'effects':
-        value = this.effects;
+        value = this.getEffects();
     }
     return { 'type': type, 'value': value }
   },
@@ -185,6 +188,15 @@ WebGLVisualizer = {
     green = Math.floor(255 * color.g);
     blue = Math.floor(255 * color.b);
     return 'rgb('+red+','+green+','+blue+')'
+  },
+
+  getEffects: function() {
+    names = Object.keys(this.effects);
+    effectsParam = {};
+    names.forEach(function (effectName) {
+      effectsParam[effectName] = this.effects[effectName].checked;
+    }, this)
+    return effectsParam;
   },
 
   setColor: function(color) {
@@ -221,8 +233,8 @@ WebGLVisualizer = {
     this.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
 
     Object.keys(self.effects).forEach(function (effectName, index) {
-      console.log(self.effects[effectName].checked)
       if (effectName === effectToToggle) {
+        console.log(self.effects[effectName].checked)
         self.effects[effectName].checked = !self.effects[effectName].checked;
       }
       if (self.effects[effectName].checked) {
@@ -234,11 +246,29 @@ WebGLVisualizer = {
     this.copyShader.renderToScreen = true;
   },
 
-  setUpEffects: function(effects) {
+  setEffects: function(effectsParam) {
     var self = this;
-    self.effects = effects;
     self.composer = new THREE.EffectComposer(this.renderer);
     this.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
+
+    Object.keys(effectsParam).forEach(function (effectName) {
+      console.log(effectName)
+      if (effectsParam[effectName] !== self.effects[effectName].checked) {
+        self.effects[effectName].checked = effectsParam[effectName]; 
+      }
+      if (self.effects[effectName].checked) {
+        self.composer.addPass(self.effects[effectName].effect);
+      }
+    });
+
+    this.composer.addPass( this.copyShader );
+    this.copyShader.renderToScreen = true;
+  },
+
+  setUpEffects: function(effects) {
+    var self = this;
+    self.composer = new THREE.EffectComposer(this.renderer);
+    self.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
     Object.keys(self.effects).forEach(function (effectName, index) {
       if (self.effects[effectName].checked) {
         self.composer.addPass(self.effects[effectName].effect);
