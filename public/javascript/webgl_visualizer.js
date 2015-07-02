@@ -58,30 +58,35 @@ WebGLVisualizer = {
 
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
-    this.composer = new THREE.EffectComposer(this.renderer);
-    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera));
+    this.copyShader = new THREE.ShaderPass( THREE.CopyShader );
+    // postprocessing
+    // 
+    this.initEffects();
+    
+    this.setUpEffects(this.effects);
   },
 
   initEffects: function() {
+    var self = this;
     //array of hashes, with checked and value as options
     this.effects = {
-      "BloomShader":{checked:false},
-      "DotScreenShader":{checked:false},
+      "VignetteShader":{checked:true},
+      // "BloomShader":{checked:false},
       "FilmShader":{checked:false},
-      "DigitalGlitch":{checked:false},
-      "KaleidoShader":{checked:false},
       "TechnicolorShader":{checked:false},
-      "VignetteShader":{checked:false},
+      "DigitalGlitch":{checked:false},
       "EdgeShader":{checked:false},
-      "RGBShinameftShader":{checked:false}
+      "DotScreenShader":{checked:false},
+      "RGBShiftShader":{checked:false},
+      "KaleidoShader":{checked:false}
     };
 
-    Object.keys(this.effects).forEach(function(effectName) {
-      this.effects[effectName].effect = new THREE.ShaderPass( THREE[effectName] );
+    Object.keys(self.effects).forEach(function(effectName) {
+      self.effects[effectName].effect = new THREE.ShaderPass( THREE[effectName] );
     });
 
-    effects['DotScreenShader'].effect.uniforms[ 'scale' ].value = 1;
-    effects['RGBShinameftShader'].effect.uniforms[ 'amount' ].value = 0.0015;
+    self.effects['DotScreenShader'].effect.uniforms[ 'scale' ].value = 1;
+    self.effects['RGBShiftShader'].effect.uniforms[ 'amount' ].value = 0.0015;
   },
 
   onWindowResize: function() {
@@ -129,6 +134,9 @@ WebGLVisualizer = {
         case 'matcap':
           this.setMatCap(value);
           break;
+        case 'effects':
+          this.toggleEffect(value);
+          break;
       }
     }, this);
   },
@@ -147,7 +155,7 @@ WebGLVisualizer = {
     var paramList = [];
     switch (visualizerType) {
       case 1: //Basic Visualizer Case
-        paramList = paramList.concat(['geometry', 'matcap']);
+        paramList = paramList.concat(['geometry', 'matcap', 'effects']);
         break;
     }
     return paramList;
@@ -166,7 +174,7 @@ WebGLVisualizer = {
         value = this.material.uniforms.tMatCap.value.sourceFile;
         break;
       case 'effects':
-        value = this.compose
+        value = this.effects;
     }
     return { 'type': type, 'value': value }
   },
@@ -207,8 +215,38 @@ WebGLVisualizer = {
     this.material.uniforms.tMatCap.value.needsUpdate = true;
   },
 
-  toggleEffect: function(effectName) {
-    //toggle the effect's name "checked flag"
-    //reset effectsComposer, and then add any effects with "checked" flag
-  }
+  toggleEffect: function(effectToToggle) {
+    var self = this;
+    self.composer = new THREE.EffectComposer(this.renderer);
+    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
+
+    Object.keys(self.effects).forEach(function (effectName, index) {
+      console.log(self.effects[effectName].checked)
+      if (effectName === effectToToggle) {
+        self.effects[effectName].checked = !self.effects[effectName].checked;
+      }
+      if (self.effects[effectName].checked) {
+        self.composer.addPass(self.effects[effectName].effect);
+      }
+    });
+    
+    this.composer.addPass( this.copyShader );
+    this.copyShader.renderToScreen = true;
+  },
+
+  setUpEffects: function(effects) {
+    var self = this;
+    self.effects = effects;
+    self.composer = new THREE.EffectComposer(this.renderer);
+    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
+    Object.keys(self.effects).forEach(function (effectName, index) {
+      if (self.effects[effectName].checked) {
+        self.composer.addPass(self.effects[effectName].effect);
+        lastEffect = self.effects[effectName].effect;
+      }
+    });
+    
+    this.composer.addPass( this.copyShader );
+    this.copyShader.renderToScreen = true;
+  },  
 }

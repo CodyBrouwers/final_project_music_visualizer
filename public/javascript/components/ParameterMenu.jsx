@@ -34,20 +34,21 @@ var ParameterMenu = React.createClass({
     },
 
     toggleEffect: function() {
+      console.log(event.target.value)
       var self = this;
       var effect = [{
-        'type': 'effect',
+        'type': 'effects',
         'value': event.target.value }];
       visualizer.setParams(effect);
-      this.updateTransition();
+      self.updateTransition();
     },
 
     updateTransition: function() {
       var self = this;
-      if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
+      if (musicInterface.regionsLoaded() && !!self.props.visualization.path) {
         Transition.updateTransition(self.props.visualization.id);
       }
-    }
+    },
 
     updateAllParams: function (parameters) {
 
@@ -61,7 +62,7 @@ var ParameterMenu = React.createClass({
       }
       // Change shape selection on click of new region
       var shape = params[1].value;
-      selectShape(shape);
+      this.selectShape(shape);
     },
 
     selectShape: function(shape) {
@@ -107,18 +108,19 @@ var ParameterMenu = React.createClass({
         matCapItems[i] = (<MatCapItem imgIndex={i+1} changeMatCap={this.changeMatCap} />)
       }
       var effectArr = [
-        {name:"Bloom", value:"BloomShader"},
-        {name:"Dot Screen", value:"DotScreenShader"},
-        {name:"Film", value:"FilmShader"},
-        {name:"Glitch", value:"DigitalGlitch"},
-        {name:"Kaleido Scope", value:"KaleidoShader"},
-        {name:"Technicolor", value:"TechnicolorShader"},
         {name:"Vignette", value:"VignetteShader"},
-        {name:"Edge Highlights", value:"EdgeShader"}];
+        // {name:"Bloom", value:"BloomShader"},
+        {name:"Film", value:"FilmShader"},
+        {name:"Technicolor", value:"TechnicolorShader"},
+        {name:"Glitch", value:"DigitalGlitch"},
+        {name:"Edge Highlights", value:"EdgeShader"},
+        {name:"Dot Screen", value:"DotScreenShader"},
+        {name:"RGB Shift", value:"RGBShiftShader"},
+        {name:"Kaleido Scope", value:"KaleidoShader"}]
       var effectsItems = [];
       effectArr.forEach(function(effect, index) {
-        effectsItems[index] = (<li><EffectCheckBox effectName={effect.name} effectValue={effect.value} toggleEffect={toggleEffect} /></li>)
-      })
+        effectsItems[index] = (<li><EffectCheckBox effectName={effect.name} effectValue={effect.value} toggleEffect={this.toggleEffect} /></li>)
+      }, this)
       return (
         <div className="menu-drawer">
           <div className="menu">
@@ -153,7 +155,7 @@ var ParameterMenu = React.createClass({
               <ul>
                 {effectsItems}
               </ul>
-            </fieldset
+            </fieldset>
           </div>
         </div> 
       )
