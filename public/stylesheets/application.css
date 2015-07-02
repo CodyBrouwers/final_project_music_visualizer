@@ -8,6 +8,7 @@ body {
   font-family: 'Lato';
   color: #FFF;
   background: #191919;
+  overflow: hidden;
 }
 
 #header {
