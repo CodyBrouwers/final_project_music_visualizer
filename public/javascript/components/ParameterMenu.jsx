@@ -61,8 +61,9 @@ var ParameterMenu = React.createClass({
         params = visualizer.getParams();
       }
       // Change shape selection on click of new region
-      var shape = params[1].value;
+      var shape = params[0].value;
       this.selectShape(shape);
+      this.checkEffects(params[2].value)
     },
 
     selectShape: function(shape) {
@@ -75,6 +76,14 @@ var ParameterMenu = React.createClass({
       } else if (shape === "PlaneGeometry") {
         this.refs.plane.getDOMNode().checked = 'true';
       }
+    },
+
+    checkEffects: function(effectParams) {
+      var self = this;
+      Object.keys(effectParams).forEach(function (effectKey) {
+      console.log(self.refs)
+        document.getElementById(effectKey).checked = effectParams[effectKey];
+      });
     },
 
     componentDidMount: function () {
