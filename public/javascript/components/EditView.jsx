@@ -35,7 +35,7 @@ var EditView = React.createClass({
         <div className='viz-container'>
           <div id="header">
             <div className="header-left" onClick={self.handleClick}>
-              <h1 className="logo-text">NeoN</h1>
+              <h1 className="logo-text">NWMP</h1>
             </div>
           </div>
           <h1 id="vizname">{this.props.visualization.name}</h1>

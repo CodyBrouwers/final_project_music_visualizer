@@ -225,7 +225,6 @@ var Transition = {
     musicInterface.removeAllRegions();
     Transition._deleteAllTransitionsLocally();
     Transition._deleteAllTransitionsRemotely(vizId);
-    console.log(Transition._transitions);
   },
 
   updateTransition: function (vizId) {
