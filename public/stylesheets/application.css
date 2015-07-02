@@ -336,7 +336,7 @@ img {
   color: #FFF;
   top: 15vh;
   left: 2vw;
-  background-color: rgba(0, 0, 0, 0.3);
+  /*background-color: rgba(0, 0, 0, 0.3);*/
   /*width: 160px;*/
   z-index: 2;
   -webkit-transition: all 0.4s ease;
@@ -362,18 +362,10 @@ img {
   color: #fff;
 }
 
-.close {
-  position: absolute;
-  color: #c8c8c8;
-  left: 0px;
-  top: 30px;
-  font-size: 0.8em;
-  padding: 8px 18px 13px 13px;
+fieldset {
+  margin-right: 25px;
 }
-.close:hover {
-  cursor: pointer;
-  color: #fff;
-}
+
 .menu p {
   padding: 7px 0px 0px 10px;
   margin: 0;
@@ -497,8 +489,8 @@ i#pause:hover {
 
 #toggle {
   position: absolute;
-  top: 5vh;
-  right: 4vw;
+  top: 8vh;
+  right: 5vw;
   font-size: 14px;
   display: block;
   border-style: solid;
@@ -511,6 +503,13 @@ i#pause:hover {
   border-width: 1px;
   background: rgba(25, 25, 25, .4); 
   z-index: 1004;
+  transition: all 0.3s ease-in;
+}
+
+#toggle:hover {
+  color: #00FFE3;
+  border-color: #00FFE3;
+  cursor: pointer;
 }
 
 img.matcap {
