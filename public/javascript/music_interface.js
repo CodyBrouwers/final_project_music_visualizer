@@ -198,7 +198,7 @@ var MusicInterface = {
         transition.id,
         this.getCurrentTime(),
         this.currentRegion.end,
-        "rgba(217, 167, 71, 0.5)"
+        this.randomColor(0.5)
       );
       this.currentRegion = this.currentRegion.update({
         start: this.currentRegion.start,
