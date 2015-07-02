@@ -140,14 +140,13 @@ input:focus::-webkit-input-placeholder {
 .sort-menu {
   z-index: 1001;
   position: absolute;
-  top: 5vh;
+  top: 4.5vh;
   left: 0vw;
 }
 
 .sort-button {
   /*position: relative;*/
   margin: 0px;
-  /*top: 5px;*/
   font-size: 14px;
   display: block;
   border-style: solid;
@@ -228,7 +227,7 @@ input:focus::-webkit-input-placeholder {
 }
 
 #songURL {
-  font-size: .5em;
+  font-size: 1em;
   width: 45vw;
 }
 
@@ -239,16 +238,17 @@ input:focus::-webkit-input-placeholder {
   border-width: 1px;
   margin-top: 10vh;
   margin-left: 15vw;
-  background: gray;
+  background: #00FFE3;
   height: 10vh;
   width: 20vw;
   color: white;
   font-weight:300;
-  transition: all .1s ease-in;
+  transition: all .3s ease-in;
+
 }
 
 #soundcloud-load:hover {
-  background: #222;
+  background: #70FF70;
 }
 
 #soundcloud-close {
@@ -366,6 +366,10 @@ fieldset {
   margin-right: 25px;
 }
 
+legend > input {
+  margin-right: 1vw;
+}
+
 .menu p {
   padding: 7px 0px 0px 10px;
   margin: 0;
@@ -411,6 +415,7 @@ fieldset {
 
 .menu li label { 
   margin-right: 1vw;
+  margin-left: 1vw;
 }
 
 
