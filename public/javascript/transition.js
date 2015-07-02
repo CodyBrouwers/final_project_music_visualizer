@@ -249,10 +249,10 @@ var Transition = {
   },
 
   setCurrentRegionAndTransition: function(vizId, region) {
+    if (musicInterface.currentRegion === region) return;
     musicInterface.currentRegion = region;
     var transition = this.findCurrentTransition(region);
     visualizer.setParams(transition.params);
-    return transition;
   },
 
   registerChangeCallback: function (fn) {

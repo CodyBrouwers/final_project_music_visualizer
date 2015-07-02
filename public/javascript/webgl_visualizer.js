@@ -9,12 +9,7 @@ WebGLVisualizer = {
     this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
     this.camera.position.z = 50;
 
-    // var red = 240;
-    // var green = 50;
-    // var blue = 10;
-    // this.color = 'rgb(' + red + ',' + green + ',' + blue + ')'
-    // var myColor = new THREE.Color(this.color);
-    var geometry = new THREE.BoxGeometry( 20, 20, 20 );
+    var geometry = new THREE.IcosahedronGeometry( 20, 4 );
     var texture = new THREE.DataTexture(musicInterface.getByteData(), 1024, 2, THREE.RGBFormat);
 
     var uniforms = { 
@@ -58,6 +53,35 @@ WebGLVisualizer = {
 
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
+    this.copyShader = new THREE.ShaderPass( THREE.CopyShader );
+    // postprocessing
+    // 
+    this.initEffects();
+    
+    this.setUpEffects();
+  },
+
+  initEffects: function() {
+    var self = this;
+    //array of hashes, with checked and value as options
+    this.effects = {
+      "VignetteShader":{checked:false},
+      // "BloomShader":{checked:false},
+      "FilmShader":{checked:false},
+      "TechnicolorShader":{checked:false},
+      "DigitalGlitch":{checked:false},
+      "EdgeShader":{checked:false},
+      "DotScreenShader":{checked:false},
+      "RGBShiftShader":{checked:false},
+      "KaleidoShader":{checked:false}
+    };
+
+    Object.keys(self.effects).forEach(function(effectName) {
+      self.effects[effectName].effect = new THREE.ShaderPass( THREE[effectName] );
+    });
+
+    self.effects['DotScreenShader'].effect.uniforms[ 'scale' ].value = 1;
+    self.effects['RGBShiftShader'].effect.uniforms[ 'amount' ].value = 0.0015;
   },
 
   onWindowResize: function() {
@@ -83,7 +107,7 @@ WebGLVisualizer = {
     this.material.uniforms[ 'time' ].value += .00025;
     this.material.uniforms.iChannel0.value.image.data = musicInterface.getByteData();
     this.material.uniforms.iChannel0.value.needsUpdate = true
-    this.renderer.render(this.scene, this.camera);
+    this.composer.render(this.scene, this.camera);
   },
 
   cancelAnimate: function () {
@@ -99,14 +123,17 @@ WebGLVisualizer = {
       var value = param['value'];
       
       switch (type) {
-        // case 'color':
-        //   this.setColor(value);
-        //   break;
         case 'geometry':
           this.setGeometry(value);
           break;
         case 'matcap':
           this.setMatCap(value);
+          break;
+        case 'effect':
+          this.toggleEffect(value);
+          break;
+        case 'effects':
+          this.setEffects(value);
           break;
       }
     }, this);
@@ -126,7 +153,7 @@ WebGLVisualizer = {
     var paramList = [];
     switch (visualizerType) {
       case 1: //Basic Visualizer Case
-        paramList = paramList.concat(['color', 'geometry', 'matcap']);
+        paramList = paramList.concat(['geometry', 'matcap', 'effects']);
         break;
     }
     return paramList;
@@ -144,21 +171,32 @@ WebGLVisualizer = {
       case 'matcap':
         value = this.material.uniforms.tMatCap.value.sourceFile;
         break;
+      case 'effects':
+        value = this.getEffects();
     }
     return { 'type': type, 'value': value }
   },
 
-  // getColor: function() {
-  //   color = this.mesh.material.color;
-  //   red = Math.floor(255 * color.r);
-  //   green = Math.floor(255 * color.g);
-  //   blue = Math.floor(255 * color.b);
-  //   return 'rgb('+red+','+green+','+blue+')'
-  // },
+  getColor: function() {
+    color = this.mesh.material.color;
+    red = Math.floor(255 * color.r);
+    green = Math.floor(255 * color.g);
+    blue = Math.floor(255 * color.b);
+    return 'rgb('+red+','+green+','+blue+')'
+  },
 
-  // setColor: function(color) {
-  //   this.mesh.material.color = new THREE.Color(color);
-  // },
+  getEffects: function() {
+    names = Object.keys(this.effects);
+    effectsParam = {};
+    names.forEach(function (effectName) {
+      effectsParam[effectName] = this.effects[effectName].checked;
+    }, this)
+    return effectsParam;
+  },
+
+  setColor: function(color) {
+    this.mesh.material.color = new THREE.Color(color);
+  },
 
   setGeometry: function(shape) {
     if (shape === 'TorusKnotGeometry') {
@@ -168,7 +206,7 @@ WebGLVisualizer = {
       this.mesh.geometry = new THREE[shape]( 20, 4 );
     }
     else if (shape === 'PlaneGeometry') {
-      this.mesh.geometry = new THREE[shape]( 30, 30, 32, 32);
+      this.mesh.geometry = new THREE[shape]( 30, 30, 512, 4);
     }
     else {
       this.mesh.geometry = new THREE[shape]( 20, 20, 20, 32, 32, 32 );
@@ -182,5 +220,56 @@ WebGLVisualizer = {
     THREE.ClampToEdgeWrapping;
 
     this.material.uniforms.tMatCap.value.needsUpdate = true;
-  }
+  },
+
+  toggleEffect: function(effectToToggle) {
+    var self = this;
+    self.composer = new THREE.EffectComposer(this.renderer);
+    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
+
+    Object.keys(self.effects).forEach(function (effectName, index) {
+      if (effectName === effectToToggle) {
+        self.effects[effectName].checked = !self.effects[effectName].checked;
+      }
+      if (self.effects[effectName].checked) {
+        self.composer.addPass(self.effects[effectName].effect);
+      }
+    });
+    
+    this.composer.addPass( this.copyShader );
+    this.copyShader.renderToScreen = true;
+  },
+
+  setEffects: function(effectsParam) {
+    var self = this;
+    self.composer = new THREE.EffectComposer(this.renderer);
+    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
+
+    Object.keys(effectsParam).forEach(function (effectName) {
+      if (effectsParam[effectName] !== self.effects[effectName].checked) {
+        self.effects[effectName].checked = effectsParam[effectName]; 
+      }
+      if (self.effects[effectName].checked) {
+        self.composer.addPass(self.effects[effectName].effect);
+      }
+    });
+
+    this.composer.addPass( this.copyShader );
+    this.copyShader.renderToScreen = true;
+  },
+
+  setUpEffects: function(effects) {
+    var self = this;
+    self.composer = new THREE.EffectComposer(this.renderer);
+    self.composer.addPass( new THREE.RenderPass(this.scene, this.camera) );
+    Object.keys(self.effects).forEach(function (effectName, index) {
+      if (self.effects[effectName].checked) {
+        self.composer.addPass(self.effects[effectName].effect);
+        lastEffect = self.effects[effectName].effect;
+      }
+    });
+    
+    this.composer.addPass( this.copyShader );
+    this.copyShader.renderToScreen = true;
+  },  
 }
