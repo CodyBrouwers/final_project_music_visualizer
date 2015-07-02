@@ -234,7 +234,6 @@ WebGLVisualizer = {
 
     Object.keys(self.effects).forEach(function (effectName, index) {
       if (effectName === effectToToggle) {
-        console.log(self.effects[effectName].checked)
         self.effects[effectName].checked = !self.effects[effectName].checked;
       }
       if (self.effects[effectName].checked) {

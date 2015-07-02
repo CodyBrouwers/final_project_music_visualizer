@@ -68,7 +68,6 @@ var ParameterMenu = React.createClass({
     checkEffects: function(effectParams) {
       var self = this;
       Object.keys(effectParams).forEach(function (effectKey) {
-      console.log(self.refs)
         document.getElementById(effectKey).checked = effectParams[effectKey];
       });
     },
