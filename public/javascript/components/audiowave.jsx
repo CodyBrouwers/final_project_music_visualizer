@@ -104,7 +104,8 @@ var AudioWave = React.createClass({
               Transition.setCurrentRegionAndTransition(self.props.visualization.id, region);
           });
           musicInterface.waveSurfer.on('region-dblclick', function (region, event) {
-            Transition.removeTransition(self.props.visualization.id);
+            // musicInterface.removeAllRegions();
+            // Transition.removeTransition(self.props.visualization.id);
           });
 
       });

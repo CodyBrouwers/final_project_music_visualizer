@@ -18,4 +18,3 @@ Visualization.create!(path: "http://media.soundcloud.com/stream/b4I2jqZPUzko", n
 Visualization.create!(path: "http://media.soundcloud.com/stream/wCh8J5LdNBN4", name: "Norah's Lullaby", image: "https://i1.sndcdn.com/artworks-000121047778-ecrmbi-t300x300.jpg")
 Visualization.create!(path: "http://media.soundcloud.com/stream/7NQBDshL2LlO", name: "The Chainsmokers - Let You Go (Steve James Remix)", image: "https://i1.sndcdn.com/artworks-000116538430-yf9brd-t300x300.jpg")
 Visualization.create!(path: "http://media.soundcloud.com/stream/S0futF8idWsb", name: "Illenium - I'll Be Your Reason [NEST052]",  image: "https://i1.sndcdn.com/artworks-000119582385-seu0od-t300x300.jpg")
-
