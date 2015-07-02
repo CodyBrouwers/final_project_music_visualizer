@@ -67,12 +67,14 @@ WebGLVisualizer = {
     this.effects = {
       "VignetteShader":{checked:false},
       // "BloomShader":{checked:false},
-      "FilmShader":{checked:false},
       "TechnicolorShader":{checked:false},
-      "DigitalGlitch":{checked:false},
+      // "DigitalGlitch":{checked:false},
       "EdgeShader":{checked:false},
+      "EdgeShader2":{checked:false},
       "DotScreenShader":{checked:false},
+      "FilmShader":{checked:false},
       "RGBShiftShader":{checked:false},
+      "MirrorShader":{checked:false},
       "KaleidoShader":{checked:false}
     };
 
@@ -81,7 +83,16 @@ WebGLVisualizer = {
     });
 
     self.effects['DotScreenShader'].effect.uniforms[ 'scale' ].value = 1;
-    self.effects['RGBShiftShader'].effect.uniforms[ 'amount' ].value = 0.0015;
+    self.effects['DotScreenShader'].effect.uniforms[ 'angle' ].value = 1.6;
+    self.effects['RGBShiftShader'].effect.uniforms[ 'amount' ].value = 0.003;
+    self.effects['VignetteShader'].effect.uniforms[ 'darkness' ].value = 1.3;
+    self.effects['FilmShader'].effect.uniforms[ 'grayscale' ].value = 0.8;
+    self.effects['FilmShader'].effect.uniforms[ 'nIntensity' ].value = 1.0;
+    self.effects['FilmShader'].effect.uniforms[ 'sIntensity' ].value = 0.8;
+    self.effects['FilmShader'].effect.uniforms[ 'sCount' ].value = 512.0;
+
+    // self.effects['TechnicolorShader'].effect.uniforms[ 'tDiffuse' ].value = 1.5;
+    
   },
 
   onWindowResize: function() {
@@ -98,13 +109,20 @@ WebGLVisualizer = {
     // this.mesh.rotation.x += 0.01;
     // this.mesh.rotation.y += 0.02;
 
-    var scale = 1 + musicInterface.level;
+    var scale = 1 + 1.7*musicInterface.level;
+    // if (musicInterface.level > 0.4) {
+    //   this.effects['DigitalGlitch'].effect.uniforms[ 'byp' ].value = 0;
+    // }
+    // else {
+    //  this.effects['DigitalGlitch'].effect.uniforms[ 'byp' ].value = 1; 
+    // }
     this.mesh.scale.x = scale;
     this.mesh.scale.y = scale;
     this.mesh.scale.z = scale;
 
     musicInterface.updateData();
     this.material.uniforms[ 'time' ].value += .00025;
+    this.effects['FilmShader'].effect.uniforms[ 'time' ].value += .00025;
     this.material.uniforms.iChannel0.value.image.data = musicInterface.getByteData();
     this.material.uniforms.iChannel0.value.needsUpdate = true
     this.composer.render(this.scene, this.camera);
