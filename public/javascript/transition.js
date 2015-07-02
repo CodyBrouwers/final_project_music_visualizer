@@ -120,6 +120,7 @@ var Transition = {
       dataType: 'json',
       success: function() {
         console.log('All transitions deleted');
+        Transition.addInitialRegionAndTransition(vizId);
       },
       error: function() {
         alert('error deleting all transitions');
