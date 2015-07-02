@@ -26,6 +26,3 @@ var SoundcloudInput = React.createClass({
   }
 
 });
-
-// <form htmlFor='newVisualization'>Please Paste any SoundCloud URL:</form>
-
