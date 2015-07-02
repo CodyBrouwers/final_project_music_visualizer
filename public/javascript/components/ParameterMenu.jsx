@@ -10,9 +10,7 @@ var ParameterMenu = React.createClass({
         'value': 'rgb('+red+','+green+','+blue+')'
       }];
       visualizer.setParams(colors);
-      if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
-        Transition.updateTransition(self.props.visualization.id);
-      }
+      
     },
 
     changeShape: function() {
@@ -21,33 +19,35 @@ var ParameterMenu = React.createClass({
       'type': 'geometry',
       'value': event.target.value
       }];
-      if (event.target.value === "IcosahedronGeometry") {
-        self.refs.icosahedron.getDOMNode().checked = 'true';
-      } else if (event.target.value === "BoxGeometry") {
-        self.refs.box.getDOMNode().checked = 'true';
-      } else if (event.target.value === "TorusKnotGeometry") {
-        self.refs.torusKnot.getDOMNode().checked = 'true';
-      } else if (event.target.value === "PlaneGeometry") {
-        self.refs.plane.getDOMNode().checked = 'true';
-      }
+      this.selectShape(event.target.value);
       visualizer.setParams(shape)
-      if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
-        Transition.updateTransition(self.props.visualization.id);
-      }
+      this.updateTransition();
     },
 
     changeMatCap: function() {
-      var self = this;
       var matCap = [{
         'type': 'matcap',
         'value': (event.target.src.slice(21))
       }];
       visualizer.setParams(matCap)
-      console.log(visualizer.material.uniforms.tMatCap.value)
+      this.updateTransition()
+    },
+
+    toggleEffect: function() {
+      var self = this;
+      var effect = [{
+        'type': 'effect',
+        'value': event.target.value }];
+      visualizer.setParams(effect);
+      this.updateTransition();
+    },
+
+    updateTransition: function() {
+      var self = this;
       if (musicInterface.regionsLoaded() && !!this.props.visualization.path) {
         Transition.updateTransition(self.props.visualization.id);
       }
-    },
+    }
 
     updateAllParams: function (parameters) {
 
@@ -59,22 +59,20 @@ var ParameterMenu = React.createClass({
       } else {
         params = visualizer.getParams();
       }
-      // Change colors sliders on click of new region
-      var colors = params[0].value.slice(4,-1).split(',');
-      self.refs.red.getDOMNode().value = parseInt(colors[0]);
-      self.refs.green.getDOMNode().value = parseInt(colors[1]);
-      self.refs.blue.getDOMNode().value = parseInt(colors[2]);
-      
       // Change shape selection on click of new region
       var shape = params[1].value;
+      selectShape(shape);
+    },
+
+    selectShape: function(shape) {
       if (shape === "IcosahedronGeometry") {
-        self.refs.icosahedron.getDOMNode().checked = 'true';
+        this.refs.icosahedron.getDOMNode().checked = 'true';
       } else if (shape === "BoxGeometry") {
-        self.refs.box.getDOMNode().checked = 'true';
+        this.refs.box.getDOMNode().checked = 'true';
       } else if (shape === "TorusKnotGeometry") {
-        self.refs.torusKnot.getDOMNode().checked = 'true';
+        this.refs.torusKnot.getDOMNode().checked = 'true';
       } else if (shape === "PlaneGeometry") {
-        self.refs.plane.getDOMNode().checked = 'true';
+        this.refs.plane.getDOMNode().checked = 'true';
       }
     },
 
@@ -103,31 +101,27 @@ var ParameterMenu = React.createClass({
     },
 
     render: function(){
-      numOfMatCaps = 9;
-      matCapItems = new Array(numOfMatCaps);
+      var numOfMatCaps = 9;
+      var matCapItems = new Array(numOfMatCaps);
       for (var i = 0; i < numOfMatCaps; i++) {
         matCapItems[i] = (<MatCapItem imgIndex={i+1} changeMatCap={this.changeMatCap} />)
       }
+      var effectArr = [
+        {name:"Bloom", value:"BloomShader"},
+        {name:"Dot Screen", value:"DotScreenShader"},
+        {name:"Film", value:"FilmShader"},
+        {name:"Glitch", value:"DigitalGlitch"},
+        {name:"Kaleido Scope", value:"KaleidoShader"},
+        {name:"Technicolor", value:"TechnicolorShader"},
+        {name:"Vignette", value:"VignetteShader"},
+        {name:"Edge Highlights", value:"EdgeShader"}];
+      var effectsItems = [];
+      effectArr.forEach(function(effect, index) {
+        effectsItems[index] = (<li><EffectCheckBox effectName={effect.name} effectValue={effect.value} toggleEffect={toggleEffect} /></li>)
+      })
       return (
         <div className="menu-drawer">
           <div className="menu">
-            <fieldset>
-              <legend>Color</legend>
-              <ul className="color">
-                <li>
-                  <form htmlFor='input-red'>Red</form>
-                  <input id='input-red' type='range' ref="red" max="255" defaultValue="0" onChange={this.changeColorParams}/>
-                </li>
-                <li>
-                  <form htmlFor='input-green'>Green</form>
-                  <input id='input-green' type='range' ref="green" max="255" defaultValue="0" onChange={this.changeColorParams}/>
-                </li>
-                <li>
-                  <form htmlFor='input-blue'>Blue</form>
-                  <input id='input-blue' type='range' ref="blue" max="255" defaultValue="0" onChange={this.changeColorParams}/>
-                </li>
-              </ul>
-            </fieldset>
             <fieldset>
               <legend>Shape</legend>
               <ul className='shape'>
@@ -152,8 +146,14 @@ var ParameterMenu = React.createClass({
             </fieldset>
             <fieldset>
               <legend>Material</legend>
-                {matCapItems}
+              {matCapItems}
             </fieldset>
+            <fieldset>
+              <legend>Effects</legend>
+              <ul>
+                {effectsItems}
+              </ul>
+            </fieldset
           </div>
         </div> 
       )

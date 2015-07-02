@@ -248,7 +248,7 @@ input:focus::-webkit-input-placeholder {
 }
 
 #soundcloud-load:hover {
-  background: black;
+  background: #222;
 }
 
 #soundcloud-close {

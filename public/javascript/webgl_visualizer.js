@@ -59,17 +59,29 @@ WebGLVisualizer = {
     window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
 
     this.composer = new THREE.EffectComposer(this.renderer);
-    compose.addPass( new THREE.RenderPass(scene, camera));
+    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera));
+  },
 
-    var dotScreenEffect = new THREE.ShaderPass( THREE.DotScreenShader );
-    dotScreenEffect.uniforms[ 'scale' ].value = 4;
-    composer.addPass( dotScreenEffect );
+  initEffects: function() {
+    //array of hashes, with checked and value as options
+    this.effects = {
+      "BloomShader":{checked:false},
+      "DotScreenShader":{checked:false},
+      "FilmShader":{checked:false},
+      "DigitalGlitch":{checked:false},
+      "KaleidoShader":{checked:false},
+      "TechnicolorShader":{checked:false},
+      "VignetteShader":{checked:false},
+      "EdgeShader":{checked:false},
+      "RGBShinameftShader":{checked:false}
+    };
 
-    var rgbEffect = new THREE.ShaderPass( THREE.RGBShiftShader );
-    rgbEffect.uniforms[ 'amount' ].value = 0.0015;
-    rgbEffect.renderToScreen = true;
-    composer.addPass( rgbEffect );
+    Object.keys(this.effects).forEach(function(effectName) {
+      this.effects[effectName].effect = new THREE.ShaderPass( THREE[effectName] );
+    });
 
+    effects['DotScreenShader'].effect.uniforms[ 'scale' ].value = 1;
+    effects['RGBShinameftShader'].effect.uniforms[ 'amount' ].value = 0.0015;
   },
 
   onWindowResize: function() {
@@ -111,9 +123,6 @@ WebGLVisualizer = {
       var value = param['value'];
       
       switch (type) {
-        case 'color':
-          this.setColor(value);
-          break;
         case 'geometry':
           this.setGeometry(value);
           break;
@@ -138,7 +147,7 @@ WebGLVisualizer = {
     var paramList = [];
     switch (visualizerType) {
       case 1: //Basic Visualizer Case
-        paramList = paramList.concat(['color', 'geometry', 'matcap']);
+        paramList = paramList.concat(['geometry', 'matcap']);
         break;
     }
     return paramList;
@@ -156,6 +165,8 @@ WebGLVisualizer = {
       case 'matcap':
         value = this.material.uniforms.tMatCap.value.sourceFile;
         break;
+      case 'effects':
+        value = this.compose
     }
     return { 'type': type, 'value': value }
   },
@@ -180,7 +191,7 @@ WebGLVisualizer = {
       this.mesh.geometry = new THREE[shape]( 20, 4 );
     }
     else if (shape === 'PlaneGeometry') {
-      this.mesh.geometry = new THREE[shape]( 30, 30, 32, 32);
+      this.mesh.geometry = new THREE[shape]( 30, 30, 512, 4);
     }
     else {
       this.mesh.geometry = new THREE[shape]( 20, 20, 20, 32, 32, 32 );
@@ -194,5 +205,10 @@ WebGLVisualizer = {
     THREE.ClampToEdgeWrapping;
 
     this.material.uniforms.tMatCap.value.needsUpdate = true;
+  },
+
+  toggleEffect: function(effectName) {
+    //toggle the effect's name "checked flag"
+    //reset effectsComposer, and then add any effects with "checked" flag
   }
 }
