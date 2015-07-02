@@ -51,7 +51,6 @@ var EditView = React.createClass({
     visualizer.animate();
     $('#toggle').on('click', function(){
       $('.menu-drawer').toggleClass('hidden');
-      // $('#toggle').html($('#toggle').text() === 'Hide' ? 'Show Controls' : 'Hide');
     })
   },
 

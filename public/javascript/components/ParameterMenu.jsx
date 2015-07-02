@@ -112,23 +112,6 @@ var ParameterMenu = React.createClass({
         <div className="menu-drawer">
           <div className="menu">
             <fieldset>
-              <legend>Color</legend>
-              <ul className="color">
-                <li>
-                  <form htmlFor='input-red'>Red</form>
-                  <input id='input-red' type='range' ref="red" max="255" defaultValue="0" onChange={this.changeColorParams}/>
-                </li>
-                <li>
-                  <form htmlFor='input-green'>Green</form>
-                  <input id='input-green' type='range' ref="green" max="255" defaultValue="0" onChange={this.changeColorParams}/>
-                </li>
-                <li>
-                  <form htmlFor='input-blue'>Blue</form>
-                  <input id='input-blue' type='range' ref="blue" max="255" defaultValue="0" onChange={this.changeColorParams}/>
-                </li>
-              </ul>
-            </fieldset>
-            <fieldset>
               <legend>Shape</legend>
               <ul className='shape'>
                 <li>
