@@ -8,6 +8,7 @@ var SortMenu = React.createClass ({
     var buttons = _.map(self.props.sortOptions, function(sortOption){
       return <div className="sort-button" onClick={function(){
         self.props.changeSort(sortOption);
+        self.props.displaySortButtons();
       }}>{sortOption}</div>;
     })
     return (
