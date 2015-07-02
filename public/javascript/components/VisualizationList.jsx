@@ -55,6 +55,9 @@ var VisualizationList = React.createClass({
     var props = this.props;
     var self = this;
     var items = _.sortBy(Visualization.getAll(), function(viz){return viz[self.state.sortBy]});
+    if (self.state.sortBy === "created_at" || self.state.sortBy === "updated_at") {
+      items.reverse();
+    }
     items = items.filter(function(viz){
       return viz.name.toLowerCase().indexOf(self.state.filterText.toLowerCase()) > -1;
     })

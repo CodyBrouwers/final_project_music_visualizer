@@ -1,18 +1,5 @@
 var ParameterMenu = React.createClass({
 
-    changeColorParams: function () {
-      var self = this;
-      var red = this.refs.red.getDOMNode().value;
-      var green = this.refs.green.getDOMNode().value;
-      var blue = this.refs.blue.getDOMNode().value;
-      var colors = [{
-        'type': 'color',
-        'value': 'rgb('+red+','+green+','+blue+')'
-      }];
-      visualizer.setParams(colors);
-      
-    },
-
     changeShape: function() {
       var self = this;
       var shape = [{
