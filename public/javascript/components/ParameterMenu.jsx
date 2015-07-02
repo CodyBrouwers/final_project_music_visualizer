@@ -96,7 +96,7 @@ var ParameterMenu = React.createClass({
     },
 
     render: function(){
-      var numOfMatCaps = 9;
+      var numOfMatCaps = 16;
       var matCapItems = new Array(numOfMatCaps);
       for (var i = 0; i < numOfMatCaps; i++) {
         matCapItems[i] = (<MatCapItem imgIndex={i+1} changeMatCap={this.changeMatCap} />)
