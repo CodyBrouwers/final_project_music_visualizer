@@ -106,11 +106,13 @@ var ParameterMenu = React.createClass({
         // {name:"Bloom", value:"BloomShader"},
         {name:"Film", value:"FilmShader"},
         {name:"Technicolor", value:"TechnicolorShader"},
-        {name:"Glitch", value:"DigitalGlitch"},
+        // {name:"Glitch", value:"DigitalGlitch"},
         {name:"Edge Highlights", value:"EdgeShader"},
+        {name:"Alternate Edge Highlights", value:"EdgeShader2"},
         {name:"Dot Screen", value:"DotScreenShader"},
         {name:"RGB Shift", value:"RGBShiftShader"},
-        {name:"Kaleido Scope", value:"KaleidoShader"}]
+        {name:"Mirror", value:"MirrorShader"},
+        {name:"Kaleidoscope", value:"KaleidoShader"}];
       var effectsItems = [];
       effectArr.forEach(function(effect, index) {
         effectsItems[index] = (<li><EffectCheckBox effectName={effect.name} effectValue={effect.value} toggleEffect={this.toggleEffect} /></li>)
