@@ -178,7 +178,7 @@ var MusicInterface = {
         id: transition.id,
         start: transition.time,
         end: this.getDuration(),
-        color: "rgba(0, 255, 227, 0.2)",
+        color: "rgba(0,255,227,0.3)",
         drag: false,
         resize: false
     })
@@ -198,7 +198,7 @@ var MusicInterface = {
         transition.id,
         this.getCurrentTime(),
         this.currentRegion.end,
-        this.randomColor(0.3)
+        this.randomColor()
       );
       this.currentRegion = this.currentRegion.update({
         start: this.currentRegion.start,
@@ -220,7 +220,6 @@ var MusicInterface = {
     transitions.sort(function(a,b) {
       return a.time - b.time;
     });
-    console.log(transitions);
     if (transitions.length === 1) {
       this.currentRegion = this.addInitialRegion(transitions[0]);
     } else {
@@ -228,13 +227,13 @@ var MusicInterface = {
         transitions[0].id,
         transitions[0].time,
         transitions[1].time,
-        "rgba(0, 255, 227, 0.3)"
+        "rgba(0,255,227,0.3)"
       );
       for (var index = 1; index < transitions.length - 1; index++) {
         if (index % 2 === 1) {
-          color = "rgba(105, 31, 114, 0.3)";
+          color = "rgba(105,31,114,0.3)";
         } else {
-          color = "rgba(0, 255, 227, 0.3)";
+          color = "rgba(0,255,227,0.3)";
         }
         this.addOneRegion(
           transitions[index].id,
@@ -243,10 +242,10 @@ var MusicInterface = {
           color
         );
       }
-      if (color === "rgba(0, 255, 227, 0.3)") {
-        color = "rgba(105, 31, 114, 0.3)";
+      if (color === "rgba(0,255,227,0.3)") {
+        color = "rgba(105,31,114,0.3)";
       } else {
-        color = "rgba(0, 255, 227, 0.3)";
+        color = "rgba(0,255,227,0.3)";
       }
       this.addOneRegion(
         transitions[index].id,
@@ -268,12 +267,12 @@ var MusicInterface = {
   },
 
   // Generates random colour for regions
-  randomColor: function (alpha) {
+  randomColor: function () {
     return 'rgba(' + [
         Math.floor(Math.random() * 255),
         Math.floor(Math.random() * 255),
         Math.floor(Math.random() * 255),
-        alpha || 1
+        0.3
     ] + ')';
   },
   
