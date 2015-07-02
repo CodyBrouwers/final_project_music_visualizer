@@ -74,7 +74,8 @@ var Transition = {
           Transition._storeAllLocally(vizId, transitions);
           visualizer.setParams(Transition._transitions[0].params);
           Transition._runCallbacks();
-        }
+        },
+        error: console.log("No viz with that id")
     });
   },
 

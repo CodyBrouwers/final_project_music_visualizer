@@ -9,11 +9,11 @@ WebGLVisualizer = {
     this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
     this.camera.position.z = 50;
 
-    var red = 240;
-    var green = 50;
-    var blue = 10;
-    this.color = 'rgb(' + red + ',' + green + ',' + blue + ')'
-    var myColor = new THREE.Color(this.color);
+    // var red = 240;
+    // var green = 50;
+    // var blue = 10;
+    // this.color = 'rgb(' + red + ',' + green + ',' + blue + ')'
+    // var myColor = new THREE.Color(this.color);
     var geometry = new THREE.BoxGeometry( 20, 20, 20 );
     var texture = new THREE.DataTexture(musicInterface.getByteData(), 1024, 2, THREE.RGBFormat);
 
@@ -32,7 +32,7 @@ WebGLVisualizer = {
       }
     }
     this.material = new THREE.ShaderMaterial( {
-      color: myColor,
+      // color: myColor,
       uniforms: uniforms,
       vertexShader: document.getElementById( 'vertexShader' ).textContent,
       fragmentShader: document.getElementById( 'fragmentShader' ).textContent
@@ -99,9 +99,9 @@ WebGLVisualizer = {
       var value = param['value'];
       
       switch (type) {
-        case 'color':
-          this.setColor(value);
-          break;
+        // case 'color':
+        //   this.setColor(value);
+        //   break;
         case 'geometry':
           this.setGeometry(value);
           break;
@@ -135,9 +135,9 @@ WebGLVisualizer = {
   getParam: function(type) {
     var value;
     switch (type) {
-      case 'color':
-        value = this.getColor();
-        break;
+      // case 'color':
+      //   value = this.getColor();
+      //   break;
       case 'geometry':
         value = this.mesh.geometry.type;
         break;
@@ -148,17 +148,17 @@ WebGLVisualizer = {
     return { 'type': type, 'value': value }
   },
 
-  getColor: function() {
-    color = this.mesh.material.color;
-    red = Math.floor(255 * color.r);
-    green = Math.floor(255 * color.g);
-    blue = Math.floor(255 * color.b);
-    return 'rgb('+red+','+green+','+blue+')'
-  },
+  // getColor: function() {
+  //   color = this.mesh.material.color;
+  //   red = Math.floor(255 * color.r);
+  //   green = Math.floor(255 * color.g);
+  //   blue = Math.floor(255 * color.b);
+  //   return 'rgb('+red+','+green+','+blue+')'
+  // },
 
-  setColor: function(color) {
-    this.mesh.material.color = new THREE.Color(color);
-  },
+  // setColor: function(color) {
+  //   this.mesh.material.color = new THREE.Color(color);
+  // },
 
   setGeometry: function(shape) {
     if (shape === 'TorusKnotGeometry') {

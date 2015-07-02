@@ -62,6 +62,7 @@ var ParameterMenu = React.createClass({
       var self = this
 
       $(document).ajaxComplete(function (event, xhr, settings) {
+        console.log(settings);
         if (!$.isEmptyObject(self.refs) && settings.type === "GET") {
           var transitions = Transition.getAll();
           var firstParams = transitions[0].params;
