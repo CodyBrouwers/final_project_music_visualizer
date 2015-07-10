@@ -69,7 +69,7 @@ var VisualizationList = React.createClass({
         changeVisualization={self.props.changeVisualization} />;
     })
     return (
-      <div>
+      <div id="landing-page">
         <div id="header">
           <div className="header-left">
             <h1 className="logo-text">NWMP</h1>
