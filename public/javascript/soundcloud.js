@@ -13,7 +13,7 @@ var SoundCloud = {
         var streamURL;
         $.ajax({
           type: "GET",
-          url: "http://api.sndcdn.com/i1/tracks/"+songID+"/streams?client_id="+clientID,
+          url: "https://api.sndcdn.com/i1/tracks/"+songID+"/streams?client_id="+clientID,
           dataType: 'jsonp',
           success: function(trackLinks) {
             // Gets artwork url from track and gets larger version
