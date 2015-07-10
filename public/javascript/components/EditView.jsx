@@ -56,6 +56,8 @@ var EditView = React.createClass({
 
   componentWillMount: function () {
     Transition.fetchAll(this.props.visualization.id);
+   var scrollPosition = document.body.scrollTop;
+    document.body.scrollTop -= scrollPosition;
   }
 
 

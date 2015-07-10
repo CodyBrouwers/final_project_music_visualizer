@@ -1,13 +1,19 @@
 html {
-  min-width: 100%;
-  max-width: 100%;
+
 }
 
 body {
   font-family: 'Lato';
   color: #FFF;
   background: #191919;
-  overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: scroll;
 }
 
 #header {
@@ -477,7 +483,7 @@ i#pause:hover {
   display: block;
   width: 20vw;
   height: 100vh;
-  overflow:hidden;
+  overflow-y: scroll;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 1002;
   transition: all 0.35s ease-in;
@@ -506,7 +512,7 @@ i#pause:hover {
   line-height: 30px;
   border-color: #FFF;
   border-width: 1px;
-  background: rgba(25, 25, 25, .4); 
+  background: rgba(25, 25, 25, 1); 
   z-index: 1004;
   transition: all 0.3s ease-in;
 }
@@ -539,6 +545,14 @@ img.matcap {
   top: 82vh;
   left: 13vw;
   z-index: 2;
+}
+
+#landing-page {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 
