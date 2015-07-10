@@ -11,6 +11,10 @@ gem 'sinatra-activerecord'
 gem 'puma'
 gem 'tux'
 
+group :production do
+  gem 'pg'
+end
+
 group :development, :test do
   gem 'pry'
   gem 'shotgun'
