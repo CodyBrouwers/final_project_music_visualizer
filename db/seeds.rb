@@ -19,6 +19,8 @@
 # Visualization.create!(path: "http://media.soundcloud.com/stream/7NQBDshL2LlO", name: "The Chainsmokers - Let You Go (Steve James Remix)", image: "https://i1.sndcdn.com/artworks-000116538430-yf9brd-t300x300.jpg")
 # Visualization.create!(path: "http://media.soundcloud.com/stream/S0futF8idWsb", name: "Illenium - I'll Be Your Reason [NEST052]",  image: "https://i1.sndcdn.com/artworks-000119582385-seu0od-t300x300.jpg")
 
+Visualization.destroy_all
+
 Visualization.create!(path:   'https://media.soundcloud.com/stream/oxQrAdtfxmMz' , name:   'Zedd – Beautiful Now (feat. Jon Bellion) KDrew Remix'  , image:  'https://i1.sndcdn.com/artworks-000121834475-b32s66-t300x300.jpg'         )
 Visualization.create!(path:   'https://media.soundcloud.com/stream/xWQhQpHY98bU' , name:   'Dillon Francis - Bruk Bruk (I Need Your Lovin)'  , image:  'https://i1.sndcdn.com/artworks-000121667393-oa8eor-t300x300.jpg'         )
 Visualization.create!(path:   'https://media.soundcloud.com/stream/P5YZJbq85782' , name:   'Damn (club edit)'  , image:  'https://i1.sndcdn.com/artworks-000119019213-g76rdx-t300x300.jpg'         )
@@ -42,7 +44,7 @@ Visualization.create!(path:   'https://media.soundcloud.com/stream/WWcwqzHvzbd0'
 Visualization.create!(path:   'https://media.soundcloud.com/stream/VGGUdzU69Ng5' , name:   'Swedish House Mafia - GREYHOUND' , image:  'https://i1.sndcdn.com/artworks-000019937036-4m6w62-t300x300.jpg'         )
 Visualization.create!(path:   'https://media.soundcloud.com/stream/MsUz5w6bsVMB' , name:   'Echosmith - Bright ' , image:  'https://i1.sndcdn.com/artworks-000119814977-3naur1-t300x300.jpg'         )
 Visualization.create!(path:   'https://media.soundcloud.com/stream/4wg1ZGPYhl4g' , name:   'Said The Sky - Darling ' , image:  'https://i1.sndcdn.com/artworks-000113052590-p2j8vd-t300x300.jpg'         )
-Visualization.create!(path:   'https://media.soundcloud.git com/stream/eZPNNjK34NYC' , name:   'Dj Snake X Porter Robinson - Sad Bird Machine (Foxsky Edit)' , image:  'https://i1.sndcdn.com/artworks-000095656899-jacs08-t300x300.jpg'         )
+Visualization.create!(path:   'https://media.soundcloud.com/stream/eZPNNjK34NYC' , name:   'Dj Snake X Porter Robinson - Sad Bird Machine (Foxsky Edit)' , image:  'https://i1.sndcdn.com/artworks-000095656899-jacs08-t300x300.jpg'         )
 Visualization.create!(path:   'https://media.soundcloud.com/stream/RLxDW2Nu99wu' , name:   'Roses ft. Rozes' , image:  'https://i1.sndcdn.com/artworks-000120309443-zk9y3u-t300x300.jpg'         )
 Visualization.create!(path:   'https://media.soundcloud.com/stream/ngzYozvwYww8' , name:   'aerocity - love lost ' , image:  'https://i1.sndcdn.com/artworks-000113919416-xjjiu3-t300x300.jpg'         )
 Visualization.create!(path:   'https://media.soundcloud.com/stream/EDxKRz3tNrkq' , name:   'Alison Wonderland - U Dont Know (Daktyl Remix)' , image:  'https://i1.sndcdn.com/artworks-000112227756-9xpt31-t300x300.jpg'         )
