@@ -29,7 +29,7 @@ var SoundCloud = {
             var stream = trackLinks.http_mp3_128_url;
             if (stream) {
               var trackKey = stream.match(/\w{12}/);
-              streamURL = "http://media.soundcloud.com/stream/"+trackKey;
+              streamURL = "https://media.soundcloud.com/stream/"+trackKey;
 
               // Sets new viz properties and updates and loads song
               viz.path = streamURL;
